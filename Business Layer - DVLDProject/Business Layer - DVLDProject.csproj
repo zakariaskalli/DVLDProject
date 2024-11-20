@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{91EF1D04-AC94-42E4-9717-EE3713D7912B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Business_Layer___DVLDProject</RootNamespace>
+    <AssemblyName>Business Layer - DVLDProject</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="People\clsAddEditPersonInfoBusiness.cs" />
+    <Compile Include="Users\clsAddNewEditUserBusiness.cs" />
+    <Compile Include="License\clsApplicationNewLicenseInfoBusiness.cs" />
+    <Compile Include="Applications\Detain License\clsDetainLicenseBusiness.cs" />
+    <Compile Include="License\clsDriverLicensesBusiness.cs" />
+    <Compile Include="Drivers\clsFilterDriverInfoBusiness.cs" />
+    <Compile Include="Applications\International License\clsInternationalLicenseApplicationsBusiness.cs" />
+    <Compile Include="Applications\International License\clsInternationalLicenseInfoBusiness.cs" />
+    <Compile Include="License\clsIssueDriverLicenseBusiness.cs" />
+    <Compile Include="Applications\Local License\clsLicenseInfoBusiness.cs" />
+    <Compile Include="Applications\Detain License\clsListDetainedLicensesBusiness.cs" />
+    <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplicationsBusiness.cs" />
+    <Compile Include="Login\clsLoginScreenBusiness.cs" />
+    <Compile Include="Applications\clsManageAppliactionTypesBussiness.cs" />
+    <Compile Include="Drivers\clsManageDriversBusiness.cs" />
+    <Compile Include="Tests\clsManageTestTypesBusiness.cs" />
+    <Compile Include="Users\clsManageUsersBussiness.cs" />
+    <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
+    <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
+    <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationBusiness.cs" />
+    <Compile Include="People\clsPeopleBusiness.cs" />
+    <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseBusiness.cs" />
+    <Compile Include="Applications\Renew driving License\clsRenewLocalDrivingLicenseBusiness.cs" />
+    <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesBusiness.cs" />
+    <Compile Include="Tests\clsTakeTestBusiness.cs" />
+    <Compile Include="Tests\clsTestsAppointmentsBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data Layer - DVLDProject\Data Layer - DVLDProject.csproj">
+      <Project>{64810c3d-ba79-4058-8365-3c94e8fedc21}</Project>
+      <Name>Data Layer - DVLDProject</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
