@@ -364,6 +364,7 @@
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(132, 21);
             this.cbCountry.TabIndex = 30;
+            this.cbCountry.SelectedIndexChanged += new System.EventHandler(this.cbCountry_SelectedIndexChanged);
             // 
             // tbAddress
             // 

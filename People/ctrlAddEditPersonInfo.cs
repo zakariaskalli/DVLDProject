@@ -14,6 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization.Formatters.Binary;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
@@ -23,15 +24,17 @@ namespace DVLDProject
 
         public event Action<int> OnSaveClicked;
 
+        clsPeople PersonInfo = new clsPeople();
+
         public int _PersonID = -1;
 
         public enum enMode { AddNew =  0, Edit = 1 }
 
         public enMode Mode = enMode.AddNew;
 
-        clsAddEditPersonInfoBusiness _ClsAdd;
+        //clsAddEditPersonInfoBusiness _ClsAdd;
 
-        clsAddEditPersonInfoBusiness _ClsUpdate;
+        //clsAddEditPersonInfoBusiness _ClsUpdate;
 
         protected virtual void SaveClicked(int PersonID)
         {
@@ -66,8 +69,8 @@ namespace DVLDProject
 
             // Load All Countries From DataBase To ComboBox
 
-            DataTable dt = clsAddEditPersonInfoBusiness.LoadAllData();
-            
+            DataTable dt = clsCountries.GetAllCountries();
+
             if (dt != null)
             {
                 foreach (DataRow RecordRow in dt.Rows) 
@@ -82,32 +85,30 @@ namespace DVLDProject
             cbCountry.SelectedIndex = cbCountry.FindString("Morocco");
         }
 
-        private void UploadAllData(clsAddEditPersonInfoBusiness Data)
+        private void UploadAllData()
         {
-            _ClsUpdate = Data;
+            tbFirstName.Text = PersonInfo.FirstName;
+            tbSecondName.Text = PersonInfo.SecondName;
+            tbThirdName.Text = PersonInfo.ThirdName;
+            tbLastName.Text = PersonInfo.LastName;
+            tbNationalNo.Text = PersonInfo.NationalNo;
+            DTP1.Value = (DateTime)PersonInfo.DateOfBirth;
 
-            tbFirstName.Text = Data.FirstName;
-            tbSecondName.Text = Data.SecondName;
-            tbThirdName.Text = Data.ThirdName;
-            tbLastName.Text = Data.LastName;
-            tbNationalNo.Text = Data.NationalNo;
-            DTP1.Value = Data.DateOfBirth;
-
-            if (Data.Gendor == 0)
+            if (PersonInfo.Gendor == 0)
                 rbMale.Checked = true;
             else
                 rbFemale.Checked = true;
 
-            tbPhone.Text = Data.Phone;
-            tbEmail.Text = Data.Email;
-            tbAddress.Text = Data.Address;
+            tbPhone.Text = PersonInfo.Phone;
+            tbEmail.Text = PersonInfo.Email;
+            tbAddress.Text = PersonInfo.Address;
 
 
-            cbCountry.SelectedIndex = (Data.NationalityCountryID - 1);
+            cbCountry.SelectedIndex = (int)(PersonInfo.NationalityCountryID - 1);
 
-            tbEmail.Text = Data.Email;
+            tbEmail.Text = PersonInfo.Email;
 
-            if (Data.ImagePath == "" || !File.Exists(Data.ImagePath))
+            if (PersonInfo.ImagePath == "" || !File.Exists(PersonInfo.ImagePath))
             {
                     if (rbMale.Checked)
                     PB1.ImageLocation = _ImageMalePath;
@@ -116,8 +117,8 @@ namespace DVLDProject
             }
             else
             {
-                PB1.ImageLocation = Data.ImagePath;
-                openFileDialog1.FileName = Data.ImagePath;
+                PB1.ImageLocation = PersonInfo.ImagePath;
+                openFileDialog1.FileName = PersonInfo.ImagePath;
                 linkLabelRemove.Visible = true;
             }
 
@@ -128,10 +129,13 @@ namespace DVLDProject
         {
             DefaultOfCtrl();
 
-            if (_PersonID != -1)
+            if (PersonInfo.PersonID != null)
             {
-                clsAddEditPersonInfoBusiness Data = clsAddEditPersonInfoBusiness.UploadAllDataByPersonID(_PersonID);
-                UploadAllData(Data);
+                PersonInfo = clsPeople.FindByPersonID(PersonInfo.PersonID);
+
+                //clsAddEditPersonInfoBusiness Data = clsAddEditPersonInfoBusiness.UploadAllDataByPersonID(_PersonID);
+                
+                UploadAllData();
                 Mode = enMode.Edit;
             }
         }
@@ -235,6 +239,7 @@ namespace DVLDProject
 
         }
 
+        //[Serializable]
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Image Upload To My Folder
@@ -243,6 +248,7 @@ namespace DVLDProject
             string destinationPath = "";
 
             // NewID()
+
             if (FilePath != "openFileDialog1" )
             {
                 try
@@ -262,59 +268,66 @@ namespace DVLDProject
                 }
             }
 
+
             
 
-            string NationalNo = tbNationalNo.Text;
-            string FirstName = tbFirstName.Text;
-            string SecondName = tbSecondName.Text;
-            string ThirdName = tbThirdName.Text;
-            string LastName = tbLastName.Text;
-            DateTime DateOfBirth = DTP1.Value;
-            
-            int Gendor = 0;
+            PersonInfo.NationalNo = tbNationalNo.Text;
+            PersonInfo.FirstName = tbFirstName.Text;
+            PersonInfo.SecondName = tbSecondName.Text;
+            PersonInfo.ThirdName = tbThirdName.Text;
+            PersonInfo.LastName = tbLastName.Text;
+            PersonInfo.DateOfBirth = DTP1.Value;
+
+            PersonInfo.Gendor = 0;
 
             if (rbMale.Checked != true)
-                Gendor = 1;
+                PersonInfo.Gendor = 1;
 
-            string Address = tbAddress.Text;
-            string Phone = tbPhone.Text;
-            string Email = tbEmail.Text;
-            int NationalityCountryID = cbCountry.FindString(cbCountry.Text) + 1;
-            
-            string ImagePath = "";
+            PersonInfo.Address = tbAddress.Text;
+            PersonInfo.Phone = tbPhone.Text;
+            PersonInfo.Email = tbEmail.Text;
+            PersonInfo.NationalityCountryID = cbCountry.FindString(cbCountry.Text) + 1;
+
+            PersonInfo.ImagePath = "";
 
             if (destinationPath != "")
-                ImagePath = destinationPath;
+                PersonInfo.ImagePath = destinationPath;
 
 
-            if (NationalNo == "" || FirstName == "" || Address == "" || Phone == "")
+            if (PersonInfo.NationalNo == "" || PersonInfo.FirstName == "" || PersonInfo.Address == "" || PersonInfo.Phone == "")
             {
                 MessageBox.Show("Enter All Data Successfully", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (_PersonID == -1)
+            if (PersonInfo.PersonID != null)
             {
-                _ClsAdd = new clsAddEditPersonInfoBusiness(NationalNo, FirstName, SecondName,
-                ThirdName, LastName, DateOfBirth, Gendor, Address, Phone, Email, NationalityCountryID, ImagePath);
-                _PersonID = _ClsAdd.PersonID;
+                PersonInfo = new clsPeople(PersonInfo.PersonID, PersonInfo.NationalNo, PersonInfo.FirstName, PersonInfo.DateOfBirth, PersonInfo.Gendor, PersonInfo.Address, PersonInfo.Phone, PersonInfo.NationalityCountryID, PersonInfo.SecondName, PersonInfo.ThirdName, PersonInfo.LastName, PersonInfo.Email, PersonInfo.ImagePath);
+
+
             }
             else
             {
-                _ClsAdd = new clsAddEditPersonInfoBusiness(_PersonID, NationalNo, FirstName, SecondName,
-                ThirdName, LastName, DateOfBirth, Gendor, Address, Phone, Email, NationalityCountryID, ImagePath);
+
+                /*
+                _ClsAdd = new clsAddEditPersonInfoBusiness(PersonInfo.PersonID, PersonInfo.NationalNo, PersonInfo.FirstName, PersonInfo.SecondName,
+                PersonInfo.ThirdName, PersonInfo.LastName, PersonInfo.DateOfBirth, PersonInfo.Gendor, PersonInfo.Address, PersonInfo.Phone, PersonInfo.Email, PersonInfo.NationalityCountryID, PersonInfo.ImagePath);
+                */
 
             }
 
-
-            if (_ClsAdd.Save())
+            if (PersonInfo.Save())
             {
+                // Serializable
+
+                /*
+                
                 // For XML
                 XmlSerializer serializer = new XmlSerializer(typeof(clsAddEditPersonInfoBusiness));
                 
                 using (TextWriter writer = new StreamWriter("person.xml"))
                 {
-                    serializer.Serialize(writer, _ClsAdd);
+                    serializer.Serialize(writer, PersonInfo._ClsAdd);
                 }
 
                 // For Json
@@ -336,8 +349,11 @@ namespace DVLDProject
                     formatter.Serialize(stream, _ClsAdd);
                 }
 
+                */
+
+
                 MessageBox.Show("Data Saved Successfully", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _PersonID = _ClsAdd.PersonID;
+                //_PersonID = _ClsAdd.PersonID;
             }
             else
             {
@@ -346,7 +362,7 @@ namespace DVLDProject
             }
 
             if (OnSaveClicked != null)
-                SaveClicked(_ClsAdd.PersonID);
+                SaveClicked((int)PersonInfo.PersonID);
         }
 
         private void tbFirstName_Validating(object sender, CancelEventArgs e)
@@ -389,7 +405,7 @@ namespace DVLDProject
 
             if (Mode == enMode.Edit)
             {
-                if (tbNationalNo.Text != _ClsUpdate.NationalNo && clsAddEditPersonInfoBusiness.NationalNoIsAvailable(tbNationalNo.Text))
+                if (tbNationalNo.Text != PersonInfo.NationalNo && clsAddEditPersonInfoBusiness.NationalNoIsAvailable(tbNationalNo.Text))
                 {
                     e.Cancel = true;
                     errorProvider2.SetError(tbNationalNo, "This NationalNo Is Available.");
@@ -423,7 +439,7 @@ namespace DVLDProject
 
             if (Mode == enMode.Edit)
             {
-                if (tbPhone.Text != _ClsUpdate.Phone && clsAddEditPersonInfoBusiness.PhoneIsAvailable(tbPhone.Text))
+                if (tbPhone.Text != PersonInfo.Phone && clsAddEditPersonInfoBusiness.PhoneIsAvailable(tbPhone.Text))
                 {
                     e.Cancel = true;
                     errorProvider2.SetError(tbPhone, "This Phone Is Available.");
@@ -456,7 +472,10 @@ namespace DVLDProject
 
         }
 
+        private void cbCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
 

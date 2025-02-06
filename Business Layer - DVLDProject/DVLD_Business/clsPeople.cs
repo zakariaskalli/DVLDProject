@@ -47,7 +47,7 @@ namespace DVLD_BusinessLayer
         }
 
 
-        private clsPeople(
+        public clsPeople(
 int? PersonID, string NationalNo, string FirstName, DateTime? DateOfBirth, byte? Gendor, string Address, string Phone, int? NationalityCountryID, string SecondName = null, string ThirdName = null, string LastName = null, string Email = null, string ImagePath = null)        {
             this.PersonID = PersonID;
             this.NationalNo = NationalNo;

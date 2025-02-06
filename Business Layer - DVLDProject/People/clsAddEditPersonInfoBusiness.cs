@@ -10,7 +10,6 @@ using System.Xml.Serialization;
 
 namespace Business_Layer___DVLDProject
 {
-    [Serializable]
     public class clsAddEditPersonInfoBusiness
     {
         enum enMode { UpdateMode = 0, AddNewMode = 1 }
@@ -307,6 +306,7 @@ namespace Business_Layer___DVLDProject
             }
             return false;
         }
+
     }
 
 }

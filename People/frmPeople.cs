@@ -175,7 +175,7 @@ namespace DVLDProject
             textBox1.Text = "";
 
 
-            if (clsAddEditPersonInfoBusiness.PersonIDIsFound(PersonID))
+            if (clsPeople.FindByPersonID(PersonID) != null)
             {
                 frmAddEditPersonInfo frm = new frmAddEditPersonInfo(PersonID);
                 frm.ShowDialog();
@@ -215,13 +215,13 @@ namespace DVLDProject
             textBox1.Text = "";
 
 
-            if (clsAddEditPersonInfoBusiness.PersonIDIsFound(PersonID))
+            if (clsPeople.FindByPersonID(PersonID) != null)
             {
                 string TextView = $"Are you sure you want to delete Person [{PersonID}]";
 
                 if (MessageBox.Show(TextView, "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    if (clsBusinessDVLD_clsPeople.DeletePersonByID(PersonID))
+                    if (clsPeople.DeletePeople(PersonID))
                         MessageBox.Show("Person Delete Successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
                         MessageBox.Show("Person was not deleted because it has data linked to it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
