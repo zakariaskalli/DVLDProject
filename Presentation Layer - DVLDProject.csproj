@@ -40,6 +40,9 @@
     <Reference Include="MyFirstWinFormsProject">
       <HintPath>..\FirstWinForms\MyFirstWinFormsProject\bin\Debug\MyFirstWinFormsProject.exe</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -347,42 +350,52 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Applications\Renew Driving License\ApplicationBasicInfo.resx">
       <DependentUpon>ApplicationBasicInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Local License\frmLocalDrivingLicenseApplicationInfo.resx">
       <DependentUpon>frmLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\ctrlAddEditPersonInfo.resx">
       <DependentUpon>ctrlAddEditPersonInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Replacement For Loast Or Damaged License\ctrlAppInfoForLicReplacement.resx">
       <DependentUpon>ctrlAppInfoForLicReplacement.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ctrlApplicationInfo.resx">
       <DependentUpon>ctrlApplicationInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="License\ctrlApplicationNewLicenseInfo.resx">
       <DependentUpon>ctrlApplicationNewLicenseInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Detain License\ctrlDetainInfo.resx">
       <DependentUpon>ctrlDetainInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="License\ctrlDriverLicenses.resx">
       <DependentUpon>ctrlDriverLicenses.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="People\ctrlFilterAndMakePersonInfo.resx">
       <DependentUpon>ctrlFilterAndMakePersonInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\ctrlFilterBy.resx">
       <DependentUpon>ctrlFilterBy.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\ctrlFilterDriverLicenseInfo.resx">
       <DependentUpon>ctrlFilterDriverLicenseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\International License\ctrlInternationalLicenseInfo.resx">
       <DependentUpon>ctrlInternationalLicenseInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Local License\ctrlLicenseInfo.resx">
       <DependentUpon>ctrlLicenseInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\ctrlLoginInformation.resx">
       <DependentUpon>ctrlLoginInformation.cs</DependentUpon>
@@ -499,6 +512,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.manifest" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

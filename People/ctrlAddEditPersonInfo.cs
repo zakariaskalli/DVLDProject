@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 using Business_Layer___DVLDProject;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-using System.Xml.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 

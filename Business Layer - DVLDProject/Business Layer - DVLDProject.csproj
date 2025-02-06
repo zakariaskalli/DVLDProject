@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -44,6 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DVLD_Business\clsApplications.cs" />
+    <Compile Include="DVLD_Business\clsApplicationTypes.cs" />
+    <Compile Include="DVLD_Business\clsCountries.cs" />
+    <Compile Include="DVLD_Business\clsDetainedLicenses.cs" />
+    <Compile Include="DVLD_Business\clsDrivers.cs" />
+    <Compile Include="DVLD_Business\clsInternationalLicenses.cs" />
+    <Compile Include="DVLD_Business\clsLicenseClasses.cs" />
+    <Compile Include="DVLD_Business\clsLicenses.cs" />
+    <Compile Include="DVLD_Business\clsLocalDrivingLicenseApplications.cs" />
+    <Compile Include="DVLD_Business\clsPeople.cs" />
+    <Compile Include="DVLD_Business\clsTestAppointments.cs" />
+    <Compile Include="DVLD_Business\clsTests.cs" />
+    <Compile Include="DVLD_Business\clsTestTypes.cs" />
+    <Compile Include="DVLD_Business\clsUsers.cs" />
+    <Compile Include="DVLD_Business\SqlHelper.cs" />
     <Compile Include="People\clsAddEditPersonInfoBusiness.cs" />
     <Compile Include="Users\clsAddNewEditUserBusiness.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoBusiness.cs" />
@@ -78,6 +96,8 @@
       <Name>Data Layer - DVLDProject</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

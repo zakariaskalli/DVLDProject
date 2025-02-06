@@ -9,10 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Business_Layer___DVLDProject;
-using Business_Layer_DVLDProject_clsPeople;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-
+using Business_Layer___DVLDProject;
+// Removed the problematic using directive
+using DVLD_BusinessLayer;
+using Business_Layer_DVLDProject_clsPeople;
+using System.Web;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDProject
 {
@@ -25,6 +28,9 @@ namespace DVLDProject
 
         private void LoadComboBox()
         {
+            // The First Code
+
+            /*
             cbSearchBy.Items.Add("None");
             cbSearchBy.Items.Add("Person ID");
             cbSearchBy.Items.Add("National No.");
@@ -38,13 +44,25 @@ namespace DVLDProject
             cbSearchBy.Items.Add("Email");
 
             cbSearchBy.SelectedIndex = 0;
+            */
+
+            cbSearchBy.Items.Clear(); // Clear previous items
+
+            cbSearchBy.Items.Add("None");
+
+            foreach (string column in Enum.GetNames(typeof(clsPeople.PeopleColumn)))
+            {
+                cbSearchBy.Items.Add(column);
+            }
+
+            cbSearchBy.SelectedIndex = 0;
         }
 
 
         // Upload Data To Table
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsBusinessDVLD_clsPeople.LoadData();
+            DataTable dataTable = clsPeople.GetAllPeople();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
@@ -111,8 +129,8 @@ namespace DVLDProject
                 return;
             }
 
-
-            DataTable dataTable = clsBusinessDVLD_clsPeople.SearchInTable(ColumnName(), textBox1.Text);
+            DataTable dataTable = clsPeople.SearchData((clsPeople.PeopleColumn)Enum.Parse(typeof(clsPeople.PeopleColumn), cbSearchBy.Text), textBox1.Text);
+            //DataTable dataTable = clsBusinessDVLD_clsPeople.SearchInTable(ColumnName(), textBox1.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }

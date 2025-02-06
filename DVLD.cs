@@ -12,6 +12,8 @@ using System.Windows.Forms;
 
 namespace DVLDProject
 {
+    //Sdk="Microsoft.NET.Sdk"
+
     public partial class DVLD : Form
     {
         readonly string _UserName = "";

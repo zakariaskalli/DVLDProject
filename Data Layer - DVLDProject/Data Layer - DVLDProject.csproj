@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -54,6 +57,22 @@
     <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationData.cs" />
     <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseData.cs" />
     <Compile Include="clsHashing.cs" />
+    <Compile Include="DVLD_DataAccess\clsApplications.cs" />
+    <Compile Include="DVLD_DataAccess\clsApplicationTypes.cs" />
+    <Compile Include="DVLD_DataAccess\clsCountries.cs" />
+    <Compile Include="DVLD_DataAccess\clsDetainedLicenses.cs" />
+    <Compile Include="DVLD_DataAccess\clsDrivers.cs" />
+    <Compile Include="DVLD_DataAccess\clsInternationalLicenses.cs" />
+    <Compile Include="DVLD_DataAccess\clsLicenseClasses.cs" />
+    <Compile Include="DVLD_DataAccess\clsLicenses.cs" />
+    <Compile Include="DVLD_DataAccess\clsLocalDrivingLicenseApplications.cs" />
+    <Compile Include="DVLD_DataAccess\clsPeople.cs" />
+    <Compile Include="DVLD_DataAccess\clsTestAppointments.cs" />
+    <Compile Include="DVLD_DataAccess\clsTests.cs" />
+    <Compile Include="DVLD_DataAccess\clsTestTypes.cs" />
+    <Compile Include="DVLD_DataAccess\clsUsers.cs" />
+    <Compile Include="DVLD_DataAccess\ConnectionString\clsDataAccessSettings.cs" />
+    <Compile Include="DVLD_DataAccess\ErrorHandler\clsErrorHandlingManager.cs" />
     <Compile Include="People\clsAddEditPersonInfoData.cs" />
     <Compile Include="Users\clsAddNewEditUserData.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoData.cs" />
@@ -78,6 +97,26 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
+    <None Include="DVLD_DataAccess\ErrorHandler\JsonFile\ErrorHandling_JsonFile.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DVLD_DataAccess\SPTables\Applications_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\ApplicationTypes_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\Countries_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\DetainedLicenses_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\Drivers_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\ErrorLog_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\InternationalLicenses_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\LicenseClasses_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\Licenses_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\LocalDrivingLicenseApplications_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\People_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\RememberMe_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\TestAppointments_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\Tests_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\TestTypes_SPs.sql" />
+    <Content Include="DVLD_DataAccess\SPTables\Users_SPs.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
