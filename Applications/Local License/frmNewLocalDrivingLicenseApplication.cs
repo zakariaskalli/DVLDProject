@@ -252,14 +252,14 @@ namespace DVLDProject
                 {
 
                     if (clsNewLocalDrivingLicenseApplicationBusiness.IsFoundApplicationMatchLocalDriveByPersonID(
-                        ctrlFilterAndMakePersonInfo1._PersonID, LicenseClassID))
+                        (int)ctrlFilterAndMakePersonInfo1._PersonID, LicenseClassID))
                     {
                         MessageBox.Show(@"Choose another License Class, the selected Person Already have
                                         an active application for the selected Class with id = ??", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    _ClsAdd = new clsNewLocalDrivingLicenseApplicationBusiness(ctrlFilterAndMakePersonInfo1._PersonID, UserID, LicenseClassID);
+                    _ClsAdd = new clsNewLocalDrivingLicenseApplicationBusiness((int)ctrlFilterAndMakePersonInfo1._PersonID, UserID, LicenseClassID);
                 }
 
                 ctrlFilterAndMakePersonInfo1._PersonID = _ClsAdd.PersonID;
@@ -282,7 +282,7 @@ namespace DVLDProject
                 else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
                 {
                     if (clsNewLocalDrivingLicenseApplicationBusiness.IsFoundApplicationMatchLocalDriveByPersonID(
-                        ctrlFilterAndMakePersonInfo1._PersonID, LicenseClassID))
+                        (int)ctrlFilterAndMakePersonInfo1._PersonID, LicenseClassID))
                     {
                         MessageBox.Show(@"Choose another License Class, the selected Person Already have
                                         an active application for the selected Class with id = ??", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

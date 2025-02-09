@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Data_Layer___DVLDProject;
-using Data_Layer_DVLDProject_clsPeople;
 
 
 namespace Business_Layer___DVLDProject

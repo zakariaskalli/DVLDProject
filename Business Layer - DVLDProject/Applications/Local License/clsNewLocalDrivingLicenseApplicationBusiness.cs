@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data_Layer___DVLDProject;
-using Data_Layer_DVLDProject_clsPeople;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Xml.Serialization;
 

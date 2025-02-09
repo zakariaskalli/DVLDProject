@@ -11,9 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Business_Layer___DVLDProject;
-// Removed the problematic using directive
 using DVLD_BusinessLayer;
-using Business_Layer_DVLDProject_clsPeople;
 using System.Web;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -28,23 +26,6 @@ namespace DVLDProject
 
         private void LoadComboBox()
         {
-            // The First Code
-
-            /*
-            cbSearchBy.Items.Add("None");
-            cbSearchBy.Items.Add("Person ID");
-            cbSearchBy.Items.Add("National No.");
-            cbSearchBy.Items.Add("First Name");
-            cbSearchBy.Items.Add("Second Name");
-            cbSearchBy.Items.Add("Third Name");
-            cbSearchBy.Items.Add("Last Name");
-            cbSearchBy.Items.Add("Gendor");
-            cbSearchBy.Items.Add("Nationality");
-            cbSearchBy.Items.Add("Phone");
-            cbSearchBy.Items.Add("Email");
-
-            cbSearchBy.SelectedIndex = 0;
-            */
 
             cbSearchBy.Items.Clear(); // Clear previous items
 
@@ -58,7 +39,6 @@ namespace DVLDProject
             cbSearchBy.SelectedIndex = 0;
         }
 
-
         // Upload Data To Table
         private void LoadAllDataToDGV()
         {
@@ -67,8 +47,6 @@ namespace DVLDProject
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
         }
-
-
 
         private void frmPeople_Load(object sender, EventArgs e)
         {
@@ -85,12 +63,9 @@ namespace DVLDProject
             else
                 textBox1.Visible = false;
 
-
-
             textBox1.Text = "";
             LoadAllDataToDGV();
         }
-
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -99,27 +74,6 @@ namespace DVLDProject
                     e.Handled = true;
         }
 
-        private string ColumnName()
-        {
-            switch (cbSearchBy.Text)
-            {
-                case "Person ID":
-                    return "PersonID";
-                case "National No.":
-                    return "NationalNo";
-                case "First Name":
-                    return "FirstName";
-                case "Second Name":
-                    return "SecondName";
-                case "Third Name":
-                    return "ThirdName";
-                case "Last Name":
-                    return "LastName";
-                default:
-                    return cbSearchBy.Text;
-            }
-
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -130,7 +84,7 @@ namespace DVLDProject
             }
 
             DataTable dataTable = clsPeople.SearchData((clsPeople.PeopleColumn)Enum.Parse(typeof(clsPeople.PeopleColumn), cbSearchBy.Text), textBox1.Text);
-            //DataTable dataTable = clsBusinessDVLD_clsPeople.SearchInTable(ColumnName(), textBox1.Text);
+
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }
@@ -138,12 +92,10 @@ namespace DVLDProject
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             cbSearchBy.SelectedIndex = 0;
             textBox1.Text = "";
 
@@ -156,7 +108,6 @@ namespace DVLDProject
 
         private void addNewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             cbSearchBy.SelectedIndex = 0;
             textBox1.Text = "";
 
@@ -235,7 +186,6 @@ namespace DVLDProject
 
         private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             cbSearchBy.SelectedIndex = 0;
             textBox1.Text = "";
 

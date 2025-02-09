@@ -66,14 +66,13 @@
     <Compile Include="DVLD_DataAccess\clsLicenseClasses.cs" />
     <Compile Include="DVLD_DataAccess\clsLicenses.cs" />
     <Compile Include="DVLD_DataAccess\clsLocalDrivingLicenseApplications.cs" />
-    <Compile Include="DVLD_DataAccess\clsPeople.cs" />
+    <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_DataAccess\clsTestAppointments.cs" />
     <Compile Include="DVLD_DataAccess\clsTests.cs" />
     <Compile Include="DVLD_DataAccess\clsTestTypes.cs" />
     <Compile Include="DVLD_DataAccess\clsUsers.cs" />
     <Compile Include="DVLD_DataAccess\ConnectionString\clsDataAccessSettings.cs" />
     <Compile Include="DVLD_DataAccess\ErrorHandler\clsErrorHandlingManager.cs" />
-    <Compile Include="People\clsAddEditPersonInfoData.cs" />
     <Compile Include="Users\clsAddNewEditUserData.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoData.cs" />
     <Compile Include="License\clsDriverLicensesData.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Tests\clsManageTestTypesData.cs" />
     <Compile Include="Users\clsManageUsersData.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralData.cs" />
-    <Compile Include="People\clsPeopleData.cs" />
     <Compile Include="Applications\Renew Driving License\clsRenewLocalDrivingLicenseData.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesData.cs" />
     <Compile Include="Tests\clsTakeTestData.cs" />

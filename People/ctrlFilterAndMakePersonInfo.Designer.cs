@@ -48,7 +48,7 @@
             this.ctrlShowPersonDetails1.Name = "ctrlShowPersonDetails1";
             this.ctrlShowPersonDetails1.Size = new System.Drawing.Size(770, 290);
             this.ctrlShowPersonDetails1.TabIndex = 1;
-            this.ctrlShowPersonDetails1.Load += new System.EventHandler(this.ctrlShowPersonDetails1_Load);
+            
             // 
             // ctrlFilterAndMakePersonInfo
             // 

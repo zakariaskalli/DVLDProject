@@ -13,7 +13,7 @@ namespace DVLDProject
 {
     public partial class frmAddEditPersonInfo : Form
     {
-        int _PersonID = -1;
+        int? _PersonID = -1;
 
         public frmAddEditPersonInfo()
         {
@@ -25,9 +25,11 @@ namespace DVLDProject
         {
             InitializeComponent();
 
-            _PersonID = clsMethodsGeneralBusiness.PersonIDByNationalNo(NationalNo);
 
-            ctrlAddEditPersonInfo1._PersonID = _PersonID;
+
+            _PersonID =  clsMethodsGeneralBusiness.PersonIDByNationalNo(NationalNo);
+
+            ctrlAddEditPersonInfo1.PersonInfo.PersonID = _PersonID;
             
             lblAddOrUpdate.Text = "Update Person";
             lblPersonID.Text = _PersonID.ToString();
@@ -35,15 +37,15 @@ namespace DVLDProject
 
         public int GetPersonID()
         {
-            return _PersonID;
+            return (int)ctrlAddEditPersonInfo1.PersonInfo.PersonID;
         }
 
-        public frmAddEditPersonInfo(int PersonID)
+        public frmAddEditPersonInfo(int? PersonID)
         {
             
             InitializeComponent();
 
-            ctrlAddEditPersonInfo1._PersonID = PersonID;
+            ctrlAddEditPersonInfo1.PersonInfo.PersonID = PersonID;
 
 
             lblAddOrUpdate.Text = "Update Person";

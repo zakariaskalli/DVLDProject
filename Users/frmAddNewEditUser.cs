@@ -139,7 +139,7 @@ namespace DVLDProject
                 if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), Convert.ToString(ctrlFilterAndMakePersonInfo1._PersonID)))
                 {
 
-                    if (!clsMethodsGeneralBusiness.IsFoundUserByPersonID(ctrlFilterAndMakePersonInfo1._PersonID))
+                    if (!clsMethodsGeneralBusiness.IsFoundUserByPersonID((int)ctrlFilterAndMakePersonInfo1._PersonID))
                     {
                         tabControl1.SelectedTab = tabPage2;
                     }
@@ -178,7 +178,7 @@ namespace DVLDProject
                 }
                 else
                 {
-                    if (!clsMethodsGeneralBusiness.IsFoundUserByPersonID(ctrlFilterAndMakePersonInfo1._PersonID))
+                    if (!clsMethodsGeneralBusiness.IsFoundUserByPersonID((int)ctrlFilterAndMakePersonInfo1._PersonID))
                     {
                         tabControl1.SelectedTab = tabPage2;
                         _Next = true;
@@ -291,7 +291,7 @@ namespace DVLDProject
                 if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
                     _ClsAdd = new clsAddNewEditUserBusiness(ctrlFilterAndMakePersonInfo1._NationalNo, UserName, Password, IsActive);
                 else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
-                    _ClsAdd = new clsAddNewEditUserBusiness(ctrlFilterAndMakePersonInfo1._PersonID, UserName, Password, IsActive);
+                    _ClsAdd = new clsAddNewEditUserBusiness((int)ctrlFilterAndMakePersonInfo1._PersonID, UserName, Password, IsActive);
 
                 ctrlFilterAndMakePersonInfo1._PersonID = _ClsAdd.PersonID;
                 ctrlFilterAndMakePersonInfo1._NationalNo = _ClsAdd.NationalNo;
@@ -302,7 +302,7 @@ namespace DVLDProject
                 if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
                     _ClsAdd = new clsAddNewEditUserBusiness(_UserID,ctrlFilterAndMakePersonInfo1._NationalNo, UserName, Password, IsActive);
                 else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
-                    _ClsAdd = new clsAddNewEditUserBusiness(_UserID, ctrlFilterAndMakePersonInfo1._PersonID, UserName, Password, IsActive);
+                    _ClsAdd = new clsAddNewEditUserBusiness(_UserID, (int)ctrlFilterAndMakePersonInfo1._PersonID, UserName, Password, IsActive);
 
             }
 

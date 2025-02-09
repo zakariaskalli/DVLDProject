@@ -56,13 +56,12 @@
     <Compile Include="DVLD_Business\clsLicenseClasses.cs" />
     <Compile Include="DVLD_Business\clsLicenses.cs" />
     <Compile Include="DVLD_Business\clsLocalDrivingLicenseApplications.cs" />
-    <Compile Include="DVLD_Business\clsPeople.cs" />
+    <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_Business\clsTestAppointments.cs" />
     <Compile Include="DVLD_Business\clsTests.cs" />
     <Compile Include="DVLD_Business\clsTestTypes.cs" />
     <Compile Include="DVLD_Business\clsUsers.cs" />
     <Compile Include="DVLD_Business\SqlHelper.cs" />
-    <Compile Include="People\clsAddEditPersonInfoBusiness.cs" />
     <Compile Include="Users\clsAddNewEditUserBusiness.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoBusiness.cs" />
     <Compile Include="Applications\Detain License\clsDetainLicenseBusiness.cs" />
@@ -82,7 +81,6 @@
     <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
     <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationBusiness.cs" />
-    <Compile Include="People\clsPeopleBusiness.cs" />
     <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseBusiness.cs" />
     <Compile Include="Applications\Renew driving License\clsRenewLocalDrivingLicenseBusiness.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesBusiness.cs" />

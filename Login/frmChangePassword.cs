@@ -13,7 +13,7 @@ namespace DVLDProject
 {
     public partial class frmChangePassword : Form
     {
-        int _PersonID = -1;
+        int? _PersonID = null;
         int _UserID = -1;
 
 

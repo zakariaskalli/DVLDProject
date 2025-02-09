@@ -15,6 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using DVLD_BusinessLayer;
+using DVLD.Classes;
 
 namespace DVLDProject
 {
@@ -24,9 +25,9 @@ namespace DVLDProject
 
         public event Action<int> OnSaveClicked;
 
-        clsPeople PersonInfo = new clsPeople();
+        public clsPeople PersonInfo = new clsPeople();
 
-        public int _PersonID = -1;
+        //public int _PersonID = -1;
 
         public enum enMode { AddNew =  0, Edit = 1 }
 
@@ -92,7 +93,16 @@ namespace DVLDProject
             tbThirdName.Text = PersonInfo.ThirdName;
             tbLastName.Text = PersonInfo.LastName;
             tbNationalNo.Text = PersonInfo.NationalNo;
-            DTP1.Value = (DateTime)PersonInfo.DateOfBirth;
+            
+            if (PersonInfo.DateOfBirth >= DTP1.MinDate && PersonInfo.DateOfBirth <= DTP1.MaxDate)
+            {
+                DTP1.Value = (DateTime)PersonInfo.DateOfBirth;
+            }
+            else
+            {
+                // Handle the case where the date is out of range
+                DTP1.Value = DTP1.MinDate; // or some other default value
+            }
 
             if (PersonInfo.Gendor == 0)
                 rbMale.Checked = true;
@@ -169,25 +179,20 @@ namespace DVLDProject
                 return;
             }
 
-            if (tbEmail.Text == "")
+            //no need to validate the email incase it's empty.
+            if (tbEmail.Text.Trim() == "")
                 return;
 
-
-            if (tbEmail.TextLength < 10)
+            //validate email format
+            if (!clsValidatoin.ValidateEmail(tbEmail.Text))
             {
-                e.Cancel = true; 
-                errorProvider1.SetError(tbEmail, "Enter A Valid Length Email.");
-            }
-            else if (tbEmail.Text.Substring(tbEmail.TextLength - 10, 10) != "@gmail.com")
-            {
-
                 e.Cancel = true;
-                errorProvider1.SetError(tbEmail, "Enter A Valid Email.");
+                errorProvider1.SetError(tbEmail, "Invalid Email Address Format!");
             }
             else
-                errorProvider1.SetError(tbEmail, string.Empty);
-
-            // Code Validating Email Is Available In DataBase
+            {
+                errorProvider1.SetError(tbEmail, null);
+            };
 
         }
 
@@ -395,7 +400,7 @@ namespace DVLDProject
             if (tbNationalNo.Text == "")
             {
                 e.Cancel = true;
-                
+
                 errorProvider2.SetError(tbNationalNo, "Enter A The NationalNo.");
 
             }
@@ -405,14 +410,31 @@ namespace DVLDProject
 
             if (Mode == enMode.Edit)
             {
-                if (tbNationalNo.Text != PersonInfo.NationalNo && clsAddEditPersonInfoBusiness.NationalNoIsAvailable(tbNationalNo.Text))
+                /*
+                                 if 
+                                (
+                                    tbNationalNo.Text != PersonInfo.NationalNo 
+                                    &&
+                                    clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, tbNationalNo.Text) != null
+                                )
+                 */
+
+
+
+                if (
+                    tbNationalNo.Text.ToLower() != PersonInfo.NationalNo.ToLower()
+                    &&
+                    clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, tbNationalNo.Text, clsPeople.SearchMode.ExactMatch).Rows.Count != 0 
+                    )
                 {
                     e.Cancel = true;
                     errorProvider2.SetError(tbNationalNo, "This NationalNo Is Available.");
 
                 }
             }
-            else if (clsAddEditPersonInfoBusiness.NationalNoIsAvailable(tbNationalNo.Text))
+            else if (
+                clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, tbNationalNo.Text, clsPeople.SearchMode.ExactMatch).Rows.Count != 0
+                )
             {
                 e.Cancel = true;
                 errorProvider2.SetError(tbNationalNo, "This NationalNo Is Available.");
@@ -439,13 +461,19 @@ namespace DVLDProject
 
             if (Mode == enMode.Edit)
             {
-                if (tbPhone.Text != PersonInfo.Phone && clsAddEditPersonInfoBusiness.PhoneIsAvailable(tbPhone.Text))
+                if (
+                    tbPhone.Text != PersonInfo.Phone 
+                    &&
+                    clsPeople.SearchData(clsPeople.PeopleColumn.Phone, tbPhone.Text, clsPeople.SearchMode.ExactMatch).Rows.Count != 0
+                   )
                 {
                     e.Cancel = true;
                     errorProvider2.SetError(tbPhone, "This Phone Is Available.");
                 }
             }
-            else if (clsAddEditPersonInfoBusiness.PhoneIsAvailable(tbPhone.Text))
+            else if (
+                    clsPeople.SearchData(clsPeople.PeopleColumn.Phone, tbPhone.Text, clsPeople.SearchMode.ExactMatch).Rows.Count != 0
+                    )
             {
                 e.Cancel = true;
                 errorProvider2.SetError(tbPhone, "This Phone Is Available.");
@@ -472,10 +500,6 @@ namespace DVLDProject
 
         }
 
-        private void cbCountry_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
 

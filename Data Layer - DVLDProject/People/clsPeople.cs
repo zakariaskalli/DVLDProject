@@ -65,6 +65,60 @@ namespace DVLD_DataLayer
     return isFound;
 }
 
+
+        public static bool GetPeopleInfoByNationalNo(string NationalNo, ref int PersonID, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime? DateOfBirth, ref byte? Gendor, ref string Address, ref string Phone, ref string Email, ref int? NationalityCountryID, ref string ImagePath)
+        {
+            bool isFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SP_Get_People_ByNationalNo";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Ensure correct parameter assignment
+                        command.Parameters.AddWithValue("@NationalNo", NationalNo ?? (object)DBNull.Value);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // The record was found
+                                isFound = true;
+
+                                PersonID = (int)reader["PersonID"];
+                                FirstName = (string)reader["FirstName"];
+                                SecondName = reader["SecondName"] != DBNull.Value ? reader["SecondName"].ToString() : null;
+                                ThirdName = reader["ThirdName"] != DBNull.Value ? reader["ThirdName"].ToString() : null;
+                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null;
+                                DateOfBirth = (DateTime)reader["DateOfBirth"];
+                                Gendor = (byte)reader["Gendor"];
+                                Address = (string)reader["Address"];
+                                Phone = (string)reader["Phone"];
+                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null;
+                                NationalityCountryID = (int)reader["NationalityCountryID"];
+                                ImagePath = reader["ImagePath"] != DBNull.Value ? reader["ImagePath"].ToString() : null;
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle all exceptions in a general way
+                ErrorHandler.HandleException(ex, nameof(GetPeopleInfoByNationalNo), $"Parameter: NationalNo = " + NationalNo);
+            }
+
+            return isFound;
+        }
+
+
         public static DataTable GetAllPeople()
 {
     DataTable dt = new DataTable();

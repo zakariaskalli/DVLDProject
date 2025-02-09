@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace DVLDProject
 {
     public partial class ctrlFilterAndMakePersonInfo : UserControl
     {
-        public int _PersonID = -1;
+        public int? _PersonID = null;
         public string _NationalNo = "";
 
         public ctrlFilterAndMakePersonInfo()
@@ -64,7 +65,10 @@ namespace DVLDProject
         private void ctrlFilterBy1_OnFilterBtn(string arg1, string arg2)
         {
             
-            if (clsAddNewEditUserBusiness.IsFoundPerson(arg1, arg2))
+            //DataTable dataTable = clsPeople.SearchData((clsPeople.PeopleColumn)Enum.Parse(typeof(clsPeople.PeopleColumn), arg1), arg2);
+
+
+            if (clsPeople.SearchData((clsPeople.PeopleColumn)Enum.Parse(typeof(clsPeople.PeopleColumn), arg1), arg2).Rows.Count > 0)
             {
                 _NationalNo = "";
                 _PersonID = -1;
@@ -116,9 +120,5 @@ namespace DVLDProject
             ctrlFilterBy1.SelectedTextBox();
         }
 
-        private void ctrlShowPersonDetails1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

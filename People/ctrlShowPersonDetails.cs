@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
     public partial class ctrlShowPersonDetails : UserControl
     {
-        public int _PersonID = -1;
+        public int? _PersonID = null;
         public string _NationalNo = "";
 
         static private string _ImageMalePath = @"C:/Programation Level 2/DVLDProject/Project Image/homme.png";
@@ -30,36 +31,34 @@ namespace DVLDProject
 
         private void LoadAllDataByPersonID()
         {
-            if (clsAddEditPersonInfoBusiness.PersonIDIsFound(_PersonID))
+            if (clsPeople.FindByPersonID(_PersonID) != null)
             {
+                clsPeople PersonInfo = clsPeople.FindByPersonID(_PersonID);
 
-                clsAddEditPersonInfoBusiness clsA = clsAddEditPersonInfoBusiness.UploadAllDataByPersonID(_PersonID);
+                _NationalNo = PersonInfo.NationalNo; 
+                lblPersonID.Text = PersonInfo.PersonID.ToString();
+                lblName.Text = PersonInfo.FirstName.ToString() + " " + PersonInfo.SecondName.ToString()
+                    + " " + PersonInfo.ThirdName.ToString() + " " + PersonInfo.LastName.ToString();
+                lblNationalNo.Text = PersonInfo.NationalNo.ToString();
 
-                _NationalNo = clsA.NationalNo; 
-                lblPersonID.Text = clsA.PersonID.ToString();
-                lblName.Text = clsA.FirstName.ToString() + " " + clsA.SecondName.ToString()
-                    + " " + clsA.ThirdName.ToString() + " " + clsA.LastName.ToString();
-                lblNationalNo.Text = clsA.NationalNo.ToString();
-
-                if (clsA.Gendor == 0)
+                if (PersonInfo.Gendor == 0)
                     lblGendor.Text = "Male";
                 else
                     lblGendor.Text = "Female";
 
-                lblEmail.Text = clsA.Email.ToString();
-                lblAddress.Text = clsA.Address.ToString();
-                lblDateOfBirth.Text = clsA.DateOfBirth.ToString();
-                lblPhone.Text = clsA.Phone.ToString();
+                lblEmail.Text = PersonInfo.Email.ToString();
+                lblAddress.Text = PersonInfo.Address.ToString();
+                lblDateOfBirth.Text = PersonInfo.DateOfBirth.ToString();
+                lblPhone.Text = PersonInfo.Phone.ToString();
 
-                string CountryName = "";
-                CountryName = clsMethodsGeneralBusiness.NameCountryByNumber(clsA.NationalityCountryID);
-                if (CountryName != "")
-                    lblCountry.Text = CountryName;
+
+                if (PersonInfo.CountriesInfo.CountryName != "")
+                    lblCountry.Text = PersonInfo.CountriesInfo.CountryName;
                 else
                     lblCountry.Text = "None";
 
-                string ImagePath = clsA.ImagePath;
-                if (ImagePath == "" || !File.Exists(clsA.ImagePath))
+                string ImagePath = PersonInfo.ImagePath;
+                if (ImagePath == "" || !File.Exists(PersonInfo.ImagePath))
                 {
                     if (lblGendor.Text == "Male")
                         PBImage.ImageLocation = _ImageMalePath;
@@ -67,7 +66,7 @@ namespace DVLDProject
                         PBImage.ImageLocation = _ImageFemalePath;
                 }
                 else
-                    PBImage.ImageLocation = clsA.ImagePath;
+                    PBImage.ImageLocation = PersonInfo.ImagePath;
 
             }
 
@@ -75,36 +74,34 @@ namespace DVLDProject
 
         private void LoadAllDataByNationalNo()
         {
-            if (clsAddEditPersonInfoBusiness.NationalNoIsAvailable(_NationalNo))
+            if (clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, _NationalNo, clsPeople.SearchMode.ExactMatch).Rows.Count != 0)
             {
+                clsPeople PersonInfo = clsPeople.FindByNationalNo(_NationalNo);
 
-                clsAddEditPersonInfoBusiness clsA = clsAddEditPersonInfoBusiness.UploadAllDataByNationalNo(_NationalNo);
+                _NationalNo = PersonInfo.NationalNo;
+                lblPersonID.Text = PersonInfo.PersonID.ToString();
+                lblName.Text = PersonInfo.FirstName.ToString() + " " + PersonInfo.SecondName.ToString()
+                    + " " + PersonInfo.ThirdName.ToString() + " " + PersonInfo.LastName.ToString();
+                lblNationalNo.Text = PersonInfo.NationalNo.ToString();
 
-                _NationalNo = clsA.NationalNo;
-                lblPersonID.Text = clsA.PersonID.ToString();
-                lblName.Text = clsA.FirstName.ToString() + " " + clsA.SecondName.ToString()
-                    + " " + clsA.ThirdName.ToString() + " " + clsA.LastName.ToString();
-                lblNationalNo.Text = clsA.NationalNo.ToString();
-
-                if (clsA.Gendor == 0)
+                if (PersonInfo.Gendor == 0)
                     lblGendor.Text = "Male";
                 else
                     lblGendor.Text = "Female";
 
-                lblEmail.Text = clsA.Email.ToString();
-                lblAddress.Text = clsA.Address.ToString();
-                lblDateOfBirth.Text = clsA.DateOfBirth.ToString();
-                lblPhone.Text = clsA.Phone.ToString();
+                lblEmail.Text = PersonInfo.Email.ToString();
+                lblAddress.Text = PersonInfo.Address.ToString();
+                lblDateOfBirth.Text = PersonInfo.DateOfBirth.ToString();
+                lblPhone.Text = PersonInfo.Phone.ToString();
 
-                string CountryName = "";
-                CountryName = clsMethodsGeneralBusiness.NameCountryByNumber(clsA.NationalityCountryID);
-                if (CountryName != "")
-                    lblCountry.Text = CountryName;
+
+                if (PersonInfo.CountriesInfo.CountryName != "")
+                    lblCountry.Text = PersonInfo.CountriesInfo.CountryName;
                 else
                     lblCountry.Text = "None";
 
-                string ImagePath = clsA.ImagePath;
-                if (ImagePath == "" || !File.Exists(clsA.ImagePath))
+                string ImagePath = PersonInfo.ImagePath;
+                if (ImagePath == "" || !File.Exists(PersonInfo.ImagePath))
                 {
                     if (lblGendor.Text == "Male")
                         PBImage.ImageLocation = _ImageMalePath;
@@ -112,14 +109,14 @@ namespace DVLDProject
                         PBImage.ImageLocation = _ImageFemalePath;
                 }
                 else
-                    PBImage.ImageLocation = clsA.ImagePath;
+                    PBImage.ImageLocation = PersonInfo.ImagePath;
 
             }
         }
 
         public void ctrlShowPersonDetails_Load()
         {
-            if (_PersonID != -1 && _PersonID != 0)
+            if (_PersonID != -1 && _PersonID != 0 && _PersonID != null)
                 LoadAllDataByPersonID();
             else if (_NationalNo != "")
                 LoadAllDataByNationalNo();
@@ -133,7 +130,7 @@ namespace DVLDProject
 
         private void lnkLblEditPeronInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_PersonID != -1)
+            if (_PersonID != null)
             {
                 frmAddEditPersonInfo Frm = new frmAddEditPersonInfo(_PersonID);
                 Frm.ShowDialog();
@@ -151,5 +148,6 @@ namespace DVLDProject
                 LoadAllDataByNationalNo();
 
         }
+
     }
 }

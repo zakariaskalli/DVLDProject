@@ -79,7 +79,8 @@ BEGIN
     LTRIM(RTRIM(@Phone)),
     LTRIM(RTRIM(@Email)),
     LTRIM(RTRIM(@NationalityCountryID)),
-    LTRIM(RTRIM(@ImagePath)));
+    LTRIM(RTRIM(@ImagePath))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -105,7 +106,8 @@ CREATE OR ALTER PROCEDURE SP_Update_People_ByID
     @Phone nvarchar(20),
     @Email nvarchar(50) = NULL,
     @NationalityCountryID int,
-    @ImagePath nvarchar(250) = NULL
+    @ImagePath nvarchar(250) = NULL
+
 )
 AS
 BEGIN
@@ -130,7 +132,8 @@ BEGIN
     [Phone] = LTRIM(RTRIM(@Phone)),
     [Email] = LTRIM(RTRIM(@Email)),
     [NationalityCountryID] = LTRIM(RTRIM(@NationalityCountryID)),
-    [ImagePath] = LTRIM(RTRIM(@ImagePath))
+    [ImagePath] = LTRIM(RTRIM(@ImagePath))
+
         WHERE PersonID = @PersonID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated
