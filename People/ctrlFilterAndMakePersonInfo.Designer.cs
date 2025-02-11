@@ -39,7 +39,7 @@
             this.ctrlFilterBy1.Size = new System.Drawing.Size(770, 60);
             this.ctrlFilterBy1.TabIndex = 0;
             this.ctrlFilterBy1.OnFilterBtn += new System.Action<string, string>(this.ctrlFilterBy1_OnFilterBtn);
-            this.ctrlFilterBy1.OnNewPeronAdd += new System.Action<int>(this.ctrlFilterBy1_OnNewPeronAdd);
+            this.ctrlFilterBy1.OnNewPeronAdd += new System.Action<int?>(this.ctrlFilterBy1_OnNewPeronAdd);
             this.ctrlFilterBy1.Load += new System.EventHandler(this.ctrlFilterBy1_Load);
             // 
             // ctrlShowPersonDetails1

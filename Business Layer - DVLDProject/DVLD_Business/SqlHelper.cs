@@ -9,6 +9,7 @@ namespace DVLD_BusinessLayer
     {
         public static bool IsSafeInput(string data)
         {
+
             if (string.IsNullOrWhiteSpace(data))
                 return false; // Input is empty or contains only whitespace
         

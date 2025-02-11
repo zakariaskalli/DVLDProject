@@ -35,10 +35,10 @@ namespace DVLDProject
         }
 
 
-        public event Action<int> OnNewPeronAdd;
-        protected virtual void NewPeronAdd(int PersonID)
+        public event Action<int?> OnNewPeronAdd;
+        protected virtual void NewPeronAdd(int? PersonID)
         {
-            Action<int> handler = OnNewPeronAdd;
+            Action<int?> handler = OnNewPeronAdd;
 
             if (handler != null)
                 handler(PersonID);
@@ -101,9 +101,9 @@ namespace DVLDProject
             frmAddEditPersonInfo Form = new frmAddEditPersonInfo();
             Form.ShowDialog();
 
-            int PersonID = Form.GetPersonID();
+            int? PersonID = Form.GetPersonID();
 
-            if (PersonID != -1)
+            if (PersonID != null)
             {
                 if (OnNewPeronAdd != null)
                     NewPeronAdd(PersonID);

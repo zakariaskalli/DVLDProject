@@ -100,7 +100,7 @@ namespace DVLDProject
 
         }
 
-        private void ctrlFilterBy1_OnNewPeronAdd(int obj)
+        private void ctrlFilterBy1_OnNewPeronAdd(int? obj)
         {
 
             ctrlShowPersonDetails1._PersonID = obj;

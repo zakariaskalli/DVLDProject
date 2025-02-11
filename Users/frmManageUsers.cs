@@ -1,14 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DVLDProject
@@ -22,15 +18,16 @@ namespace DVLDProject
 
         private void LoadComboBoxFilterBy()
         {
+            cbSearchBy.Items.Clear();
+
             cbSearchBy.Items.Add("None");
-            cbSearchBy.Items.Add("User ID");
-            cbSearchBy.Items.Add("User Name");
-            cbSearchBy.Items.Add("Person ID");
-            cbSearchBy.Items.Add("Full Name");
-            cbSearchBy.Items.Add("Is Active");
+
+            foreach (string column in Enum.GetNames(typeof(clsUsers.UsersColumn)))
+            {
+                cbSearchBy.Items.Add(column);
+            }
 
             cbSearchBy.SelectedIndex = 0;
-
         }
 
         private void LoadComboBoxIsActive()
@@ -44,27 +41,24 @@ namespace DVLDProject
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsManageUsersBussiness.LoadData();
+            DataTable dataTable = clsUsers.GetAllUsers();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
-            dataGridView1.Columns["UserID"].Width = 130;
-            dataGridView1.Columns["PersonID"].Width = 130;
-            dataGridView1.Columns["FullName"].Width = 390;
-            dataGridView1.Columns["UserName"].Width = 130;
-            dataGridView1.Columns["IsActive"].Width = 130;
+            //dataGridView1.Columns["UserID"].Width = 130;
+            //dataGridView1.Columns["PersonID"].Width = 130;
+            //dataGridView1.Columns["FullName"].Width = 390;
+            //dataGridView1.Columns["UserName"].Width = 130;
+            //dataGridView1.Columns["IsActive"].Width = 130;
             
         }
+
         private void frmManageUsers_Load(object sender, EventArgs e)
         {
             LoadComboBoxFilterBy();
             LoadComboBoxIsActive();
 
             LoadAllDataToDGV();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
@@ -116,7 +110,7 @@ namespace DVLDProject
             cbSearchBy.SelectedIndex = 0;
             tbFilterByData.Text = "";
 
-            if (clsAddNewEditUserBusiness.UserIDIsFound(UserID))
+            if (clsUsers.FindByUserID(UserID) != null)
             {
                 frmAddNewEditUser Frm = new frmAddNewEditUser(UserID);
                 Frm.ShowDialog();
@@ -139,13 +133,16 @@ namespace DVLDProject
             cbSearchBy.SelectedIndex = 0;
             tbFilterByData.Text = "";
 
-            if (clsManageUsersBussiness.UserIDIsFound(UserID))
+            
+            //clsManageUsersBussiness.UserIDIsFound(UserID);
+
+            if (clsUsers.FindByUserID(UserID) != null)
             {
                 string TextView = $"Are you sure you want to delete User [{UserID}]";
 
                 if (MessageBox.Show(TextView, "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    if (clsManageUsersBussiness.DeleteUserByID(UserID))
+                    if (clsUsers.DeleteUsers(UserID))
                         MessageBox.Show("User Delete Successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
                         MessageBox.Show("User was not deleted because it has data linked to it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -186,41 +183,47 @@ namespace DVLDProject
 
         private void cbSearchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Hide both controls by default
+            tbFilterByData.Visible = false;
+            cbIsActive.Visible = false;
 
-            switch(cbSearchBy.Text)
+            if (cbSearchBy.Text != "None")
             {
-                case "None":
-                    tbFilterByData.Visible = false;
-                    cbIsActive.Visible = false;
-                    break;
-                case "User ID":
-                    tbFilterByData.Visible = true;
-                    cbIsActive.Visible = false;
-                    break;
-                case "User Name":
-                    tbFilterByData.Visible = true;
-                    cbIsActive.Visible = false;
-                    break;
-                case "Person ID":
-                    tbFilterByData.Visible = true;
-                    cbIsActive.Visible = false;
-                    break;
-                case "Full Name":
-                    tbFilterByData.Visible = true;
-                    cbIsActive.Visible = false;
-                    break;
-                case "Is Active":
-                    tbFilterByData.Visible = false;
-                    cbIsActive.Visible = true;
-                    cbIsActive.Location = new Point(230, cbIsActive.Location.Y);
-                    break;
-                default:
-                    break;
-            }
+                if (Enum.TryParse(cbSearchBy.Text, out clsUsers.UsersColumn selectedColumn))
+                {
+                    switch (selectedColumn)
+                    {
+                        case clsUsers.UsersColumn.UserID:
+                        case clsUsers.UsersColumn.PersonID:
+                        case clsUsers.UsersColumn.UserName:
+                        case clsUsers.UsersColumn.FullName:
+                            tbFilterByData.Visible = true;
+                            break;
 
-            
+                        case clsUsers.UsersColumn.IsActive:
+                            cbIsActive.Visible = true;
+                            cbIsActive.Location = new Point(230, cbIsActive.Location.Y);
+                            break;
+
+                        default:
+                            // Log or handle unexpected values
+                            MessageBox.Show("Unexpected search column selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                    }
+                }
+                else
+                {
+                    // Handle invalid enum values
+                    MessageBox.Show("Invalid search column selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
+
+
+
+            
+        
         private void tbFilterByData_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (cbSearchBy.Text == "Person ID" || cbSearchBy.Text == "User ID")
@@ -228,23 +231,6 @@ namespace DVLDProject
                     e.Handled = true;
         }
 
-        private string ColumnName()
-        {
-            switch (cbSearchBy.Text)
-            {
-                case "User ID":
-                    return "UserID";
-                case "User Name":
-                    return "FullName";
-                case "Person ID":
-                    return "PersonID";
-                case "Full Name":
-                    return "FullName";
-                default:
-                    return cbSearchBy.Text;
-            }
-
-        }
 
         private void tbFilterByData_TextChanged(object sender, EventArgs e)
         {
@@ -254,8 +240,7 @@ namespace DVLDProject
                 return;
             }
 
-
-            DataTable dataTable = clsManageUsersBussiness.SearchInTable(ColumnName(), tbFilterByData.Text);
+            DataTable dataTable = clsUsers.SearchData((clsUsers.UsersColumn)Enum.Parse(typeof(clsUsers.UsersColumn), cbSearchBy.Text), tbFilterByData.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }
@@ -277,7 +262,7 @@ namespace DVLDProject
                 YesNo = 1;
 
 
-            DataTable dataTable = clsManageUsersBussiness.SearchDataIsActive(YesNo);
+            DataTable dataTable = clsUsers.SearchData(clsUsers.UsersColumn.IsActive, YesNo.ToString());
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }

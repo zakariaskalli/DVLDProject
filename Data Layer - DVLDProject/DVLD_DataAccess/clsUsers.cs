@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using DVLD_DataAccess;
 using Newtonsoft.Json;
+using ConnectionToSQL;
 
 namespace DVLD_DataLayer
 {
@@ -13,50 +14,53 @@ namespace DVLD_DataLayer
     {
         //#nullable enable
 
-        public static bool GetUsersInfoByID(int? UserID , ref int? PersonID, ref string UserName, ref string Password, ref bool? IsActive)
-{
-    bool isFound = false;
-
-    try
-    {
-        using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+        public static bool GetUsersInfoByID(int UserID, ref int PersonID, ref string UserName, ref string FullName, ref bool IsActive)
         {
-            string query = "SP_Get_Users_ByID";
+            bool isFound = false;
 
-            using (SqlCommand command = new SqlCommand(query, connection))
+            try
             {
-                command.CommandType = CommandType.StoredProcedure;
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SP_Get_Users_ByID";
 
-                // Ensure correct parameter assignment
-                command.Parameters.AddWithValue("@UserID", UserID ?? (object)DBNull.Value);
-
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                { 
-                    if (reader.Read())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        // The record was found
-                        isFound = true;
+                        command.CommandType = CommandType.StoredProcedure;
 
-                                PersonID = (int)reader["PersonID"];
-                                UserName = (string)reader["UserName"];
-                                Password = (string)reader["Password"];
-                                IsActive = (bool)reader["IsActive"];
+                        // Ensure correct parameter assignment
+                        command.Parameters.AddWithValue("@UserID", UserID);
 
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // The record was found
+                                isFound = true;
+
+                                PersonID = reader["PersonID"] != DBNull.Value ? (int)reader["PersonID"] : 0; 
+
+                                UserName = reader["UserName"] != DBNull.Value ? (string)reader["UserName"] : string.Empty; 
+
+                                FullName = reader["FullName"] != DBNull.Value ? (string)reader["FullName"] : string.Empty; 
+
+                                IsActive = reader["IsActive"] != DBNull.Value ? (bool)reader["IsActive"] : false; 
+                            }
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle all exceptions in a general way
+                ErrorHandler.HandleException(ex, nameof(GetUsersInfoByID), $"Parameter: UserID = {UserID}");
+                throw; // Rethrow the exception to propagate it up the call stack
+            }
+
+            return isFound;
         }
-    }
-    catch (Exception ex)
-    {
-        // Handle all exceptions in a general way
-        ErrorHandler.HandleException(ex, nameof(GetUsersInfoByID), $"Parameter: UserID = " + UserID);
-    }
-
-    return isFound;
-}
-
+        
         public static DataTable GetAllUsers()
 {
     DataTable dt = new DataTable();
@@ -139,7 +143,7 @@ namespace DVLD_DataLayer
         return UserID;
     }
 
-        public static bool UpdateUsersByID(int? UserID, int? PersonID, string UserName, string Password, bool? IsActive)
+        public static bool UpdateUsersByID(int? UserID, int PersonID, string UserName, string Password, bool IsActive)
 {
     int rowsAffected = 0;
 
@@ -247,5 +251,122 @@ namespace DVLD_DataLayer
 
     return dt;
 }
+
+        public static bool ValidateUser(string UserName, string Password)
+        {
+            bool IsValid = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    // Prepare parameters for the stored procedure
+                    SqlCommand command = new SqlCommand("SP_ValidateUser", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@Password", Password);
+
+                    // Output parameter for validation result
+                    SqlParameter outputIsValid = new SqlParameter("@IsValid", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(outputIsValid);
+
+                    connection.Open();
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    if (outputIsValid.Value != DBNull.Value)
+                    {
+                        IsValid = (bool)outputIsValid.Value;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., log the error)
+                ErrorHandler.HandleException(ex, nameof(ValidateUser), $"Parameter: UserName = {UserName}");
+            }
+
+            return IsValid;
+        }
+
+        static public bool IsAccountActive(string UserName)
+        {
+            bool IsActive = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+            {
+                string query = "SP_IsAccountActive"; // Use the stored procedure
+
+                using (SqlCommand Command = new SqlCommand(query, connection))
+                {
+                    Command.CommandType = CommandType.StoredProcedure; // Specify it's a stored procedure
+                    Command.Parameters.AddWithValue("@UserName", UserName);
+
+                    SqlParameter outputParam = new SqlParameter("@IsActive", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    Command.Parameters.Add(outputParam);
+
+                    try
+                    {
+                        connection.Open();
+                        Command.ExecuteNonQuery();
+
+                        // Retrieve the value from the output parameter
+                        IsActive = outputParam.Value != DBNull.Value && (bool)outputParam.Value;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception here if needed
+                        ErrorHandler.HandleException(ex, nameof(IsAccountActive), $"Parameter: UserName = {UserName}");
+                    }
+                }
+            }
+
+            return IsActive;
+        }
+
+        public static bool IsFoundUserByNationalNo(string NationalNo)
+        {
+            bool IsFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    // Define the stored procedure name
+                    string query = "SP_IsFoundUserByNationalNo";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add the parameter for the NationalNo
+                        command.Parameters.AddWithValue("@NationalNo", NationalNo);
+
+                        connection.Open();
+
+                        // Execute the query and check if any result is returned
+                        object result = command.ExecuteScalar();
+                        IsFound = result != null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception and log it
+                ErrorHandler.HandleException(ex, nameof(IsFoundUserByNationalNo), $"Parameter: NationalNo = {NationalNo}");
+            }
+
+            return IsFound;
+        }
+
     }
 }

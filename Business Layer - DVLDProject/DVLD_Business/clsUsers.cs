@@ -1,6 +1,7 @@
 
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using DVLD_DataLayer;
 
 namespace DVLD_BusinessLayer
@@ -9,15 +10,12 @@ namespace DVLD_BusinessLayer
     {
         //#nullable enable
 
-        public enum enMode { AddNew = 0, Update = 1 };
-        public enMode Mode = enMode.AddNew;
-
         public int? UserID { get; set; }
-        public int? PersonID { get; set; }
+        public int PersonID { get; set; }
         public clsPeople PeopleInfo { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool? IsActive { get; set; }
+        public string FullName { get; set; }
+        public bool IsActive { get; set; }
 
 
         public clsUsers()
@@ -25,89 +23,40 @@ namespace DVLD_BusinessLayer
             this.UserID = null;
             this.PersonID = 0;
             this.UserName = "";
-            this.Password = "";
+            this.FullName = "";
             this.IsActive = false;
-            Mode = enMode.AddNew;
         }
 
 
         private clsUsers(
-int? UserID, int? PersonID, string UserName, string Password, bool? IsActive)        {
+int? UserID, int PersonID, string UserName, string FullName, bool IsActive)        {
             this.UserID = UserID;
             this.PersonID = PersonID;
             this.PeopleInfo = clsPeople.FindByPersonID(PersonID);
             this.UserName = UserName;
-            this.Password = Password;
+            this.FullName = FullName;
             this.IsActive = IsActive;
-            Mode = enMode.Update;
         }
 
+        /*
+        
+        public enum enMode { AddNew = 0, Update = 1 };
+        public enMode Mode = enMode.AddNew;
 
        private bool _AddNewUsers()
        {
         this.UserID = clsUsersData.AddNewUsers(
-this.PersonID, this.UserName, this.Password, this.IsActive);
+this.PersonID, this.UserName, this.FullName, this.IsActive);
         return (this.UserID != null);
        }
-
-
-       public static bool AddNewUsers(
-ref int? UserID, int? PersonID, string UserName, string Password, bool? IsActive)        {
-        UserID = clsUsersData.AddNewUsers(
-PersonID, UserName, Password, IsActive);
-
-        return (UserID != null);
-
-       }
-
 
        private bool _UpdateUsers()
        {
         return clsUsersData.UpdateUsersByID(
-this.UserID, this.PersonID, this.UserName, this.Password, this.IsActive);
+this.UserID, this.PersonID, this.UserName, this.FullName, this.IsActive);
        }
 
-
-       public static bool UpdateUsersByID(
-int? UserID, int? PersonID, string UserName, string Password, bool? IsActive)        {
-        return clsUsersData.UpdateUsersByID(
-UserID, PersonID, UserName, Password, IsActive);
-
-        }
-
-
-       public static clsUsers FindByUserID(int? UserID)
-
-        {
-            if (UserID == null)
-            {
-                return null;
-            }
-            int? PersonID = 0;
-            string UserName = "";
-            string Password = "";
-            bool? IsActive = false;
-            bool IsFound = clsUsersData.GetUsersInfoByID(UserID,
- ref PersonID,  ref UserName,  ref Password,  ref IsActive);
-
-           if (IsFound)
-               return new clsUsers(
-UserID, PersonID, UserName, Password, IsActive);
-            else
-                return null;
-            }
-
-
-       public static DataTable GetAllUsers()
-       {
-
-        return clsUsersData.GetAllUsers();
-
-       }
-
-
-
-        public bool Save()
+                public bool Save()
         {
             switch (Mode)
             {
@@ -130,6 +79,151 @@ UserID, PersonID, UserName, Password, IsActive);
         }
 
 
+        */
+
+        public static string AddNewUsers(ref int? UserID, int PersonID, string UserName, string Password, bool IsActive)
+        {
+            // Validate input data and return an error message instead of throwing an exception
+            if (PersonID <= 0)
+            {
+                return "Error: PersonID must be greater than 0.";
+            }
+
+            if (string.IsNullOrWhiteSpace(UserName))
+            {
+                return "Error: Username cannot be empty.";
+            }
+
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                return "Error: Password cannot be empty.";
+            }
+
+            try
+            {
+                // Check if the username already exists to prevent duplication
+                if (SearchData(clsUsers.UsersColumn.UserName, UserName, SearchMode.ExactMatch).Rows.Count > 0)
+                {
+                    return "Error: The username already exists. Please choose a different one.";
+                }
+
+                if (SearchData(clsUsers.UsersColumn.PersonID, PersonID.ToString(), SearchMode.ExactMatch).Rows.Count > 0)
+                {
+                    return "Error: The PersonID already User. Please choose a different one.";
+                }
+
+                // Attempt to add the user
+                UserID = clsUsersData.AddNewUsers(PersonID, UserName, Password, IsActive);
+
+                // Validate the result
+                if (UserID == null)
+                {
+                    return "Error: Failed to add the user.";
+                }
+
+                return "User added successfully.";
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle database-specific errors
+                ErrorHandler.HandleException(sqlEx, nameof(AddNewUsers), $"Parameters: PersonID={PersonID}, UserName={UserName}");
+                return "Database error: Unable to add the user.";
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected errors
+                ErrorHandler.HandleException(ex, nameof(AddNewUsers), $"Parameters: PersonID={PersonID}, UserName={UserName}");
+                return "An unexpected error occurred while trying to add the user.";
+            }
+        }
+
+
+
+        public static string UpdateUsersByID(int UserID, int PersonID, string UserName, string Password, bool IsActive)
+        {
+            // Validate input data and return an error message instead of throwing an exception
+            if (UserID <= 0)
+            {
+                return "Error: UserID must be a valid number greater than 0.";
+            }
+
+            if (PersonID <= 0)
+            {
+                return "Error: PersonID must be a valid number greater than 0.";
+            }
+
+            if (string.IsNullOrWhiteSpace(UserName))
+            {
+                return "Error: Username cannot be empty.";
+            }
+
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                return "Error: Password cannot be empty.";
+            }
+
+            try
+            {
+                // Check if the user exists before attempting an update
+                if (!(SearchData(clsUsers.UsersColumn.UserID, UserID.ToString(), SearchMode.ExactMatch).Rows.Count > 0))
+                {
+                    return "Error: No user found with the provided UserID.";
+                }
+
+                // Check if the new username is already taken by another user
+                if (!(SearchData(clsUsers.UsersColumn.UserName, UserName, SearchMode.ExactMatch).Rows.Count > 0))
+                {
+                    return "Error: The username is already in use by another user.";
+                }
+
+                // Attempt to update the user
+                bool isUpdated = clsUsersData.UpdateUsersByID(UserID, PersonID, UserName, Password, IsActive);
+
+                return isUpdated ? "User updated successfully." : "Error: Failed to update the user.";
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle database-specific errors
+                ErrorHandler.HandleException(sqlEx, nameof(UpdateUsersByID), $"Parameters: UserID={UserID}, PersonID={PersonID}, UserName={UserName}");
+                return "Database error: Unable to update the user.";
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected errors
+                ErrorHandler.HandleException(ex, nameof(UpdateUsersByID), $"Parameters: UserID={UserID}, PersonID={PersonID}, UserName={UserName}");
+                return "An unexpected error occurred while trying to update the user.";
+            }
+        }
+
+
+        public static clsUsers FindByUserID(int? UserID)
+        {
+            if (UserID == null)
+            {
+                return null;
+            }
+
+            int PersonID = 0;
+            string UserName = "";
+            string FullName = "";
+            bool IsActive = false;
+            bool IsFound = clsUsersData.GetUsersInfoByID((int)UserID,
+ ref PersonID,  ref UserName,  ref FullName,  ref IsActive);
+
+           if (IsFound)
+               return new clsUsers(
+UserID, PersonID, UserName, FullName, IsActive);
+            else
+                return null;
+       }
+
+
+       public static DataTable GetAllUsers()
+       {
+
+        return clsUsersData.GetAllUsers();
+
+       }
 
        public static bool DeleteUsers(int UserID)
        {
@@ -143,8 +237,8 @@ UserID, PersonID, UserName, Password, IsActive);
          {
             UserID,
             PersonID,
+            FullName,
             UserName,
-            Password,
             IsActive
          }
 
@@ -166,9 +260,72 @@ UserID, PersonID, UserName, Password, IsActive);
             string modeValue = Mode.ToString(); // Get the mode as string for passing to the stored procedure
 
             return clsUsersData.SearchData(ChosenColumn.ToString(), SearchValue, modeValue);
-        }        
+        }
+
+        public static string ValidateUser(string UserName, string Password,ref bool IsValid )
+        {
+            try
+            {
+                IsValid = false;
+                // Basic validations for empty or invalid input
+                if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+                {
+                    return "Please enter a valid username and password.";
+                }
+
+                // Check for invalid characters using a helper method (assuming SqlHelper checks for SQL injection)
+                if (!SqlHelper.IsSafeInput(UserName) || !SqlHelper.IsSafeInput(Password))
+                {
+                    return "Invalid characters in username or password.";
+                }
+
+                // Check if the username and password length are within the valid range
+                if (UserName.Length > 20 || Password.Length > 50)
+                {
+                    return "Username and password must be less than 50 characters.";
+                }
+
+                IsValid = clsUsersData.ValidateUser(UserName, Password);
+
+                return IsValid != false ? "" : "This UserName/Password Is NotFound";
+
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected exceptions and pass them to the error handler
+                ErrorHandler.HandleException(ex, nameof(ValidateUser), $"Parameter: UserName = {UserName}, Password = {Password.Substring(0, 1)}****");  // Mask password for security
+                return "An error occurred while validating the user. Please try again.";
+            }
+        }
+
+        public static bool IsAccountActive(string UserName)
+        {
+            if (string.IsNullOrWhiteSpace(UserName))
+            {
+                return false;
+            }
+
+            bool isActive = clsUsersData.IsAccountActive(UserName); 
+
+            return isActive;
+        }
+
+        public static bool IsFoundUserByNationalNo(string NationalNo)
+        {
+            // Basic validation to check if the NationalNo is provided and is not empty
+            if (string.IsNullOrWhiteSpace(NationalNo))
+            {
+                return false;
+            }
 
 
+            // Call the Data Access Layer method to check if the user exists by NationalNo
+            bool isFound = clsUsersData.IsFoundUserByNationalNo(NationalNo);
+
+            // If user found or not, return the result
+            return isFound;
+
+        }
 
     }
 }

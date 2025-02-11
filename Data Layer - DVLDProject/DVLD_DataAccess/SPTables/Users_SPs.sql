@@ -1,3 +1,4 @@
+
 -- Stored Procedures for Table: Users
 
 Use [DVLD];
@@ -13,7 +14,7 @@ BEGIN
     BEGIN TRY
         -- Attempt to retrieve data
         SELECT *
-        FROM Users
+        FROM Users_View
         WHERE UserID = @UserID;
     END TRY
     BEGIN CATCH
@@ -29,7 +30,7 @@ BEGIN
     BEGIN TRY
         -- Attempt to retrieve all data from the table
         SELECT *
-        FROM Users;
+        FROM Users_View;
     END TRY
     BEGIN CATCH
         -- Call the centralized error handling procedure
@@ -38,35 +39,35 @@ BEGIN
 END;
 GO
 
-
 CREATE OR ALTER PROCEDURE SP_Add_Users
 (
-    @PersonID int,
-    @UserName nvarchar(20),
-    @Password nvarchar(255),
-    @IsActive bit,
+    @PersonID INT,
+    @UserName NVARCHAR(20),
+    @Password NVARCHAR(255),
+    @IsActive BIT,
     @NewID INT OUTPUT
-
 )
 AS
 BEGIN
     BEGIN TRY
-        -- Check if any required parameters are NULL
-        IF LTRIM(RTRIM(@PersonID)) IS NULL OR LTRIM(RTRIM(@UserName)) IS NULL OR LTRIM(RTRIM(@Password)) IS NULL OR LTRIM(RTRIM(@IsActive)) IS NULL
+        -- Validate required parameters
+        IF @PersonID IS NULL OR LTRIM(RTRIM(@UserName)) = '' OR LTRIM(RTRIM(@Password)) = '' OR @IsActive IS NULL
         BEGIN
-            RAISERROR('One or more required parameters are NULL or have only whitespace.', 16, 1);
+            RAISERROR('One or more required parameters are NULL or empty.', 16, 1);
             RETURN;
         END
 
-        -- Insert the data into the table
-        INSERT INTO Users ([PersonID],[UserName],[Password],[IsActive])
-        VALUES (    LTRIM(RTRIM(@PersonID)),
-    LTRIM(RTRIM(@UserName)),
-    LTRIM(RTRIM(@Password)),
-    LTRIM(RTRIM(@IsActive)));
+        -- Generate a new Salt
+        DECLARE @Salt UNIQUEIDENTIFIER = NEWID();
+        -- Hash the password using the salt
+        DECLARE @PasswordHash VARBINARY(64) = dbo.HashPassword(@Password, @Salt);
 
-        -- Set the new ID
-        SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
+        -- Insert into Users table
+        INSERT INTO Users ([PersonID], [UserName], [IsActive], [PasswordHash], [Salt])
+        VALUES (@PersonID, @UserName, @IsActive, @PasswordHash, @Salt);
+
+        -- Get the newly inserted UserID
+        SET @NewID = SCOPE_IDENTITY();
     END TRY
     BEGIN CATCH
         EXEC SP_HandleError; -- Error handling
@@ -77,34 +78,51 @@ GO
 
 CREATE OR ALTER PROCEDURE SP_Update_Users_ByID
 (
-    @UserID int,
-    @PersonID int,
-    @UserName nvarchar(20),
-    @Password nvarchar(255),
-    @IsActive bit
+    @UserID INT,
+    @PersonID INT,
+    @UserName NVARCHAR(20),
+    @Password NVARCHAR(255) = NULL,  -- Optional password update
+    @IsActive BIT
 )
 AS
 BEGIN
     BEGIN TRY
-        -- Check if required parameters are NULL or contain only whitespace after trimming
-        IF LTRIM(RTRIM(@PersonID)) IS NULL OR LTRIM(RTRIM(@PersonID)) = '' OR LTRIM(RTRIM(@UserName)) IS NULL OR LTRIM(RTRIM(@UserName)) = '' OR LTRIM(RTRIM(@Password)) IS NULL OR LTRIM(RTRIM(@Password)) = '' OR LTRIM(RTRIM(@IsActive)) IS NULL OR LTRIM(RTRIM(@IsActive)) = ''
+        -- Validate required parameters
+        IF @UserID IS NULL OR @PersonID IS NULL OR LTRIM(RTRIM(@UserName)) = '' OR @IsActive IS NULL
         BEGIN
-            RAISERROR('One or more required parameters are NULL or have only whitespace.', 16, 1);
+            RAISERROR('One or more required parameters are NULL or empty.', 16, 1);
             RETURN;
         END
 
-        -- Update the record in the table
+        -- Declare variables for Salt & PasswordHash
+        DECLARE @Salt UNIQUEIDENTIFIER;
+        DECLARE @PasswordHash VARBINARY(64);
+
+        -- Check if a new password is provided
+        IF @Password IS NOT NULL AND LTRIM(RTRIM(@Password)) <> ''
+        BEGIN
+            SET @Salt = NEWID();  -- Generate new Salt
+            SET @PasswordHash = dbo.HashPassword(@Password, @Salt);
+        END
+        ELSE
+        BEGIN
+            -- Keep existing Salt and PasswordHash
+            SELECT @Salt = Salt, @PasswordHash = PasswordHash FROM Users WHERE UserID = @UserID;
+        END
+
+        -- Update the user record
         UPDATE Users
-        SET     [PersonID] = LTRIM(RTRIM(@PersonID)),
-    [UserName] = LTRIM(RTRIM(@UserName)),
-    [Password] = LTRIM(RTRIM(@Password)),
-    [IsActive] = LTRIM(RTRIM(@IsActive))
+        SET PersonID = @PersonID,
+            UserName = @UserName,
+            IsActive = @IsActive,
+            PasswordHash = @PasswordHash,
+            Salt = @Salt
         WHERE UserID = @UserID;
-        
-        -- Optionally, you can check if the update was successful and raise an error if no rows were updated
+
+        -- Check if the update was successful
         IF @@ROWCOUNT = 0
         BEGIN
-            RAISERROR('No rows were updated. Please check the PersonID or other parameters.', 16, 1);
+            RAISERROR('No rows were updated. Please check the UserID or other parameters.', 16, 1);
             RETURN;
         END
     END TRY
@@ -147,7 +165,6 @@ BEGIN
 END;
 GO
 
-
 CREATE OR ALTER PROCEDURE SP_Search_Users_ByColumn
 (
     @ColumnName NVARCHAR(128),  -- Column name without spaces
@@ -161,14 +178,14 @@ BEGIN
         DECLARE @SQL NVARCHAR(MAX);
         DECLARE @SearchPattern NVARCHAR(255);
 
-        -- Map input column name to actual database column name
+        -- Map input column name to actual column name in Users_View
         SET @ActualColumn = 
             CASE @ColumnName
                 WHEN 'UserID' THEN 'UserID'
-        WHEN 'PersonID' THEN 'PersonID'
-        WHEN 'UserName' THEN 'UserName'
-        WHEN 'Password' THEN 'Password'
-        WHEN 'IsActive' THEN 'IsActive'
+                WHEN 'PersonID' THEN 'PersonID'
+                WHEN 'UserName' THEN 'UserName'
+                WHEN 'IsActive' THEN 'IsActive'
+                WHEN 'FullName' THEN 'FullName'
                 ELSE NULL
             END;
 
@@ -196,8 +213,8 @@ BEGIN
                 ELSE '%' + LTRIM(RTRIM(@SearchValue)) + '%'
             END;
 
-        -- Build the dynamic SQL query safely
-        SET @SQL = N'SELECT * FROM ' + QUOTENAME('Users') + 
+        -- Build the dynamic SQL query safely to search in Users_View
+        SET @SQL = N'SELECT * FROM ' + QUOTENAME('Users_View') + 
                    N' WHERE ' + QUOTENAME(@ActualColumn) + N' LIKE @SearchPattern OPTION (RECOMPILE)';
 
         -- Execute the dynamic SQL with parameterized search pattern
@@ -205,6 +222,26 @@ BEGIN
     END TRY
     BEGIN CATCH
         -- Handle errors
+        EXEC SP_HandleError;
+    END CATCH
+END;
+GO
+
+
+
+CREATE OR ALTER PROCEDURE SP_IsFoundUserByNationalNo
+    @NationalNo VARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        -- Attempt to check if the user exists by NationalNo
+        SELECT 1 
+        FROM Users 
+        INNER JOIN People ON Users.PersonID = People.PersonID
+        WHERE People.NationalNo = @NationalNo;
+    END TRY
+    BEGIN CATCH
+        -- Call the centralized error handling procedure
         EXEC SP_HandleError;
     END CATCH
 END;

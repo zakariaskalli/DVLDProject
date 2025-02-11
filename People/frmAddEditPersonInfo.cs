@@ -35,9 +35,9 @@ namespace DVLDProject
             lblPersonID.Text = _PersonID.ToString();
         }
 
-        public int GetPersonID()
+        public int? GetPersonID()
         {
-            return (int)ctrlAddEditPersonInfo1.PersonInfo.PersonID;
+            return (int?)ctrlAddEditPersonInfo1.PersonInfo.PersonID;
         }
 
         public frmAddEditPersonInfo(int? PersonID)

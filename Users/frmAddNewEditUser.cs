@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,8 @@ namespace DVLDProject
 
         bool _Next = false;
 
+        clsUsers UserInfo;
+
         clsAddNewEditUserBusiness _ClsAdd;
 
 
@@ -32,6 +35,8 @@ namespace DVLDProject
         public frmAddNewEditUser()
         {
             InitializeComponent();
+
+
 
             _Mode = enMode.AddNew;
         }
@@ -115,11 +120,13 @@ namespace DVLDProject
 
             if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
             {
+                // ctrlFilterAndMakePersonInfo1.GetFilterByName() Is the Name For Column
 
-                if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), ctrlFilterAndMakePersonInfo1._NationalNo))
+
+                if ( clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, ctrlFilterAndMakePersonInfo1._NationalNo, clsPeople.SearchMode.ExactMatch).Rows.Count != 0)
                 {
 
-                    if (!clsMethodsGeneralBusiness.IsFoundUserByNationalNo(ctrlFilterAndMakePersonInfo1._NationalNo))
+                    if (!clsUsers.IsFoundUserByNationalNo(ctrlFilterAndMakePersonInfo1._NationalNo))
                     {
                         tabControl1.SelectedTab = tabPage2;
                     }
@@ -136,10 +143,10 @@ namespace DVLDProject
             }
             else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
             {
-                if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), Convert.ToString(ctrlFilterAndMakePersonInfo1._PersonID)))
+                if (clsPeople.SearchData(clsPeople.PeopleColumn.PersonID, ctrlFilterAndMakePersonInfo1._PersonID?.ToString(), clsPeople.SearchMode.ExactMatch).Rows.Count != 0)
                 {
 
-                    if (!clsMethodsGeneralBusiness.IsFoundUserByPersonID((int)ctrlFilterAndMakePersonInfo1._PersonID))
+                    if ( clsUsers.SearchData(clsUsers.UsersColumn.PersonID, ctrlFilterAndMakePersonInfo1._PersonID?.ToString(), clsUsers.SearchMode.ExactMatch).Rows.Count == 0)
                     {
                         tabControl1.SelectedTab = tabPage2;
                     }
@@ -333,7 +340,7 @@ namespace DVLDProject
 
         }
 
-        private void UploadAllData(clsAddNewEditUserBusiness Data)
+        private void UploadAllData(clsUsers UserInfo)
         {
 
 
@@ -343,16 +350,16 @@ namespace DVLDProject
 
 
 
-            ctrlFilterAndMakePersonInfo1._PersonID = Data.PersonID;
+            ctrlFilterAndMakePersonInfo1._PersonID = UserInfo.PersonID;
 
             ctrlFilterAndMakePersonInfo1.ctrlShowPersonDetails_Load();
 
             ctrlFilterAndMakePersonInfo1.SelectCombobox(1);
-            ctrlFilterAndMakePersonInfo1.textBoxData(Data.PersonID.ToString());
+            ctrlFilterAndMakePersonInfo1.textBoxData(UserInfo.PersonID.ToString());
             ctrlFilterAndMakePersonInfo1.DisabledFilterBy();
 
-            lblUserID.Text = Data.UserID.ToString();
-            tbUserName.Text = Data.UserName;
+            lblUserID.Text = UserInfo.UserID.ToString();
+            tbUserName.Text = UserInfo.UserName;
             
             //tbPassword.Text = Data.Password;
             //tbConfirmPassword.Text = Data.Password;
@@ -370,8 +377,9 @@ namespace DVLDProject
             {
                 _Mode = enMode.Update;
 
-                clsAddNewEditUserBusiness Data = clsAddNewEditUserBusiness.UploadAllDataUserByUserID(_UserID);
-                UploadAllData(Data);
+                clsUsers UserInfo = clsUsers.FindByUserID(_UserID);
+
+                UploadAllData(UserInfo);
 
             }
         }
@@ -380,9 +388,9 @@ namespace DVLDProject
         {
             if (_UserID != -1 || _UserID == 0)
             {
+                clsUsers UserInfo = clsUsers.FindByUserID(_UserID);
 
-                clsAddNewEditUserBusiness Data = clsAddNewEditUserBusiness.UploadAllDataUserByUserID(_UserID);
-                UploadAllData(Data);
+                UploadAllData(UserInfo);
 
             }
         }

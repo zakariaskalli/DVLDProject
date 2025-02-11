@@ -79,7 +79,6 @@
     <Compile Include="Drivers\clsFilterDriverInfoData.cs" />
     <Compile Include="License\clsIssueDriverLicenseData.cs" />
     <Compile Include="Applications\Local License\clsLicenseInfoData.cs" />
-    <Compile Include="Login\clsLoginScreenData.cs" />
     <Compile Include="Applications\clsManageAppliactionTypesData.cs" />
     <Compile Include="Drivers\clsManageDriversData.cs" />
     <Compile Include="Tests\clsManageTestTypesData.cs" />

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Business_Layer___DVLDProject;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using DVLD_BusinessLayer;
+using System.Web;
+
 
 namespace DVLDProject
 {
@@ -38,14 +41,18 @@ namespace DVLDProject
             string UserName = tbUserName.Text;
             string Password = tbPassword.Text;
 
-            if (clsLoginScreenBusiness.IsUserNameAndPasswordExciting(UserName, Password))
+            bool IsValid = false;
+
+            string Message = clsUsers.ValidateUser(UserName, Password,ref IsValid);
+
+            if (IsValid)
             {
-                if (clsLoginScreenBusiness.IsAccountActive(UserName))
+
+                if (clsUsers.IsAccountActive(UserName))
                 {
                     DataBack?.Invoke(UserName, Password);
 
-                    clsLoginScreenBusiness.RememberMe(chbRememberMe.Checked, UserName, Password);
-
+                    clsRegistryUtility.RememberMe(chbRememberMe.Checked, UserName, Password);
 
 
                     this.Close();
@@ -54,7 +61,7 @@ namespace DVLDProject
                     MessageBox.Show("This Account Is Not Active, Contact Your Admin", "Message", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
             else
-                MessageBox.Show("Invalid UserName/Password.", "Wrong Cardinality", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Message, "Wrong Cardinality", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 
@@ -83,7 +90,7 @@ namespace DVLDProject
             this.Cursor = Cursors.Arrow;
 
 
-            if (clsLoginScreenBusiness.LoadUserNameAndPasswordRememberMe(ref _UserName, ref _Password))
+            if (clsRegistryUtility.LoadUserNameAndPasswordRememberMe(ref _UserName, ref _Password))
             {
                 tbUserName.Text = tbUserName.Text.Trim();
                 tbUserName.Text = _UserName;
