@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,14 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace DVLDProject
 {
     public partial class frmUserInfo : Form
     {
 
-        int _PersonID = -1;
-        int _UserID = -1;
+        int? _PersonID = null;
+        int? _UserID = null;
 
         
 
@@ -23,13 +25,10 @@ namespace DVLDProject
         {
             InitializeComponent();
 
-            clsManageUsersBussiness clsData = new clsManageUsersBussiness(UserName);
-
-
-            clsData = clsManageUsersBussiness.UploadAllDataByUserName(UserName);
+            clsUsers UserInfo = clsUsers.FindByUserName(UserName);
             
-            _PersonID = clsData.PersonID;
-            _UserID = clsData.UserID;
+            _PersonID = UserInfo.PersonID;
+            _UserID = UserInfo.UserID;
 
             ctrlShowPersonDetails1._PersonID = _PersonID;
             ctrlLoginInformation1._UserID = _UserID;
@@ -38,17 +37,14 @@ namespace DVLDProject
         }
         //UserIDIsFound
 
-        public frmUserInfo(int UserID)
+        public frmUserInfo(int? UserID)
         {
             InitializeComponent();
 
-            clsManageUsersBussiness clsData = new clsManageUsersBussiness(UserID);
+            clsUsers UserInfo = clsUsers.FindByUserID(UserID);
 
-
-            clsData = clsManageUsersBussiness.UploadAllDataByUserID(UserID);
-
-            _PersonID = clsData.PersonID;
-            _UserID = clsData.UserID;
+            _PersonID = UserInfo.PersonID;
+            _UserID = UserInfo.UserID;
 
             ctrlShowPersonDetails1._PersonID = _PersonID;
             ctrlLoginInformation1._UserID = _UserID;
@@ -56,11 +52,5 @@ namespace DVLDProject
             ctrlShowPersonDetails1.ctrlShowPersonDetails_Load();
         }
 
-        private void frmUserInfo_Load(object sender, EventArgs e)
-        {
-            //ctrlShowPersonDetails1._PersonID = _PersonID;
-            //ctrlLoginInformation1._UserID = _UserID;
-        
-        }
     }
 }

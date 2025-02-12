@@ -80,7 +80,7 @@ namespace DVLDProject
 
         private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int UserID = (int)dataGridView1.CurrentRow.Cells[0].Value;
+            int? UserID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
             cbSearchBy.SelectedIndex = 0;
             tbFilterByData.Text = "";

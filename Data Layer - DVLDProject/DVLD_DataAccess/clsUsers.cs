@@ -60,7 +60,51 @@ namespace DVLD_DataLayer
 
             return isFound;
         }
-        
+
+        public static bool GetUsersInfoByUserName(string UserName, ref int UserID, ref int PersonID, ref string FullName, ref bool IsActive)
+        {
+            bool isFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SP_Get_Users_ByUserName";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Ensure correct parameter assignment
+                        command.Parameters.AddWithValue("@UserName", UserName);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // The record was found
+                                isFound = true;
+
+                                UserID = reader["UserID"] != DBNull.Value ? (int)reader["UserID"] : 0; // Retrieve UserID
+                                PersonID = reader["PersonID"] != DBNull.Value ? (int)reader["PersonID"] : 0;
+                                FullName = reader["FullName"] != DBNull.Value ? (string)reader["FullName"] : string.Empty;
+                                IsActive = reader["IsActive"] != DBNull.Value ? (bool)reader["IsActive"] : false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle all exceptions in a general way
+                ErrorHandler.HandleException(ex, nameof(GetUsersInfoByUserName), $"Parameter: UserName = {UserName}");
+                throw; // Rethrow the exception to propagate it up the call stack
+            }
+
+            return isFound;
+        }
+
         public static DataTable GetAllUsers()
 {
     DataTable dt = new DataTable();

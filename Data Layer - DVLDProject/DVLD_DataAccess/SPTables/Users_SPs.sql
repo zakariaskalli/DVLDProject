@@ -24,6 +24,27 @@ BEGIN
 END;
 GO
 
+CREATE OR ALTER PROCEDURE SP_Get_Users_ByUserName
+(
+    @UserName nvarchar(20)
+)
+AS
+BEGIN
+    BEGIN TRY
+        -- Attempt to retrieve data
+        SELECT *
+        FROM Users_View
+        WHERE UserName = @UserName;
+    END TRY
+    BEGIN CATCH
+        -- Call the centralized error handling procedure
+        EXEC SP_HandleError;
+    END CATCH
+END;
+GO
+
+
+
 CREATE OR ALTER PROCEDURE SP_Get_All_Users
 AS
 BEGIN

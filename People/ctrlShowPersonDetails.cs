@@ -37,8 +37,9 @@ namespace DVLDProject
 
                 _NationalNo = PersonInfo.NationalNo; 
                 lblPersonID.Text = PersonInfo.PersonID.ToString();
-                lblName.Text = PersonInfo.FirstName.ToString() + " " + PersonInfo.SecondName.ToString()
-                    + " " + PersonInfo.ThirdName.ToString() + " " + PersonInfo.LastName.ToString();
+
+                lblName.Text = PersonInfo.FullName;
+                
                 lblNationalNo.Text = PersonInfo.NationalNo.ToString();
 
                 if (PersonInfo.Gendor == 0)
@@ -80,8 +81,7 @@ namespace DVLDProject
 
                 _NationalNo = PersonInfo.NationalNo;
                 lblPersonID.Text = PersonInfo.PersonID.ToString();
-                lblName.Text = PersonInfo.FirstName.ToString() + " " + PersonInfo.SecondName.ToString()
-                    + " " + PersonInfo.ThirdName.ToString() + " " + PersonInfo.LastName.ToString();
+                lblName.Text = PersonInfo.FullName;
                 lblNationalNo.Text = PersonInfo.NationalNo.ToString();
 
                 if (PersonInfo.Gendor == 0)

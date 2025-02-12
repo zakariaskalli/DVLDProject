@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace DVLDProject
 {
     public partial class ctrlLoginInformation : UserControl
     {
-        public int _UserID = -1;
+        public int? _UserID = null;
 
         public ctrlLoginInformation()
         {
@@ -24,9 +25,9 @@ namespace DVLDProject
 
         private void LoadAllData()
         {
-            if (clsManageUsersBussiness.UserIDIsFound(_UserID))
+            if (clsManageUsersBussiness.UserIDIsFound((int)_UserID))
             {
-                clsManageUsersBussiness clsA = clsManageUsersBussiness.UploadAllDataByUserID(_UserID);
+                clsManageUsersBussiness clsA = clsManageUsersBussiness.UploadAllDataByUserID((int)_UserID);
 
                 lblUserID.Text = clsA.UserID.ToString();
                 lblUserName.Text = clsA.UserName.ToString();
@@ -44,14 +45,5 @@ namespace DVLDProject
             LoadAllData();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblUserName_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

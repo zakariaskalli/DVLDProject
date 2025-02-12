@@ -1,6 +1,7 @@
 
 using System;
 using System.Data;
+using System.Linq;
 using DVLD_DataLayer;
 
 namespace DVLD_BusinessLayer
@@ -27,6 +28,23 @@ namespace DVLD_BusinessLayer
         public clsCountries CountriesInfo { get; set; }
         public string ImagePath { get; set; } = null;
 
+        private string _fullName;
+        public string FullName
+        {
+            get
+            {
+
+               _fullName = string.Join(" ", new[]
+                    {
+                this.FirstName?.Trim(),
+                this.SecondName?.Trim(),
+                this.ThirdName?.Trim(),
+                this.LastName?.Trim()
+            }.Where(name => !string.IsNullOrWhiteSpace(name)));
+                
+                return _fullName;
+            }
+        }
 
         public clsPeople()
         {

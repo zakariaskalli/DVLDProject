@@ -38,6 +38,18 @@ int? UserID, int PersonID, string UserName, string FullName, bool IsActive)     
             this.IsActive = IsActive;
         }
 
+        private clsUsers(
+string UserName, int UserID, int PersonID, string FullName, bool IsActive)
+        {
+            this.UserName = UserName;
+            this.UserID = UserID;
+            this.PersonID = PersonID;
+            this.PeopleInfo = clsPeople.FindByPersonID(PersonID);
+            this.FullName = FullName;
+            this.IsActive = IsActive;
+        }
+
+
         /*
         
         public enum enMode { AddNew = 0, Update = 1 };
@@ -121,7 +133,7 @@ this.UserID, this.PersonID, this.UserName, this.FullName, this.IsActive);
                     return "Error: Failed to add the user.";
                 }
 
-                return "User added successfully.";
+                return "";
             }
             catch (SqlException sqlEx)
             {
@@ -136,8 +148,6 @@ this.UserID, this.PersonID, this.UserName, this.FullName, this.IsActive);
                 return "An unexpected error occurred while trying to add the user.";
             }
         }
-
-
 
         public static string UpdateUsersByID(int UserID, int PersonID, string UserName, string Password, bool IsActive)
         {
@@ -179,7 +189,7 @@ this.UserID, this.PersonID, this.UserName, this.FullName, this.IsActive);
                 // Attempt to update the user
                 bool isUpdated = clsUsersData.UpdateUsersByID(UserID, PersonID, UserName, Password, IsActive);
 
-                return isUpdated ? "User updated successfully." : "Error: Failed to update the user.";
+                return isUpdated ? "" : "Error: Failed to update the user.";
             }
             catch (SqlException sqlEx)
             {
@@ -217,8 +227,28 @@ UserID, PersonID, UserName, FullName, IsActive);
                 return null;
        }
 
+        public static clsUsers FindByUserName(string UserName)
+        {
+            if (string.IsNullOrWhiteSpace(UserName))
+            {
+                return null;
+            }
+            
+            int UserID = 0;
+            int PersonID = 0;
+            string FullName = "";
+            bool IsActive = false;
+            bool IsFound = clsUsersData.GetUsersInfoByUserName(UserName, ref UserID, ref PersonID, ref FullName, ref IsActive);
 
-       public static DataTable GetAllUsers()
+            if (IsFound)
+                return new clsUsers(
+ UserName, UserID, PersonID, FullName, IsActive);
+            else
+                return null;
+        }
+
+
+        public static DataTable GetAllUsers()
        {
 
         return clsUsersData.GetAllUsers();

@@ -52,7 +52,7 @@
             this.btnClose.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(634, 362);
+            this.btnClose.Location = new System.Drawing.Point(644, 353);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 38);
             this.btnClose.TabIndex = 39;
@@ -62,7 +62,7 @@
             // 
             // ctrlShowPersonDetails1
             // 
-            this.ctrlShowPersonDetails1.Location = new System.Drawing.Point(2, 66);
+            this.ctrlShowPersonDetails1.Location = new System.Drawing.Point(3, 57);
             this.ctrlShowPersonDetails1.Name = "ctrlShowPersonDetails1";
             this.ctrlShowPersonDetails1.Size = new System.Drawing.Size(770, 290);
             this.ctrlShowPersonDetails1.TabIndex = 0;
@@ -72,12 +72,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 410);
+            this.ClientSize = new System.Drawing.Size(776, 399);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblAddOrUpdate);
             this.Controls.Add(this.ctrlShowPersonDetails1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmPersonDetails";
-            this.Text = "frmPersonDetails";
+            this.Text = "Person Details";
             this.Load += new System.EventHandler(this.frmPersonDetails_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

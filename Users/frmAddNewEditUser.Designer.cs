@@ -144,11 +144,11 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Login Info";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // tbConfirmPassword
             // 
             this.tbConfirmPassword.Location = new System.Drawing.Point(258, 205);
+            this.tbConfirmPassword.MaxLength = 16;
             this.tbConfirmPassword.Name = "tbConfirmPassword";
             this.tbConfirmPassword.PasswordChar = '*';
             this.tbConfirmPassword.Size = new System.Drawing.Size(143, 27);
@@ -159,6 +159,7 @@
             // tbPassword
             // 
             this.tbPassword.Location = new System.Drawing.Point(258, 166);
+            this.tbPassword.MaxLength = 16;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(143, 27);
@@ -250,6 +251,7 @@
             // tbUserName
             // 
             this.tbUserName.Location = new System.Drawing.Point(258, 124);
+            this.tbUserName.MaxLength = 20;
             this.tbUserName.Name = "tbUserName";
             this.tbUserName.Size = new System.Drawing.Size(143, 27);
             this.tbUserName.TabIndex = 2;
