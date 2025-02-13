@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,43 +22,31 @@ namespace DVLDProject
         {
             InitializeComponent();
 
+            clsUsers UserInfo = clsUsers.FindByUserName(UserName);
 
-            clsManageUsersBussiness clsData = clsManageUsersBussiness.UploadAllDataByUserName(UserName);
-
-            _PersonID = clsData.PersonID;
-            _UserID = clsData.UserID;
+            _PersonID = UserInfo.PersonID;
+            _UserID = (int)UserInfo.UserID;
 
             ctrlShowPersonDetails1._PersonID = _PersonID;
             ctrlLoginInformation1._UserID = _UserID;
 
             ctrlShowPersonDetails1.ctrlShowPersonDetails_Load();
         }
-        //UserIDIsFound
+        
 
         public frmChangePassword(int UserID)
         {
             InitializeComponent();
 
-            
-            clsManageUsersBussiness clsData = clsManageUsersBussiness.UploadAllDataByUserID(UserID);
+            clsUsers UserInfo = clsUsers.FindByUserID(UserID);
 
-            _PersonID = clsData.PersonID;
-            _UserID = clsData.UserID;
+            _PersonID = UserInfo.PersonID;
+            _UserID = (int)UserInfo.UserID;
 
             ctrlShowPersonDetails1._PersonID = _PersonID;
             ctrlLoginInformation1._UserID = _UserID;
 
             ctrlShowPersonDetails1.ctrlShowPersonDetails_Load();
-        }
-
-        private void tbUserName_Validating(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        private void frmChangePassword_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox3_Validating(object sender, CancelEventArgs e)
@@ -83,12 +72,13 @@ namespace DVLDProject
             string OldPassword = tbCurrentPasword.Text;
             string NewPassword = tbNewPassword.Text;
 
-            if (clsAddNewEditUserBusiness.UpdatePasswordUser(_UserID, OldPassword, NewPassword))
+            string ErrorMessage =  clsUsers.UpdatePasswordUser(_UserID, OldPassword, NewPassword);
+            if (ErrorMessage != "")
             {
                 MessageBox.Show("Password Update Successfully :-)", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show("Password Update Denied :-(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ErrorMessage + "\n" + "Password Update Denied :-(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 

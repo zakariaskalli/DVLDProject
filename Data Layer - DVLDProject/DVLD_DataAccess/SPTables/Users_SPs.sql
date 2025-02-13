@@ -267,3 +267,61 @@ BEGIN
     END CATCH
 END;
 GO
+
+
+CREATE OR ALTER PROCEDURE SP_UpdatePasswordUser
+(
+    @UserID INT,
+    @OldPassword NVARCHAR(255),
+    @NewPassword NVARCHAR(255)
+)
+AS
+BEGIN
+    BEGIN TRY
+        -- Validate required parameters
+        IF @UserID IS NULL OR LTRIM(RTRIM(@OldPassword)) = '' OR LTRIM(RTRIM(@NewPassword)) = ''
+        BEGIN
+            RAISERROR('One or more required parameters are NULL or empty.', 16, 1);
+            RETURN;
+        END
+
+        -- Declare variables for Salt & PasswordHash
+        DECLARE @OldSalt UNIQUEIDENTIFIER;
+        DECLARE @OldPasswordHash VARBINARY(64);
+        DECLARE @NewSalt UNIQUEIDENTIFIER;
+        DECLARE @NewPasswordHash VARBINARY(64);
+
+        -- Fetch the existing Salt and PasswordHash for the user
+        SELECT @OldSalt = Salt, @OldPasswordHash = PasswordHash
+        FROM Users
+        WHERE UserID = @UserID;
+
+        -- Verify the old password
+        IF @OldPasswordHash <> dbo.HashPassword(@OldPassword, @OldSalt)
+        BEGIN
+            RAISERROR('The old password is incorrect.', 16, 1);
+            RETURN;
+        END
+
+        -- Generate new Salt and PasswordHash for the new password
+        SET @NewSalt = NEWID();
+        SET @NewPasswordHash = dbo.HashPassword(@NewPassword, @NewSalt);
+
+        -- Update the user's password
+        UPDATE Users
+        SET PasswordHash = @NewPasswordHash,
+            Salt = @NewSalt
+        WHERE UserID = @UserID;
+
+        -- Check if the update was successful
+        IF @@ROWCOUNT = 0
+        BEGIN
+            RAISERROR('No rows were updated. Please check the UserID.', 16, 1);
+            RETURN;
+        END
+    END TRY
+    BEGIN CATCH
+        EXEC SP_HandleError; -- Handle errors
+    END CATCH
+END;
+GO

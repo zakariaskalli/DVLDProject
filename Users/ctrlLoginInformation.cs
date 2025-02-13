@@ -22,27 +22,22 @@ namespace DVLDProject
             InitializeComponent();
         }
 
-
-        private void LoadAllData()
+        private void ctrlLoginInformation_Load(object sender, EventArgs e)
         {
-            if (clsManageUsersBussiness.UserIDIsFound((int)_UserID))
+            if (clsUsers.FindByUserID(_UserID) != null)
             {
-                clsManageUsersBussiness clsA = clsManageUsersBussiness.UploadAllDataByUserID((int)_UserID);
+                clsUsers UserInfo = clsUsers.FindByUserID(_UserID);
 
-                lblUserID.Text = clsA.UserID.ToString();
-                lblUserName.Text = clsA.UserName.ToString();
 
-                if (clsA.IsActive)
+                lblUserID.Text = UserInfo.UserID.ToString();
+                lblUserName.Text = UserInfo.UserName.ToString();
+
+                if (UserInfo.IsActive)
                     lblIsActive.Text = "Is Active";
                 else
                     lblIsActive.Text = "Is Not Active";
 
             }
-        }
-
-        private void ctrlLoginInformation_Load(object sender, EventArgs e)
-        {
-            LoadAllData();
         }
 
     }

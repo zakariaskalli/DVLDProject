@@ -357,5 +357,56 @@ UserID, PersonID, UserName, FullName, IsActive);
 
         }
 
+
+        public static string UpdatePasswordUser(int userID, string oldPassword, string newPassword)
+        {
+            // Validate input data
+            if (userID <= 0)
+            {
+                return "Error: UserID must be a valid number greater than 0.";
+            }
+
+            if (string.IsNullOrWhiteSpace(oldPassword))
+            {
+                return "Error: Old password cannot be empty.";
+            }
+
+            if (string.IsNullOrWhiteSpace(newPassword))
+            {
+                return "Error: New password cannot be empty.";
+            }
+
+            if (oldPassword == newPassword)
+            {
+                return "Error: New password must be different from the old password.";
+            }
+
+            try
+            {
+                // Check if the user exists
+                if (FindByUserID(userID) == null)
+                {
+                    return "Error: No user found with the provided UserID.";
+                }
+
+                // Attempt to update the password
+                bool isUpdated = clsUsersData.UpdatePasswordUser(userID, oldPassword, newPassword);
+
+                return isUpdated ? "" : "Error: Failed to update the password.";
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle database-specific errors
+                ErrorHandler.HandleException(sqlEx, nameof(UpdatePasswordUser), $"Parameters: UserID={userID}");
+                return "Database error: Unable to update the password.";
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected errors
+                ErrorHandler.HandleException(ex, nameof(UpdatePasswordUser), $"Parameters: UserID={userID}");
+                return "An unexpected error occurred while trying to update the password.";
+            }
+        }
+
     }
 }

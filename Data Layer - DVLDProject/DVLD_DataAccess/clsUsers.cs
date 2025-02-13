@@ -224,6 +224,7 @@ namespace DVLD_DataLayer
     return (rowsAffected > 0);
 }
 
+
         public static bool DeleteUsers(int UserID)
 {
     int rowsAffected = 0;
@@ -410,6 +411,38 @@ namespace DVLD_DataLayer
             }
 
             return IsFound;
+        }
+
+        public static bool UpdatePasswordUser(int UserID, string oldPassword, string newPassword)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("SP_UpdatePasswordUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameters
+                        command.Parameters.AddWithValue("@UserID", UserID);
+                        command.Parameters.AddWithValue("@OldPassword", oldPassword);
+                        command.Parameters.AddWithValue("@NewPassword", newPassword);
+
+                        // Execute the stored procedure
+                        rowsAffected = command.ExecuteNonQuery();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                ErrorHandler.HandleException(ex, nameof(UpdatePasswordUser), $"Parameter: UserID = " + UserID);
+            }
+
+            return (rowsAffected > 0);
         }
 
     }

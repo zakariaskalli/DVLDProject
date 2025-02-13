@@ -19,8 +19,6 @@ namespace DVLDProject
         int? _PersonID = null;
         int? _UserID = null;
 
-        
-
         public frmUserInfo(string UserName)
         {
             InitializeComponent();
@@ -35,7 +33,6 @@ namespace DVLDProject
 
             ctrlShowPersonDetails1.ctrlShowPersonDetails_Load();
         }
-        //UserIDIsFound
 
         public frmUserInfo(int? UserID)
         {

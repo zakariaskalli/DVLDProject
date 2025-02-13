@@ -11,6 +11,7 @@ using Business_Layer___DVLDProject;
 using static DVLDProject.ctrlAddEditPersonInfo;
 using System.Xml.Serialization;
 using System.IO;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
@@ -179,8 +180,12 @@ namespace DVLDProject
 
             if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
             {
+                string nationalNo = ctrlFilterAndMakePersonInfo1._NationalNo;
 
-                if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), ctrlFilterAndMakePersonInfo1._NationalNo))
+                bool personExistsByNationalNo = clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, nationalNo, clsPeople.SearchMode.ExactMatch).Rows.Count > 0;
+
+
+                if (personExistsByNationalNo)
                 {
                     tabControl1.SelectedTab = tabPage2; 
                 }
@@ -188,7 +193,12 @@ namespace DVLDProject
             }
             else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
             {
-                if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), Convert.ToString(ctrlFilterAndMakePersonInfo1._PersonID)))
+                string personID = ctrlFilterAndMakePersonInfo1._PersonID?.ToString();
+
+                bool userExistsByPersonID = clsUsers.SearchData(clsUsers.UsersColumn.PersonID, personID, clsUsers.SearchMode.ExactMatch).Rows.Count > 0;
+
+
+                if (userExistsByPersonID)
                 {
                     tabControl1.SelectedTab = tabPage2;
                 }
@@ -204,6 +214,8 @@ namespace DVLDProject
         private void btnClose_Click(object sender, EventArgs e)
         {
 
+
+            /*
             if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), ctrlFilterAndMakePersonInfo1.GetData()))
             {
                 
@@ -221,7 +233,7 @@ namespace DVLDProject
             }
             else
                 MessageBox.Show("Enter True People", "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            */
 
         }
 
