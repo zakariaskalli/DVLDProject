@@ -18,19 +18,12 @@ namespace DVLDProject
 {
     public partial class frmLoginScreen : Form
     {
-
-
         public delegate void DataBackEventCancel(string UserName, string Password);
         public event DataBackEventCancel DataBack;
 
         public frmLoginScreen()
         {
             InitializeComponent();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -104,11 +97,6 @@ namespace DVLDProject
             chbRememberMe.Checked = true;
 
             btnLogin.Select();
-
-        }
-
-        private void chbRememberMe_CheckedChanged(object sender, EventArgs e)
-        {
 
         }
 

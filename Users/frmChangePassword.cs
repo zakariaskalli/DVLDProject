@@ -73,7 +73,7 @@ namespace DVLDProject
             string NewPassword = tbNewPassword.Text;
 
             string ErrorMessage =  clsUsers.UpdatePasswordUser(_UserID, OldPassword, NewPassword);
-            if (ErrorMessage != "")
+            if (ErrorMessage == "")
             {
                 MessageBox.Show("Password Update Successfully :-)", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

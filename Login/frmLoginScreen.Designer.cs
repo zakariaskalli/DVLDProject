@@ -130,7 +130,6 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.UseWaitCursor = true;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label1
             // 
@@ -246,7 +245,6 @@
             this.chbRememberMe.Text = "Remember Me.";
             this.chbRememberMe.UseVisualStyleBackColor = true;
             this.chbRememberMe.UseWaitCursor = true;
-            this.chbRememberMe.CheckedChanged += new System.EventHandler(this.chbRememberMe_CheckedChanged);
             // 
             // btnCancel
             // 

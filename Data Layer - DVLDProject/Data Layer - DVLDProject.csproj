@@ -70,10 +70,9 @@
     <Compile Include="DVLD_DataAccess\clsTestAppointments.cs" />
     <Compile Include="DVLD_DataAccess\clsTests.cs" />
     <Compile Include="DVLD_DataAccess\clsTestTypes.cs" />
-    <Compile Include="DVLD_DataAccess\clsUsers.cs" />
+    <Compile Include="Users\clsUsers.cs" />
     <Compile Include="DVLD_DataAccess\ConnectionString\clsDataAccessSettings.cs" />
     <Compile Include="DVLD_DataAccess\ErrorHandler\clsErrorHandlingManager.cs" />
-    <Compile Include="Users\clsAddNewEditUserData.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoData.cs" />
     <Compile Include="License\clsDriverLicensesData.cs" />
     <Compile Include="Drivers\clsFilterDriverInfoData.cs" />
@@ -82,7 +81,6 @@
     <Compile Include="Applications\clsManageAppliactionTypesData.cs" />
     <Compile Include="Drivers\clsManageDriversData.cs" />
     <Compile Include="Tests\clsManageTestTypesData.cs" />
-    <Compile Include="Users\clsManageUsersData.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralData.cs" />
     <Compile Include="Applications\Renew Driving License\clsRenewLocalDrivingLicenseData.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesData.cs" />
@@ -115,5 +113,6 @@
     <Content Include="DVLD_DataAccess\SPTables\TestTypes_SPs.sql" />
     <Content Include="DVLD_DataAccess\SPTables\Users_SPs.sql" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

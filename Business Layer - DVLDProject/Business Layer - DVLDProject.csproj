@@ -61,9 +61,8 @@
     <Compile Include="DVLD_Business\clsTestAppointments.cs" />
     <Compile Include="DVLD_Business\clsTests.cs" />
     <Compile Include="DVLD_Business\clsTestTypes.cs" />
-    <Compile Include="DVLD_Business\clsUsers.cs" />
+    <Compile Include="Users\clsUsers.cs" />
     <Compile Include="DVLD_Business\SqlHelper.cs" />
-    <Compile Include="Users\clsAddNewEditUserBusiness.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoBusiness.cs" />
     <Compile Include="Applications\Detain License\clsDetainLicenseBusiness.cs" />
     <Compile Include="License\clsDriverLicensesBusiness.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Applications\clsManageAppliactionTypesBussiness.cs" />
     <Compile Include="Drivers\clsManageDriversBusiness.cs" />
     <Compile Include="Tests\clsManageTestTypesBusiness.cs" />
-    <Compile Include="Users\clsManageUsersBussiness.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
     <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationBusiness.cs" />
@@ -97,5 +95,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
