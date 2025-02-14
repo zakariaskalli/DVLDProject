@@ -273,7 +273,9 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmManageUsers";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage Users";
             this.Load += new System.EventHandler(this.frmManageUsers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

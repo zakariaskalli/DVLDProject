@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,22 +23,25 @@ namespace DVLDProject
         {
             this.Close();
         }
+
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsManageApplicationTypesBusiness.LoadData();
+
+
+            DataTable dataTable = clsApplicationTypes.GetAllApplicationTypes();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
-            dataGridView1.Columns["ID"].Width = 80;
-            dataGridView1.Columns["Title"].Width = 420;
-            dataGridView1.Columns["Fees"].Width = 80;
+            dataGridView1.Columns[0].Width = 140;  
+            dataGridView1.Columns[1].Width = 300; 
+            dataGridView1.Columns[2].Width = 140;  
+
 
         }
 
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
         {
-
             LoadAllDataToDGV();
         }
 
@@ -52,9 +56,5 @@ namespace DVLDProject
             LoadAllDataToDGV();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

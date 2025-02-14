@@ -115,6 +115,8 @@
             this.tbFees.Name = "tbFees";
             this.tbFees.Size = new System.Drawing.Size(294, 24);
             this.tbFees.TabIndex = 6;
+            this.tbFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbFees_KeyDown);
+            this.tbFees.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFees_KeyPress);
             // 
             // pictureBox1
             // 
@@ -187,8 +189,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmUpdateApplicationType";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Update Application Type";
             this.Load += new System.EventHandler(this.frmUpdateApplicationType_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
