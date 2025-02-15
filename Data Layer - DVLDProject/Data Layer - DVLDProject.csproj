@@ -69,7 +69,7 @@
     <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_DataAccess\clsTestAppointments.cs" />
     <Compile Include="DVLD_DataAccess\clsTests.cs" />
-    <Compile Include="DVLD_DataAccess\clsTestTypes.cs" />
+    <Compile Include="Tests\clsTestTypes.cs" />
     <Compile Include="Users\clsUsers.cs" />
     <Compile Include="DVLD_DataAccess\ConnectionString\clsDataAccessSettings.cs" />
     <Compile Include="DVLD_DataAccess\ErrorHandler\clsErrorHandlingManager.cs" />
@@ -79,7 +79,6 @@
     <Compile Include="License\clsIssueDriverLicenseData.cs" />
     <Compile Include="Applications\Local License\clsLicenseInfoData.cs" />
     <Compile Include="Drivers\clsManageDriversData.cs" />
-    <Compile Include="Tests\clsManageTestTypesData.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralData.cs" />
     <Compile Include="Applications\Renew Driving License\clsRenewLocalDrivingLicenseData.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesData.cs" />

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_BusinessLayer;
+
 
 namespace DVLDProject
 {
@@ -20,14 +22,15 @@ namespace DVLDProject
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsManageTestTypesBusiness.LoadData();
+
+            DataTable dataTable = clsTestTypes.GetAllTestTypes();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
-            // with = 715
-            dataGridView1.Columns["ID"].Width = 80;
-            dataGridView1.Columns["Title"].Width = 160;
-            dataGridView1.Columns["Description"].Width = 350;
-            dataGridView1.Columns["Fees"].Width = 80;
+            // with = 845
+            dataGridView1.Columns[0].Width = 100;
+            dataGridView1.Columns[1].Width = 200;
+            dataGridView1.Columns[2].Width = 400;
+            dataGridView1.Columns[3].Width = 100;
 
         }
 

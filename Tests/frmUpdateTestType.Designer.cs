@@ -109,6 +109,8 @@
             this.tbFees.Name = "tbFees";
             this.tbFees.Size = new System.Drawing.Size(294, 20);
             this.tbFees.TabIndex = 49;
+            this.tbFees.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbFees_KeyDown);
+            this.tbFees.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFees_KeyPress);
             // 
             // tbTitle
             // 

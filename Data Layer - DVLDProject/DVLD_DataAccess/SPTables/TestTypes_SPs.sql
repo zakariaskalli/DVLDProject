@@ -61,7 +61,8 @@ BEGIN
         INSERT INTO TestTypes ([TestTypeTitle],[TestTypeDescription],[TestTypeFees])
         VALUES (    LTRIM(RTRIM(@TestTypeTitle)),
     LTRIM(RTRIM(@TestTypeDescription)),
-    LTRIM(RTRIM(@TestTypeFees)));
+    LTRIM(RTRIM(@TestTypeFees))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -78,7 +79,8 @@ CREATE OR ALTER PROCEDURE SP_Update_TestTypes_ByID
     @TestTypeID int,
     @TestTypeTitle nvarchar(100),
     @TestTypeDescription nvarchar(500),
-    @TestTypeFees smallmoney
+    @TestTypeFees smallmoney
+
 )
 AS
 BEGIN
@@ -94,7 +96,8 @@ BEGIN
         UPDATE TestTypes
         SET     [TestTypeTitle] = LTRIM(RTRIM(@TestTypeTitle)),
     [TestTypeDescription] = LTRIM(RTRIM(@TestTypeDescription)),
-    [TestTypeFees] = LTRIM(RTRIM(@TestTypeFees))
+    [TestTypeFees] = LTRIM(RTRIM(@TestTypeFees))
+
         WHERE TestTypeID = @TestTypeID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

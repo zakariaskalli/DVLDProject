@@ -35,10 +35,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.TotalRecord = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editApplicationTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TotalRecord = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip2.SuspendLayout();
@@ -49,7 +49,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Brown;
-            this.label1.Location = new System.Drawing.Point(242, 155);
+            this.label1.Location = new System.Drawing.Point(320, 155);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(233, 31);
             this.label1.TabIndex = 3;
@@ -58,7 +58,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(269, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(353, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(160, 140);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -91,14 +91,30 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 200);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(715, 285);
+            this.dataGridView1.Size = new System.Drawing.Size(845, 285);
             this.dataGridView1.TabIndex = 4;
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editApplicationTypeToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip1";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(202, 42);
+            // 
+            // editApplicationTypeToolStripMenuItem
+            // 
+            this.editApplicationTypeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("editApplicationTypeToolStripMenuItem.Image")));
+            this.editApplicationTypeToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.editApplicationTypeToolStripMenuItem.Name = "editApplicationTypeToolStripMenuItem";
+            this.editApplicationTypeToolStripMenuItem.Size = new System.Drawing.Size(201, 38);
+            this.editApplicationTypeToolStripMenuItem.Text = "Edit Application Type";
+            this.editApplicationTypeToolStripMenuItem.Click += new System.EventHandler(this.editApplicationTypeToolStripMenuItem_Click);
             // 
             // TotalRecord
             // 
             this.TotalRecord.AutoSize = true;
             this.TotalRecord.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TotalRecord.Location = new System.Drawing.Point(12, 504);
+            this.TotalRecord.Location = new System.Drawing.Point(24, 504);
             this.TotalRecord.Name = "TotalRecord";
             this.TotalRecord.Size = new System.Drawing.Size(31, 21);
             this.TotalRecord.TabIndex = 9;
@@ -111,7 +127,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(627, 495);
+            this.button1.Location = new System.Drawing.Point(749, 495);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 38);
             this.button1.TabIndex = 11;
@@ -119,34 +135,20 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editApplicationTypeToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip1";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(202, 64);
-            // 
-            // editApplicationTypeToolStripMenuItem
-            // 
-            this.editApplicationTypeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("editApplicationTypeToolStripMenuItem.Image")));
-            this.editApplicationTypeToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.editApplicationTypeToolStripMenuItem.Name = "editApplicationTypeToolStripMenuItem";
-            this.editApplicationTypeToolStripMenuItem.Size = new System.Drawing.Size(201, 38);
-            this.editApplicationTypeToolStripMenuItem.Text = "Edit Application Type";
-            this.editApplicationTypeToolStripMenuItem.Click += new System.EventHandler(this.editApplicationTypeToolStripMenuItem_Click);
-            // 
             // frmManageTestTypes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 545);
+            this.ClientSize = new System.Drawing.Size(866, 545);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.TotalRecord);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmManageTestTypes";
-            this.Text = "frmManageTestTypes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Manage Test Types";
             this.Load += new System.EventHandler(this.frmManageTestTypes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

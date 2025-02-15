@@ -60,7 +60,7 @@
     <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_Business\clsTestAppointments.cs" />
     <Compile Include="DVLD_Business\clsTests.cs" />
-    <Compile Include="DVLD_Business\clsTestTypes.cs" />
+    <Compile Include="Tests\clsTestTypes.cs" />
     <Compile Include="Users\clsUsers.cs" />
     <Compile Include="DVLD_Business\SqlHelper.cs" />
     <Compile Include="License\clsApplicationNewLicenseInfoBusiness.cs" />
@@ -74,7 +74,6 @@
     <Compile Include="Applications\Detain License\clsListDetainedLicensesBusiness.cs" />
     <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplicationsBusiness.cs" />
     <Compile Include="Drivers\clsManageDriversBusiness.cs" />
-    <Compile Include="Tests\clsManageTestTypesBusiness.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
     <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationBusiness.cs" />

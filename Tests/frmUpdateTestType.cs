@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,14 +27,13 @@ namespace DVLDProject
 
         private void frmUpdateTestType_Load(object sender, EventArgs e)
         {
-            clsManageTestTypesBusiness clsA = new clsManageTestTypesBusiness(_ID);
-            
-            clsA = clsManageTestTypesBusiness.UploadAllDataByID(_ID);
 
-            lblID.Text = clsA.ID.ToString();
-            tbTitle.Text = clsA.Title;
-            tbFees.Text = clsA.Fees.ToString();
-            tbDescription.Text = clsA.Description;
+            clsTestTypes TestTypesInfo = clsTestTypes.FindByTestTypeID(_ID);
+
+            lblID.Text = TestTypesInfo.TestTypeID.ToString();
+            tbTitle.Text = TestTypesInfo.TestTypeTitle;
+            tbFees.Text = TestTypesInfo.TestTypeFees.ToString();
+            tbDescription.Text = TestTypesInfo.TestTypeDescription;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -44,12 +44,9 @@ namespace DVLDProject
             }
             string Title = tbTitle.Text;
             string Description = tbDescription.Text;
-            int Fees = int.Parse(tbFees.Text);
+            decimal Fees = decimal.Parse(tbFees.Text);
 
-
-            clsManageTestTypesBusiness clsA = new clsManageTestTypesBusiness(_ID, Title, Description, Fees);
-
-            if (clsA.UpdateDataToTableByID())
+            if (clsTestTypes.UpdateTestTypesByID(_ID, Title, Description, Fees))
                 MessageBox.Show("Data Update Successfully :-)", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
                 MessageBox.Show("Data Update Successfully :-(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -58,6 +55,31 @@ namespace DVLDProject
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void tbFees_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow control keys like backspace, delete, etc.
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true; // Blocks the character from being entered
+            }
+
+            // Allow only one decimal point
+            if (e.KeyChar == '.' && (tbFees.Text.Contains(".") || tbFees.Text.Length == 0))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbFees_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.ValidateChildren(); // Trigger Validating event on all controls
+                btnSave.PerformClick();  // Simulate Save button click
+                e.SuppressKeyPress = true; // Prevents the 'ding' sound on Enter key
+            }
         }
     }
 }
