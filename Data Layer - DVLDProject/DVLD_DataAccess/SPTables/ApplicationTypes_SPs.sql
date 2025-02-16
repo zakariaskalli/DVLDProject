@@ -59,7 +59,8 @@ BEGIN
         -- Insert the data into the table
         INSERT INTO ApplicationTypes ([ApplicationTypeTitle],[ApplicationFees])
         VALUES (    LTRIM(RTRIM(@ApplicationTypeTitle)),
-    LTRIM(RTRIM(@ApplicationFees)));
+    LTRIM(RTRIM(@ApplicationFees))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -75,7 +76,8 @@ CREATE OR ALTER PROCEDURE SP_Update_ApplicationTypes_ByID
 (
     @ApplicationTypeID int,
     @ApplicationTypeTitle nvarchar(150),
-    @ApplicationFees smallmoney
+    @ApplicationFees smallmoney
+
 )
 AS
 BEGIN
@@ -90,7 +92,8 @@ BEGIN
         -- Update the record in the table
         UPDATE ApplicationTypes
         SET     [ApplicationTypeTitle] = LTRIM(RTRIM(@ApplicationTypeTitle)),
-    [ApplicationFees] = LTRIM(RTRIM(@ApplicationFees))
+    [ApplicationFees] = LTRIM(RTRIM(@ApplicationFees))
+
         WHERE ApplicationTypeID = @ApplicationTypeID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

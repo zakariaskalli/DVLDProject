@@ -8,6 +8,12 @@ namespace DVLD_BusinessLayer
     public class clsApplications
     {
         //#nullable enable
+        public enum enApplicationType
+        {
+            NewDrivingLicense = 1, RenewDrivingLicense = 2, ReplaceLostDrivingLicense = 3,
+            ReplaceDamagedDrivingLicense = 4, ReleaseDetainedDrivingLicsense = 5, NewInternationalLicense = 6, RetakeTest = 7
+        };
+        public enum enApplicationStatus { New = 1, Cancelled = 2, Completed = 3 };
 
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
@@ -18,7 +24,7 @@ namespace DVLD_BusinessLayer
         public DateTime? ApplicationDate { get; set; }
         public int? ApplicationTypeID { get; set; }
         public clsApplicationTypes ApplicationTypesInfo { get; set; }
-        public byte? ApplicationStatus { get; set; }
+        public enApplicationStatus ApplicationStatus { get; set; }
         public DateTime? LastStatusDate { get; set; }
         public decimal? PaidFees { get; set; }
         public int? CreatedByUserID { get; set; }
@@ -40,7 +46,8 @@ namespace DVLD_BusinessLayer
 
 
         private clsApplications(
-int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? ApplicationTypeID, byte? ApplicationStatus, DateTime? LastStatusDate, decimal? PaidFees, int? CreatedByUserID)        {
+int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime? LastStatusDate, decimal? PaidFees, int? CreatedByUserID)        
+        {
             this.ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
             this.PeopleInfo = clsPeople.FindByPersonID(ApplicantPersonID);
@@ -59,11 +66,13 @@ int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? Appl
        private bool _AddNewApplications()
        {
         this.ApplicationID = clsApplicationsData.AddNewApplications(
-this.ApplicantPersonID, this.ApplicationDate, this.ApplicationTypeID, this.ApplicationStatus, this.LastStatusDate, this.PaidFees, this.CreatedByUserID);
+this.ApplicantPersonID, this.ApplicationDate, this.ApplicationTypeID, (byte)this.ApplicationStatus, this.LastStatusDate, this.PaidFees, this.CreatedByUserID);
         return (this.ApplicationID != null);
        }
 
+        // I don't Need To Use
 
+        /*
        public static bool AddNewApplications(
 ref int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? ApplicationTypeID, byte? ApplicationStatus, DateTime? LastStatusDate, decimal? PaidFees, int? CreatedByUserID)        {
         ApplicationID = clsApplicationsData.AddNewApplications(
@@ -72,15 +81,18 @@ ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastSt
         return (ApplicationID != null);
 
        }
-
+        */
 
        private bool _UpdateApplications()
        {
         return clsApplicationsData.UpdateApplicationsByID(
-this.ApplicationID, this.ApplicantPersonID, this.ApplicationDate, this.ApplicationTypeID, this.ApplicationStatus, this.LastStatusDate, this.PaidFees, this.CreatedByUserID);
+this.ApplicationID, this.ApplicantPersonID, this.ApplicationDate, this.ApplicationTypeID, (byte) this.ApplicationStatus, this.LastStatusDate, this.PaidFees, this.CreatedByUserID);
        }
 
 
+        // I don't Need To Use
+
+        /*
        public static bool UpdateApplicationsByID(
 int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? ApplicationTypeID, byte? ApplicationStatus, DateTime? LastStatusDate, decimal? PaidFees, int? CreatedByUserID)        {
         return clsApplicationsData.UpdateApplicationsByID(
@@ -88,9 +100,11 @@ ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, Applicatio
 
         }
 
+        */
 
-       public static clsApplications FindByApplicationID(int? ApplicationID)
 
+
+        public static clsApplications FindByApplicationID(int? ApplicationID)
         {
             if (ApplicationID == null)
             {
@@ -99,19 +113,19 @@ ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, Applicatio
             int? ApplicantPersonID = 0;
             DateTime? ApplicationDate = DateTime.Now;
             int? ApplicationTypeID = 0;
-            byte? ApplicationStatus = default(byte);
+            byte? ApplicationStatus = null; // Change enApplicationStatus? to byte?
             DateTime? LastStatusDate = DateTime.Now;
             decimal? PaidFees = 0m;
             int? CreatedByUserID = 0;
             bool IsFound = clsApplicationsData.GetApplicationsInfoByID(ApplicationID,
- ref ApplicantPersonID,  ref ApplicationDate,  ref ApplicationTypeID,  ref ApplicationStatus,  ref LastStatusDate,  ref PaidFees,  ref CreatedByUserID);
+                ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID, ref ApplicationStatus, ref LastStatusDate, ref PaidFees, ref CreatedByUserID);
 
-           if (IsFound)
-               return new clsApplications(
-ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID);
+            if (IsFound)
+                return new clsApplications(
+                    ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, (enApplicationStatus)ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID);
             else
                 return null;
-            }
+        }
 
 
        public static DataTable GetAllApplications()

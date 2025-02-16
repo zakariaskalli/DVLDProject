@@ -87,7 +87,11 @@ namespace DVLDProject
         }
 
         // Just Add new Mode
-
+        private void NavigateToTab(TabPage tabPage)
+        {
+            tabControl1.SelectedTab = tabPage;
+            _Next = true;
+        }
 
         private bool CheckPersonAndUserExistence(string nationalNo, string personID)
         {
@@ -186,11 +190,6 @@ namespace DVLDProject
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void NavigateToTab(TabPage tabPage)
-        {
-            tabControl1.SelectedTab = tabPage;
-            _Next = true;
-        }
 
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)

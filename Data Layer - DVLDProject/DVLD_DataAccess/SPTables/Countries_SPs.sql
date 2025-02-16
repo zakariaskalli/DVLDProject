@@ -57,7 +57,8 @@ BEGIN
 
         -- Insert the data into the table
         INSERT INTO Countries ([CountryName])
-        VALUES (    LTRIM(RTRIM(@CountryName)));
+        VALUES (    LTRIM(RTRIM(@CountryName))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -72,7 +73,8 @@ GO
 CREATE OR ALTER PROCEDURE SP_Update_Countries_ByID
 (
     @CountryID int,
-    @CountryName nvarchar(50)
+    @CountryName nvarchar(50)
+
 )
 AS
 BEGIN
@@ -86,7 +88,8 @@ BEGIN
 
         -- Update the record in the table
         UPDATE Countries
-        SET     [CountryName] = LTRIM(RTRIM(@CountryName))
+        SET     [CountryName] = LTRIM(RTRIM(@CountryName))
+
         WHERE CountryID = @CountryID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

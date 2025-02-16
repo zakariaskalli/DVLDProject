@@ -69,7 +69,8 @@ BEGIN
     LTRIM(RTRIM(@IssueDate)),
     LTRIM(RTRIM(@ExpirationDate)),
     LTRIM(RTRIM(@IsActive)),
-    LTRIM(RTRIM(@CreatedByUserID)));
+    LTRIM(RTRIM(@CreatedByUserID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -90,7 +91,8 @@ CREATE OR ALTER PROCEDURE SP_Update_InternationalLicenses_ByID
     @IssueDate smalldatetime,
     @ExpirationDate smalldatetime,
     @IsActive bit,
-    @CreatedByUserID int
+    @CreatedByUserID int
+
 )
 AS
 BEGIN
@@ -110,7 +112,8 @@ BEGIN
     [IssueDate] = LTRIM(RTRIM(@IssueDate)),
     [ExpirationDate] = LTRIM(RTRIM(@ExpirationDate)),
     [IsActive] = LTRIM(RTRIM(@IsActive)),
-    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+
         WHERE InternationalLicenseID = @InternationalLicenseID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

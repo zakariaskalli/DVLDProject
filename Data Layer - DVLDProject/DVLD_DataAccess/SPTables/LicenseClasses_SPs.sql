@@ -65,7 +65,8 @@ BEGIN
     LTRIM(RTRIM(@ClassDescription)),
     LTRIM(RTRIM(@MinimumAllowedAge)),
     LTRIM(RTRIM(@DefaultValidityLength)),
-    LTRIM(RTRIM(@ClassFees)));
+    LTRIM(RTRIM(@ClassFees))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -84,7 +85,8 @@ CREATE OR ALTER PROCEDURE SP_Update_LicenseClasses_ByID
     @ClassDescription nvarchar(500),
     @MinimumAllowedAge tinyint,
     @DefaultValidityLength tinyint,
-    @ClassFees smallmoney
+    @ClassFees smallmoney
+
 )
 AS
 BEGIN
@@ -102,7 +104,8 @@ BEGIN
     [ClassDescription] = LTRIM(RTRIM(@ClassDescription)),
     [MinimumAllowedAge] = LTRIM(RTRIM(@MinimumAllowedAge)),
     [DefaultValidityLength] = LTRIM(RTRIM(@DefaultValidityLength)),
-    [ClassFees] = LTRIM(RTRIM(@ClassFees))
+    [ClassFees] = LTRIM(RTRIM(@ClassFees))
+
         WHERE LicenseClassID = @LicenseClassID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

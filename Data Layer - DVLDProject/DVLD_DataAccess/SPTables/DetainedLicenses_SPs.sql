@@ -71,7 +71,8 @@ BEGIN
     LTRIM(RTRIM(@IsReleased)),
     LTRIM(RTRIM(@ReleaseDate)),
     LTRIM(RTRIM(@ReleasedByUserID)),
-    LTRIM(RTRIM(@ReleaseApplicationID)));
+    LTRIM(RTRIM(@ReleaseApplicationID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -93,7 +94,8 @@ CREATE OR ALTER PROCEDURE SP_Update_DetainedLicenses_ByID
     @IsReleased bit,
     @ReleaseDate smalldatetime = NULL,
     @ReleasedByUserID int = NULL,
-    @ReleaseApplicationID int = NULL
+    @ReleaseApplicationID int = NULL
+
 )
 AS
 BEGIN
@@ -114,7 +116,8 @@ BEGIN
     [IsReleased] = LTRIM(RTRIM(@IsReleased)),
     [ReleaseDate] = LTRIM(RTRIM(@ReleaseDate)),
     [ReleasedByUserID] = LTRIM(RTRIM(@ReleasedByUserID)),
-    [ReleaseApplicationID] = LTRIM(RTRIM(@ReleaseApplicationID))
+    [ReleaseApplicationID] = LTRIM(RTRIM(@ReleaseApplicationID))
+
         WHERE DetainID = @DetainID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

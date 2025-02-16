@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using DVLD_DataAccess;
 using Newtonsoft.Json;
+using ConnectionToSQL;
 
 namespace DVLD_DataLayer
 {
@@ -241,5 +242,74 @@ namespace DVLD_DataLayer
 
     return dt;
 }
+
+        public static bool IsFoundApplicationMatchLocalDriveByNationalNo(string NationalNo, int LicenseClassID)
+        {
+            bool IsFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    string query = "SP_IsFoundApplicationMatchLocalDriveByNationalNo";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@NationalNo", NationalNo);
+                        command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        IsFound = result != null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleException(ex, nameof(IsFoundApplicationMatchLocalDriveByNationalNo),
+                    $"Parameters: NationalNo = {NationalNo}, LicenseClassID = {LicenseClassID}");
+            }
+
+            return IsFound;
+        }
+
+        public static bool IsFoundApplicationMatchLocalDriveByPersonID(int PersonID, int LicenseClassID)
+        {
+            bool IsFound = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    string query = "SP_IsFoundApplicationMatchLocalDriveByPersonID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@PersonID", PersonID);
+                        command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        IsFound = result != null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleException(ex, nameof(IsFoundApplicationMatchLocalDriveByPersonID),
+                    $"Parameters: PersonID = {PersonID}, LicenseClassID = {LicenseClassID}");
+            }
+
+            return IsFound;
+        }
+
     }
 }

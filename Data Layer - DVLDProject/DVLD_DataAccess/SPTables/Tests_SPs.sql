@@ -63,7 +63,8 @@ BEGIN
         VALUES (    LTRIM(RTRIM(@TestAppointmentID)),
     LTRIM(RTRIM(@TestResult)),
     LTRIM(RTRIM(@Notes)),
-    LTRIM(RTRIM(@CreatedByUserID)));
+    LTRIM(RTRIM(@CreatedByUserID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -81,7 +82,8 @@ CREATE OR ALTER PROCEDURE SP_Update_Tests_ByID
     @TestAppointmentID int,
     @TestResult bit,
     @Notes nvarchar(500) = NULL,
-    @CreatedByUserID int
+    @CreatedByUserID int
+
 )
 AS
 BEGIN
@@ -98,7 +100,8 @@ BEGIN
         SET     [TestAppointmentID] = LTRIM(RTRIM(@TestAppointmentID)),
     [TestResult] = LTRIM(RTRIM(@TestResult)),
     [Notes] = LTRIM(RTRIM(@Notes)),
-    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+
         WHERE TestID = @TestID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

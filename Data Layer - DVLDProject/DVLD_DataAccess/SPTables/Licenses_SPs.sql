@@ -75,7 +75,8 @@ BEGIN
     LTRIM(RTRIM(@PaidFees)),
     LTRIM(RTRIM(@IsActive)),
     LTRIM(RTRIM(@IssueReason)),
-    LTRIM(RTRIM(@CreatedByUserID)));
+    LTRIM(RTRIM(@CreatedByUserID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -99,7 +100,8 @@ CREATE OR ALTER PROCEDURE SP_Update_Licenses_ByID
     @PaidFees smallmoney,
     @IsActive bit,
     @IssueReason tinyint,
-    @CreatedByUserID int
+    @CreatedByUserID int
+
 )
 AS
 BEGIN
@@ -122,7 +124,8 @@ BEGIN
     [PaidFees] = LTRIM(RTRIM(@PaidFees)),
     [IsActive] = LTRIM(RTRIM(@IsActive)),
     [IssueReason] = LTRIM(RTRIM(@IssueReason)),
-    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+
         WHERE LicenseID = @LicenseID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

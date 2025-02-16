@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using DVLDProject.Applications.Local_License;
 using System;
 using System.Collections.Generic;
@@ -14,31 +15,28 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace DVLDProject
 {
     public partial class frmLocalDrivingLicenseAppliactions : Form
-    {
-        readonly string _UserName = "";
-        
-        public frmLocalDrivingLicenseAppliactions(string UserName)
+    {        
+        public frmLocalDrivingLicenseAppliactions()
         {
             InitializeComponent();
 
-            _UserName = UserName;
         }
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsLocalDrivingLicenseApplicationsBusiness.LoadData();
+            DataTable dataTable = clsLocalDrivingLicenseApplications.GetAllLocalDrivingLicenseApplications();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
             // Motwait 95
 
-            dataGridView1.Columns["LDLAppID"].Width = 90;
-            dataGridView1.Columns["Driving Class"].Width = 185;
-            dataGridView1.Columns["NationalNo"].Width = 80;
-            dataGridView1.Columns["FullName"].Width = 208;
-            dataGridView1.Columns["ApplicationDate"].Width = 115;
-            dataGridView1.Columns["PassedTestCount"].Width = 110;
-            dataGridView1.Columns["Status"].Width = 80;
+            dataGridView1.Columns[0].Width = 90; //LDLAppID
+            dataGridView1.Columns[1].Width = 185;//Driving Class
+            dataGridView1.Columns[2].Width = 80; //NationalNo
+            dataGridView1.Columns[3].Width = 208;//FullName
+            dataGridView1.Columns[4].Width = 115;//ApplicationDate
+            dataGridView1.Columns[5].Width = 110;//PassedTestCount
+            dataGridView1.Columns[6].Width = 80; //Status
 
 
         }
@@ -77,7 +75,7 @@ namespace DVLDProject
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             
-            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(_UserName);
+            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
 
             frm.ShowDialog();
             LoadAllDataToDGV();
@@ -119,7 +117,7 @@ namespace DVLDProject
         {
             int _LocalDrivingLicenseApplicationID = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
 
-            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(_UserName, _LocalDrivingLicenseApplicationID);
+            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(_LocalDrivingLicenseApplicationID);
 
             frm.ShowDialog();
             LoadAllDataToDGV();

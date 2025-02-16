@@ -12,13 +12,12 @@ using static DVLDProject.ctrlAddEditPersonInfo;
 using System.Xml.Serialization;
 using System.IO;
 using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 
 namespace DVLDProject
 {
     public partial class frmNewLocalDrivingLicenseApplication : Form
     {
-        string _UserName = "";
-
 
         int _Fees = clsNewLocalDrivingLicenseApplicationBusiness.ApplicationFeesNewLocalDrivingLicenseService();
         
@@ -37,27 +36,20 @@ namespace DVLDProject
         enMode _Mode;
 
 
-        public frmNewLocalDrivingLicenseApplication(string UserName)
+        public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
 
-            this._UserName = UserName;
             _Mode = enMode.AddNew;
         }
 
-        public frmNewLocalDrivingLicenseApplication(string UserName, int LocalDrivingLicenseApplicationID)
+        public frmNewLocalDrivingLicenseApplication( int LocalDrivingLicenseApplicationID)
         {
             InitializeComponent();
 
-            this._UserName = UserName;
             this._LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
 
             _Mode = enMode.Update;
-        }
-
-        private void ctrlShowPersonDetails1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -88,7 +80,7 @@ namespace DVLDProject
             string _FullDate = $"{DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}";
 
             lblApplicationDate.Text = _FullDate;
-            lblCreatedBy.Text = _UserName;
+            lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
             lblApplicationFees.Text = _Fees.ToString();
 
             LoadAllComboBox();
@@ -151,6 +143,46 @@ namespace DVLDProject
         
         }
 
+
+
+        private bool CheckPersonAndUserExistence(string nationalNo, string personID)
+        {
+            // Check by Person ID
+            if (!string.IsNullOrEmpty(personID))
+            {
+                bool personExistsByPersonID = clsPeople.SearchData(clsPeople.PeopleColumn.PersonID, personID, clsPeople.SearchMode.ExactMatch).Rows.Count > 0;
+
+                    if (personExistsByPersonID)
+                    {
+                        tabControl1.SelectedTab = tabPage2;
+                        _Next = true;
+                        return true;
+                    }
+            }
+
+            if (!string.IsNullOrEmpty(nationalNo))
+            {
+                bool personExistsByNationalNo = clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, nationalNo, clsPeople.SearchMode.ExactMatch).Rows.Count > 0;
+
+                if (personExistsByNationalNo)
+                {
+                    tabControl1.SelectedTab = tabPage2;
+                    _Next = true;
+                    return true;
+                        
+                }
+            }
+
+
+            return false;
+        }
+
+
+        private void ShowErrorMessage(string message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
 
@@ -173,67 +205,36 @@ namespace DVLDProject
                     tabControl1.SelectedTab = tabPage1;
                 else
                     tabControl1.SelectedTab = tabPage2;
-
                 return;
             }
 
+            string nationalNo = ctrlFilterAndMakePersonInfo1._NationalNo;
+            string personID = ctrlFilterAndMakePersonInfo1._PersonID?.ToString();
 
-            if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
+            // Check if a valid person exists and navigate accordingly
+            if (CheckPersonAndUserExistence(nationalNo, personID))
             {
-                string nationalNo = ctrlFilterAndMakePersonInfo1._NationalNo;
-
-                bool personExistsByNationalNo = clsPeople.SearchData(clsPeople.PeopleColumn.NationalNo, nationalNo, clsPeople.SearchMode.ExactMatch).Rows.Count > 0;
-
-
-                if (personExistsByNationalNo)
-                {
-                    tabControl1.SelectedTab = tabPage2; 
-                }
-
+                return;
             }
-            else if (ctrlFilterAndMakePersonInfo1._PersonID != -1)
-            {
-                string personID = ctrlFilterAndMakePersonInfo1._PersonID?.ToString();
-
-                bool userExistsByPersonID = clsUsers.SearchData(clsUsers.UsersColumn.PersonID, personID, clsUsers.SearchMode.ExactMatch).Rows.Count > 0;
+            ShowErrorMessage("No valid person found. Please enter correct information.");
 
 
-                if (userExistsByPersonID)
-                {
-                    tabControl1.SelectedTab = tabPage2;
-                }
-            }
-            else
-            {
-                e.Cancel = true;
-
-                MessageBox.Show("Enter True People", "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            string nationalNo = ctrlFilterAndMakePersonInfo1._NationalNo;
+            string personID = ctrlFilterAndMakePersonInfo1._PersonID?.ToString();
 
-
-            /*
-            if (clsAddNewEditUserBusiness.IsFoundPerson(ctrlFilterAndMakePersonInfo1.GetFilterByName(), ctrlFilterAndMakePersonInfo1.GetData()))
+            // Check if the person exists by National Number
+            if (CheckPersonAndUserExistence(nationalNo, personID))
             {
-                
-
-                    if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
-                    {
-                        tabControl1.SelectedTab = tabPage2;
-                        _Next = true;
-                    }
-                    else
-                    {
-                        tabControl1.SelectedTab = tabPage2;
-                        _Next = true;
-                    }
+                return;
             }
-            else
-                MessageBox.Show("Enter True People", "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            */
+
+
+            // If no valid person is found
+            ShowErrorMessage("No valid person found. Please enter correct information.");
 
         }
 
@@ -245,17 +246,23 @@ namespace DVLDProject
             //Test Debugging
             int LicenseClassID = cbLicenseClass.SelectedIndex + 1;
 
+            string NationalNo = ctrlFilterAndMakePersonInfo1._NationalNo;
+            string PersonID = ctrlFilterAndMakePersonInfo1._PersonID?.ToString();
+
             if (_LocalDrivingLicenseApplicationID == -1 || _LocalDrivingLicenseApplicationID == 0)
             {
-                if (ctrlFilterAndMakePersonInfo1._NationalNo != "")
+                if (!string.IsNullOrEmpty(ctrlFilterAndMakePersonInfo1._NationalNo)
+                    ||
+                    (clsPeople.FindByNationalNo(NationalNo) != null))
                 {
-                    if (clsNewLocalDrivingLicenseApplicationBusiness.IsFoundApplicationMatchLocalDriveByNationalNo(
-                        ctrlFilterAndMakePersonInfo1._NationalNo, LicenseClassID))
+                    if (clsLocalDrivingLicenseApplications.IsFoundApplicationMatchLocalDriveByNationalNo(NationalNo, LicenseClassID))
                     {
                         MessageBox.Show(@"Choose another License Class, the selected Person Already have
                                         an active application for the selected Class with id = ??", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
+
 
                     _ClsAdd = new clsNewLocalDrivingLicenseApplicationBusiness(ctrlFilterAndMakePersonInfo1._NationalNo, UserID, LicenseClassID);
 

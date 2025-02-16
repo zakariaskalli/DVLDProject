@@ -69,7 +69,8 @@ BEGIN
     LTRIM(RTRIM(@PaidFees)),
     LTRIM(RTRIM(@CreatedByUserID)),
     LTRIM(RTRIM(@IsLocked)),
-    LTRIM(RTRIM(@RetakeTestApplicationID)));
+    LTRIM(RTRIM(@RetakeTestApplicationID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -90,7 +91,8 @@ CREATE OR ALTER PROCEDURE SP_Update_TestAppointments_ByID
     @PaidFees smallmoney,
     @CreatedByUserID int,
     @IsLocked bit,
-    @RetakeTestApplicationID int = NULL
+    @RetakeTestApplicationID int = NULL
+
 )
 AS
 BEGIN
@@ -110,7 +112,8 @@ BEGIN
     [PaidFees] = LTRIM(RTRIM(@PaidFees)),
     [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID)),
     [IsLocked] = LTRIM(RTRIM(@IsLocked)),
-    [RetakeTestApplicationID] = LTRIM(RTRIM(@RetakeTestApplicationID))
+    [RetakeTestApplicationID] = LTRIM(RTRIM(@RetakeTestApplicationID))
+
         WHERE TestAppointmentID = @TestAppointmentID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

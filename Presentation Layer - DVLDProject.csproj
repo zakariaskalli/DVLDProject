@@ -67,6 +67,7 @@
     <Compile Include="Applications\Local License\frmLocalDrivingLicenseApplicationInfo.Designer.cs">
       <DependentUpon>frmLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global Classes\clsGlobal.cs" />
     <Compile Include="Global Classes\clsValidatoin.cs" />
     <Compile Include="People\ctrlAddEditPersonInfo.cs">
       <SubType>UserControl</SubType>

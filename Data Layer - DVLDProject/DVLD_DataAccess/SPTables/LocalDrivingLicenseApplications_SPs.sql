@@ -59,7 +59,8 @@ BEGIN
         -- Insert the data into the table
         INSERT INTO LocalDrivingLicenseApplications ([ApplicationID],[LicenseClassID])
         VALUES (    LTRIM(RTRIM(@ApplicationID)),
-    LTRIM(RTRIM(@LicenseClassID)));
+    LTRIM(RTRIM(@LicenseClassID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -75,7 +76,8 @@ CREATE OR ALTER PROCEDURE SP_Update_LocalDrivingLicenseApplications_ByID
 (
     @LocalDrivingLicenseApplicationID int,
     @ApplicationID int,
-    @LicenseClassID int
+    @LicenseClassID int
+
 )
 AS
 BEGIN
@@ -90,7 +92,8 @@ BEGIN
         -- Update the record in the table
         UPDATE LocalDrivingLicenseApplications
         SET     [ApplicationID] = LTRIM(RTRIM(@ApplicationID)),
-    [LicenseClassID] = LTRIM(RTRIM(@LicenseClassID))
+    [LicenseClassID] = LTRIM(RTRIM(@LicenseClassID))
+
         WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated
@@ -199,3 +202,49 @@ BEGIN
     END CATCH
 END;
 GO
+
+
+
+Create PROCEDURE [dbo].[SP_IsFoundApplicationMatchLocalDriveByNationalNo]
+    @NationalNo VARCHAR(20),
+    @LicenseClassID INT
+AS
+BEGIN
+    BEGIN TRY
+        -- Attempt to check if the application exists
+        SELECT TOP 1 1 
+        FROM LocalDrivingApplicationTable A
+        INNER JOIN LicenseClasses L ON A.[Driving Class] = L.ClassName
+        WHERE A.NationalNo = @NationalNo
+          AND L.LicenseClassID = @LicenseClassID
+          AND A.Status != 'Cancelled';
+    END TRY
+    BEGIN CATCH
+        -- Call the centralized error handling procedure
+        EXEC SP_HandleError;
+    END CATCH
+END;
+
+
+
+Create PROCEDURE [dbo].[SP_IsFoundApplicationMatchLocalDriveByPersonID]
+    @PersonID INT,
+    @LicenseClassID INT
+AS
+BEGIN
+    BEGIN TRY
+        -- Attempt to check if the application exists
+        SELECT TOP 1 1
+        FROM LocalDrivingApplicationTable A
+        INNER JOIN People P ON A.NationalNo = P.NationalNo
+        INNER JOIN LicenseClasses L ON A.[Driving Class] = L.ClassName
+        WHERE P.PersonID = @PersonID
+          AND L.LicenseClassID = @LicenseClassID
+          AND A.Status != 'Cancelled';
+    END TRY
+    BEGIN CATCH
+        -- Call the centralized error handling procedure
+        EXEC SP_HandleError;
+    END CATCH
+END;
+

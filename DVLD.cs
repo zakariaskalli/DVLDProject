@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,8 +17,6 @@ namespace DVLDProject
 
     public partial class DVLD : Form
     {
-        readonly string _UserName = "";
-        readonly string _Password = "";
 
         public delegate void ReloadNewOrNot(bool YesOrNo);
         public event ReloadNewOrNot NewOrNot;
@@ -28,16 +27,9 @@ namespace DVLDProject
             frm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
         }
 
-        public DVLD(string UserName,string Password)
+        public DVLD()
         {
             InitializeComponent();
-
-            _UserName = UserName;
-            _Password = Password;
-        }
-
-        private void DVLD_Load(object sender, EventArgs e)
-        {
         }
 
         private void peopleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,26 +39,18 @@ namespace DVLDProject
             frmPeople.ShowDialog();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewOrNot?.Invoke(true);
             this.Close();
 
-            //frmLoginScreen frmLoginScreen = new frmLoginScreen();
-
-            //frmLoginScreen.ShowDialog();
         }
 
         private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-
-            frmUserInfo frm = new frmUserInfo(_UserName);
+            frmUserInfo frm = new frmUserInfo(clsGlobal.CurrenntUser.UserName);
             GeneralStyleForAllForms(frm);
             frm.ShowDialog();
         }
@@ -81,12 +65,9 @@ namespace DVLDProject
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int UserID = clsMethodsGeneralBusiness.UserIDByUserName(_UserName);
-
-            frmChangePassword Frm = new frmChangePassword(UserID);
+            frmChangePassword Frm = new frmChangePassword(clsGlobal.CurrenntUser.UserName);
             GeneralStyleForAllForms(Frm);
             Frm.ShowDialog();
-
 
         }
 
@@ -108,14 +89,14 @@ namespace DVLDProject
 
         private void localLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication(_UserName);
+            frmNewLocalDrivingLicenseApplication frm = new frmNewLocalDrivingLicenseApplication();
             GeneralStyleForAllForms(frm);
             frm.ShowDialog();
         }
 
         private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLocalDrivingLicenseAppliactions frm = new frmLocalDrivingLicenseAppliactions(_UserName);
+            frmLocalDrivingLicenseAppliactions frm = new frmLocalDrivingLicenseAppliactions();
             GeneralStyleForAllForms(frm); 
             frm.ShowDialog();
         }
@@ -185,19 +166,10 @@ namespace DVLDProject
 
         private void retakeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmLocalDrivingLicenseAppliactions frm = new frmLocalDrivingLicenseAppliactions(_UserName);
+            frmLocalDrivingLicenseAppliactions frm = new frmLocalDrivingLicenseAppliactions();
             GeneralStyleForAllForms(frm); 
             frm.ShowDialog();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void newDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

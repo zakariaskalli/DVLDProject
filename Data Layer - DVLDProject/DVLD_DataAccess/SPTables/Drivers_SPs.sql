@@ -61,7 +61,8 @@ BEGIN
         INSERT INTO Drivers ([PersonID],[CreatedByUserID],[CreatedDate])
         VALUES (    LTRIM(RTRIM(@PersonID)),
     LTRIM(RTRIM(@CreatedByUserID)),
-    LTRIM(RTRIM(@CreatedDate)));
+    LTRIM(RTRIM(@CreatedDate))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -78,7 +79,8 @@ CREATE OR ALTER PROCEDURE SP_Update_Drivers_ByID
     @DriverID int,
     @PersonID int,
     @CreatedByUserID int,
-    @CreatedDate smalldatetime
+    @CreatedDate smalldatetime
+
 )
 AS
 BEGIN
@@ -94,7 +96,8 @@ BEGIN
         UPDATE Drivers
         SET     [PersonID] = LTRIM(RTRIM(@PersonID)),
     [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID)),
-    [CreatedDate] = LTRIM(RTRIM(@CreatedDate))
+    [CreatedDate] = LTRIM(RTRIM(@CreatedDate))
+
         WHERE DriverID = @DriverID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

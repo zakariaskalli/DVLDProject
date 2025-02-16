@@ -339,7 +339,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmNewLocalDrivingLicenseApplication";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmNewLocalDrivingLicenseApplication";
+            this.Text = "New Local Driving License Application";
             this.Activated += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Activated);
             this.Load += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Load);
             this.tabControl1.ResumeLayout(false);

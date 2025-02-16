@@ -12,18 +12,20 @@ using Business_Layer___DVLDProject;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using DVLD_BusinessLayer;
 using System.Web;
+using DVLDProject.Global_Classes;
 
 
 namespace DVLDProject
 {
     public partial class frmLoginScreen : Form
     {
-        public delegate void DataBackEventCancel(string UserName, string Password);
-        public event DataBackEventCancel DataBack;
+        //public delegate void DataBackEventCancel(clsUsers UserInfo);
+        //public event DataBackEventCancel DataBack;
 
         public frmLoginScreen()
         {
             InitializeComponent();
+
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -43,7 +45,9 @@ namespace DVLDProject
 
                 if (clsUsers.IsAccountActive(UserName))
                 {
-                    DataBack?.Invoke(UserName, Password);
+                    clsGlobal.CurrenntUser = clsUsers.FindByUserName(UserName);
+
+                    //DataBack?.Invoke(UserName, Password);
 
                     clsRegistryUtility.RememberMe(chbRememberMe.Checked, UserName, Password);
 

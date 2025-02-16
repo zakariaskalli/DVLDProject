@@ -69,7 +69,8 @@ BEGIN
     LTRIM(RTRIM(@ApplicationStatus)),
     LTRIM(RTRIM(@LastStatusDate)),
     LTRIM(RTRIM(@PaidFees)),
-    LTRIM(RTRIM(@CreatedByUserID)));
+    LTRIM(RTRIM(@CreatedByUserID))
+);
 
         -- Set the new ID
         SET @NewID = SCOPE_IDENTITY();  -- Get the last inserted ID
@@ -90,7 +91,8 @@ CREATE OR ALTER PROCEDURE SP_Update_Applications_ByID
     @ApplicationStatus tinyint,
     @LastStatusDate datetime,
     @PaidFees smallmoney,
-    @CreatedByUserID int
+    @CreatedByUserID int
+
 )
 AS
 BEGIN
@@ -110,7 +112,8 @@ BEGIN
     [ApplicationStatus] = LTRIM(RTRIM(@ApplicationStatus)),
     [LastStatusDate] = LTRIM(RTRIM(@LastStatusDate)),
     [PaidFees] = LTRIM(RTRIM(@PaidFees)),
-    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+    [CreatedByUserID] = LTRIM(RTRIM(@CreatedByUserID))
+
         WHERE ApplicationID = @ApplicationID;
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated

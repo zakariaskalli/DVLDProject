@@ -1,4 +1,7 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
+
 //using MyFirstWinFormsProject;
 using System;
 using System.Collections.Generic;
@@ -23,28 +26,24 @@ namespace DVLDProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
-            string _Password = null;
-            
+                        
             bool ReloadNewOrNot = false;
             do
             {
                 ReloadNewOrNot = false;
-            
+
                 using (frmLoginScreen Form = new frmLoginScreen())
                 {
-                    Form.DataBack += (UserName, Password) => { _UserName = UserName; _Password = Password; };
                     Application.Run(Form);
-            
                 }
-            
-                if (!string.IsNullOrEmpty(_UserName) && !string.IsNullOrEmpty(_Password))
+
+                if (clsUsers.FindByUserName(clsGlobal.CurrenntUser.UserName) != null)
                 {
-                    DVLD Form = new DVLD(_UserName, _Password);
+                    DVLD Form = new DVLD(); // لم نعد بحاجة لإرسال اسم المستخدم والباسوورد
                     Form.NewOrNot += (YesOrNo) => { ReloadNewOrNot = YesOrNo; };
-            
                     Application.Run(Form);
                 }
+
             }
             while (ReloadNewOrNot == true);
 
