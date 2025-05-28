@@ -106,7 +106,7 @@ namespace DVLDProject
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DataBack?.Invoke("", "");
+            //DataBack?.Invoke("", "");
 
             this.Close();
         }

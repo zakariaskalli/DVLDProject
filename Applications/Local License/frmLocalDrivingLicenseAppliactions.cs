@@ -28,17 +28,6 @@ namespace DVLDProject
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
-            // Motwait 95
-
-            dataGridView1.Columns[0].Width = 90; //LDLAppID
-            dataGridView1.Columns[1].Width = 185;//Driving Class
-            dataGridView1.Columns[2].Width = 80; //NationalNo
-            dataGridView1.Columns[3].Width = 208;//FullName
-            dataGridView1.Columns[4].Width = 115;//ApplicationDate
-            dataGridView1.Columns[5].Width = 110;//PassedTestCount
-            dataGridView1.Columns[6].Width = 80; //Status
-
-
         }
 
         private void LoadAllComboBoxFilterBy()
@@ -94,7 +83,7 @@ namespace DVLDProject
                     tbFilterByData.Visible = true;
                     cbStatus.Visible = false;
                     break;
-                case "National No":
+                case "NationalNo":
                     tbFilterByData.Visible = true;
                     cbStatus.Visible = false;
                     break;
@@ -139,7 +128,16 @@ namespace DVLDProject
             
             
             string NationalNo = (string)dataGridView1.CurrentRow.Cells[2].Value;
-            int LicenseClassID = clsMethodsGeneralBusiness.LicenseNumberbyLicenseName((string)dataGridView1.CurrentRow.Cells[1].Value);
+
+            DataTable dt = clsLicenseClasses.SearchData(clsLicenseClasses.LicenseClassesColumn.ClassName, (string)dataGridView1.CurrentRow.Cells[1].Value,clsLicenseClasses.SearchMode.ExactMatch);
+
+            int LicenseClassID = 0;
+
+            if (dt.Rows.Count > 0)
+            {
+                LicenseClassID = Convert.ToInt32(dt.Rows[0]["LicenseClassID"]);
+            }
+
 
 
 
@@ -166,7 +164,9 @@ namespace DVLDProject
             }
 
 
-            DataTable dataTable = clsLocalDrivingLicenseApplicationsBusiness.SearchInTable(cbSearchBy.Text, tbFilterByData.Text);
+
+            DataTable dataTable = clsLocalDrivingLicenseApplications.SearchData((clsLocalDrivingLicenseApplications.LocalDrivingLicenseApplicationsColumn)Enum.Parse(typeof(clsLocalDrivingLicenseApplications.LocalDrivingLicenseApplicationsColumn), cbSearchBy.Text), tbFilterByData.Text);
+
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }
@@ -425,25 +425,5 @@ namespace DVLDProject
             }
         }
 
-        private void cancelApplicationToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
-            int TestNum = (int)dataGridView1.CurrentRow.Cells[5].Value + 1;
-
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
-
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
-            {
-                frmIssueDriverLicenseForTheFirstTime Frm = new frmIssueDriverLicenseForTheFirstTime(LDLAppID, TestNum);
-
-                Frm.ShowDialog();
-            }
-            else
-                MessageBox.Show("LDLAppID IS Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
-            LoadAllDataToDGV();
-        }
     }
 }

@@ -55,7 +55,7 @@
     <Compile Include="DVLD_Business\clsInternationalLicenses.cs" />
     <Compile Include="DVLD_Business\clsLicenseClasses.cs" />
     <Compile Include="DVLD_Business\clsLicenses.cs" />
-    <Compile Include="DVLD_Business\clsLocalDrivingLicenseApplications.cs" />
+    <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplications.cs" />
     <Compile Include="Login\clsRegistryUtility.cs" />
     <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_Business\clsTestAppointments.cs" />
@@ -76,7 +76,6 @@
     <Compile Include="Drivers\clsManageDriversBusiness.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
-    <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationBusiness.cs" />
     <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseBusiness.cs" />
     <Compile Include="Applications\Renew driving License\clsRenewLocalDrivingLicenseBusiness.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesBusiness.cs" />

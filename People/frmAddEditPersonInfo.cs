@@ -53,23 +53,9 @@ namespace DVLDProject
             
         }
 
-        //public frmAddEditPersonInfo(string NationalNo)
-        //{
-        //    InitializeComponent();
-        //
-        //    ctrlAddEditPersonInfo1._NationalNo = NationalNo;
-        //
-        //
-        //    lblAddOrUpdate.Text = "Update Person";
-        //    .Text = PersonID.ToString();
-        //}
-
-
-
         private void ctrlAddEditPersonInfo1_CloseButtonClicked_1(object sender, EventArgs e)
         {
             this.Close();
-
         }
 
         private void ctrlAddEditPersonInfo1_OnSaveClicked_1(int obj)
@@ -77,16 +63,6 @@ namespace DVLDProject
             _PersonID = obj;
             lblPersonID.Text = obj.ToString();
             lblAddOrUpdate.Text = "Update Person";
-        }
-
-        private void frmAddEditPersonInfo_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ctrlAddEditPersonInfo1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

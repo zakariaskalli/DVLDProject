@@ -49,11 +49,6 @@ namespace DVLDProject
             InitializeComponent();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         public void SelectCombobox(int NumCb)
         {
             cbSearchBy.SelectedIndex = NumCb;
@@ -83,10 +78,7 @@ namespace DVLDProject
         }
 
         //Delete
-        private void cbSearchBy_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {

@@ -139,6 +139,16 @@ ApplicationID, ApplicantPersonID, ApplicationDate, ApplicationTypeID, Applicatio
 
         public bool Save()
         {
+            if (
+                (clsPeople.FindByNationalNo(this.PeopleInfo.NationalNo) != null)
+                &&
+                (clsPeople.FindByPersonID(this.ApplicantPersonID) == null)
+                )
+            {
+                this.ApplicantPersonID = clsPeople.FindByNationalNo(this.PeopleInfo.NationalNo).PersonID;
+            }
+
+
             switch (Mode)
             {
                 case enMode.AddNew:

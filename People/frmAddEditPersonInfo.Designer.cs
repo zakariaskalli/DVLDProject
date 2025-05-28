@@ -86,7 +86,6 @@
             this.ctrlAddEditPersonInfo1.TabIndex = 11;
             this.ctrlAddEditPersonInfo1.CloseButtonClicked += new System.EventHandler(this.ctrlAddEditPersonInfo1_CloseButtonClicked_1);
             this.ctrlAddEditPersonInfo1.OnSaveClicked += new System.Action<int>(this.ctrlAddEditPersonInfo1_OnSaveClicked_1);
-            this.ctrlAddEditPersonInfo1.Load += new System.EventHandler(this.ctrlAddEditPersonInfo1_Load);
             // 
             // frmAddEditPersonInfo
             // 
@@ -102,7 +101,6 @@
             this.Name = "frmAddEditPersonInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmAddEditPersonInfo";
-            this.Load += new System.EventHandler(this.frmAddEditPersonInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

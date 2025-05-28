@@ -54,7 +54,6 @@
     <Compile Include="Applications\International License\clsInternationalLicenseInfoData.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationData.cs" />
     <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplicationsData.cs" />
-    <Compile Include="Applications\Local License\clsNewLocalDrivingLicenseApplicationData.cs" />
     <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseData.cs" />
     <Compile Include="clsHashing.cs" />
     <Compile Include="Applications\clsApplications.cs" />
@@ -65,7 +64,7 @@
     <Compile Include="DVLD_DataAccess\clsInternationalLicenses.cs" />
     <Compile Include="DVLD_DataAccess\clsLicenseClasses.cs" />
     <Compile Include="DVLD_DataAccess\clsLicenses.cs" />
-    <Compile Include="DVLD_DataAccess\clsLocalDrivingLicenseApplications.cs" />
+    <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplications.cs" />
     <Compile Include="People\clsPeople.cs" />
     <Compile Include="DVLD_DataAccess\clsTestAppointments.cs" />
     <Compile Include="DVLD_DataAccess\clsTests.cs" />

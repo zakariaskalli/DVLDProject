@@ -123,10 +123,6 @@ namespace DVLDProject
 
         } 
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void lnkLblEditPeronInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

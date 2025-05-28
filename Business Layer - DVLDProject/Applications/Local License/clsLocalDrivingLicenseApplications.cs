@@ -17,8 +17,6 @@ namespace DVLD_BusinessLayer
         //public clsApplications ApplicationsInfo { get; set; }
         public int? LicenseClassID { get; set; }
         public clsLicenseClasses LicenseClassesInfo { get; set; }
-
-
         public clsLocalDrivingLicenseApplications()
         {
             this.LocalDrivingLicenseApplicationID = null;
@@ -27,18 +25,48 @@ namespace DVLD_BusinessLayer
             Mode = enMode.AddNew;
         }
 
+        public clsLocalDrivingLicenseApplications(string NationalNo, int CreatedByUserID, int LicenseClassID)
+        {
+            clsPeople PersonInfo = clsPeople.FindByNationalNo(NationalNo);
+            this.PeopleInfo = PersonInfo;
+            this.CreatedByUserID = CreatedByUserID;
+            this.LicenseClassID = LicenseClassID;
+            Mode = enMode.AddNew;
+
+        }
+
+        public clsLocalDrivingLicenseApplications(int PersonID, int CreatedByUserID, int LicenseClassID)
+        {
+            clsPeople PersonInfo = clsPeople.FindByPersonID(PersonID);
+            this.PeopleInfo = PersonInfo;
+            this.CreatedByUserID = CreatedByUserID;
+            this.LicenseClassID = LicenseClassID;
+
+
+            Mode = enMode.AddNew;
+        }
+
+        public clsLocalDrivingLicenseApplications(int LocalDrivingLicenseApplicationID, int LicenseClassID)
+        {
+            this.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
+            this.LicenseClassID = LicenseClassID;
+
+            Mode = enMode.Update;
+        }
 
         private clsLocalDrivingLicenseApplications(
 int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonID, DateTime? ApplicationDate, int? ApplicationTypeID, enApplicationStatus ApplicationStatus, DateTime? LastStatusDate, decimal? PaidFees, int? CreatedByUserID, int? LicenseClassID) {
             this.LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
             this.ApplicationID = ApplicationID;
             this.ApplicantPersonID = ApplicantPersonID;
+            this.PeopleInfo = clsPeople.FindByPersonID(ApplicantPersonID);
             this.ApplicationDate = ApplicationDate;
             this.ApplicationTypeID = ApplicationTypeID;
             this.ApplicationStatus = ApplicationStatus;
             this.LastStatusDate = LastStatusDate;
             this.PaidFees = PaidFees;
             this.CreatedByUserID = CreatedByUserID;
+            this.UsersInfo = clsUsers.FindByUserID(CreatedByUserID);
             this.LicenseClassID = LicenseClassID;
             this.LicenseClassesInfo = clsLicenseClasses.FindByLicenseClassID(LicenseClassID);
             Mode = enMode.Update;
@@ -102,6 +130,7 @@ int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonI
 
         public bool Save()
         {
+
             base.Mode = (clsApplications.enMode)Mode;
             if (!base.Save())
                 return false;
@@ -109,6 +138,16 @@ int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonI
             switch (Mode)
             {
                 case enMode.AddNew:
+
+                    if (
+                        (clsPeople.FindByNationalNo(this.PeopleInfo.NationalNo) != null)
+                        &&
+                        (clsPeople.FindByPersonID(this.ApplicantPersonID) == null)
+                        )
+                    {
+                        this.ApplicantPersonID = clsPeople.FindByNationalNo(this.PeopleInfo.NationalNo).PersonID;
+                    }
+
                     if (_AddNewLocalDrivingLicenseApplications())
                     {
                         Mode = enMode.Update;
@@ -138,9 +177,10 @@ int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonI
 
         public enum LocalDrivingLicenseApplicationsColumn
         {
-            LocalDrivingLicenseApplicationID,
-            ApplicationID,
-            LicenseClassID
+            LDLAppID,
+            NationalNo,
+            FullName,
+            Status
         }
 
 
@@ -166,7 +206,7 @@ int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonI
         public static bool IsFoundApplicationMatchLocalDriveByNationalNo(string NationalNo, int LicenseClassID)
         {
             // Basic validation to check if the NationalNo is provided and is not empty
-            if (string.IsNullOrWhiteSpace(NationalNo) || (LicenseClassID >= 1 && LicenseClassID <= 7))
+            if (string.IsNullOrWhiteSpace(NationalNo) || (LicenseClassID < 1 && LicenseClassID > 7))
             {
                 return false;
             }
@@ -193,6 +233,47 @@ int? LocalDrivingLicenseApplicationID, int? ApplicationID, int? ApplicantPersonI
 
             // Return the result
             return isFound;
+        }
+
+        public static int ApplicationNumMatchPersonIDAndLicenseClassID(int PersonID, int LicenseClassID)
+        {
+            // Basic validation to check if the PersonID and LicenseClassID are valid
+            if (PersonID <= 0 || LicenseClassID < 1 || LicenseClassID > 7)
+            {
+                return 0;
+            }
+            // Call the Data Access Layer method to get the application number by PersonID and LicenseClassID
+            int applicationNum = clsLocalDrivingLicenseApplicationsData.ApplicationNumMatchPersonIDAndLicenseClassID(PersonID, LicenseClassID);
+            // Return the application number
+            return applicationNum;
+        }
+
+        public static int ApplicationNumMatchNationalNoAndLicenseClassID(string NationalNo, int LicenseClassID)
+        {
+            // Basic validation
+            if (string.IsNullOrWhiteSpace(NationalNo) || LicenseClassID < 1 || LicenseClassID > 7)
+            {
+                return 0;
+            }
+
+            // Call the Data Access Layer method
+            int applicationNum = clsLocalDrivingLicenseApplicationsData.ApplicationNumMatchNationalNoAndLicenseClassID(NationalNo, LicenseClassID);
+
+            return applicationNum;
+        }
+
+        public static bool CancelLicenseByNationalNoAndLicenseClassID(string NationalNo, int LicenseClassID)
+        {
+            // Basic validation
+            if (string.IsNullOrWhiteSpace(NationalNo) || LicenseClassID < 1 || LicenseClassID > 7)
+            {
+                return false;
+            }
+
+            // Call the Data Access Layer method
+            bool isCancelled = clsLocalDrivingLicenseApplicationsData.CancelLicenseByNationalNoAndLicenseClassID(NationalNo, LicenseClassID);
+
+            return isCancelled;
         }
 
     }

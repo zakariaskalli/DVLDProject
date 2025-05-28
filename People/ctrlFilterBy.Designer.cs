@@ -65,7 +65,6 @@
             this.FilterBy.TabIndex = 0;
             this.FilterBy.TabStop = false;
             this.FilterBy.Text = "Filter";
-            this.FilterBy.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btnSearch
             // 
@@ -97,7 +96,6 @@
             this.cbSearchBy.Name = "cbSearchBy";
             this.cbSearchBy.Size = new System.Drawing.Size(173, 24);
             this.cbSearchBy.TabIndex = 6;
-            this.cbSearchBy.SelectedIndexChanged += new System.EventHandler(this.cbSearchBy_SelectedIndexChanged);
             // 
             // label1
             // 

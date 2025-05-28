@@ -72,10 +72,9 @@ END;
 GO
 
 
-CREATE OR ALTER PROCEDURE SP_Update_LocalDrivingLicenseApplications_ByID
+CREATE OR ALTER PROCEDURE [dbo].[SP_Update_LocalDrivingLicenseApplications_ByID]
 (
     @LocalDrivingLicenseApplicationID int,
-    @ApplicationID int,
     @LicenseClassID int
 
 )
@@ -83,18 +82,28 @@ AS
 BEGIN
     BEGIN TRY
         -- Check if required parameters are NULL or contain only whitespace after trimming
-        IF LTRIM(RTRIM(@ApplicationID)) IS NULL OR LTRIM(RTRIM(@ApplicationID)) = '' OR LTRIM(RTRIM(@LicenseClassID)) IS NULL OR LTRIM(RTRIM(@LicenseClassID)) = ''
+        IF  LTRIM(RTRIM(@LicenseClassID)) IS NULL OR LTRIM(RTRIM(@LicenseClassID)) = ''
         BEGIN
             RAISERROR('One or more required parameters are NULL or have only whitespace.', 16, 1);
             RETURN;
-        END
+        END;
 
-        -- Update the record in the table
-        UPDATE LocalDrivingLicenseApplications
-        SET     [ApplicationID] = LTRIM(RTRIM(@ApplicationID)),
-    [LicenseClassID] = LTRIM(RTRIM(@LicenseClassID))
 
-        WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+		WITH AppCTE AS (
+		    SELECT ApplicationID
+		    FROM LocalDrivingLicenseApplications
+		    WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+		)
+		UPDATE Applications
+		SET LastStatusDate = GETDATE()
+		WHERE ApplicationID = (SELECT ApplicationID FROM AppCTE);
+
+
+		UPDATE LocalDrivingLicenseApplications
+            SET LicenseClassID = @LicenseClassID
+                WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+
+
         
         -- Optionally, you can check if the update was successful and raise an error if no rows were updated
         IF @@ROWCOUNT = 0
@@ -224,7 +233,7 @@ BEGIN
         EXEC SP_HandleError;
     END CATCH
 END;
-
+GO
 
 
 Create PROCEDURE [dbo].[SP_IsFoundApplicationMatchLocalDriveByPersonID]

@@ -33,10 +33,6 @@ namespace DVLDProject
 
         public enMode Mode = enMode.AddNew;
 
-        //clsAddEditPersonInfoBusiness _ClsAdd;
-
-        //clsAddEditPersonInfoBusiness _ClsUpdate;
-
         protected virtual void SaveClicked(int PersonID)
         {
             Action<int> handler = OnSaveClicked;
@@ -49,13 +45,6 @@ namespace DVLDProject
             InitializeComponent();
         }
 
-        //public ctrlAddEditPersonInfo(int PersonID)
-        //{
-        //    InitializeComponent();
-        //
-        //    _PersonID = PersonID;
-        //}
-
         static private string _ImageMalePath = @"C:/Programation Level 2/DVLDProject/Project Image/homme.png";
         static private string _ImageFemalePath = @"C:/Programation Level 2/DVLDProject/Project Image/medecin.png";
 
@@ -67,8 +56,6 @@ namespace DVLDProject
 
             rbMale.Checked = true;
             PB1.ImageLocation = _ImageMalePath;
-
-            // Load All Countries From DataBase To ComboBox
 
             DataTable dt = clsCountries.GetAllCountries();
 
@@ -142,8 +129,6 @@ namespace DVLDProject
             if (PersonInfo.PersonID != null)
             {
                 PersonInfo = clsPeople.FindByPersonID(PersonInfo.PersonID);
-
-                //clsAddEditPersonInfoBusiness Data = clsAddEditPersonInfoBusiness.UploadAllDataByPersonID(_PersonID);
                 
                 UploadAllData();
                 Mode = enMode.Edit;
@@ -247,7 +232,7 @@ namespace DVLDProject
         //[Serializable]
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Image Upload To My Folder
+             // Image Upload To My Folder
 
             string FilePath = openFileDialog1.FileName;
             string destinationPath = "";

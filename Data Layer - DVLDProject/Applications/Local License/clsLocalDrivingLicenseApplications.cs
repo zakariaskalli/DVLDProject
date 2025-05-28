@@ -311,5 +311,113 @@ namespace DVLD_DataLayer
             return IsFound;
         }
 
+        public static int ApplicationNumMatchPersonIDAndLicenseClassID(int PersonID, int LicenseClassID)
+        {
+            int applicationNum = 0;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    string query = "SP_GetApplicationNumberByPersonIDAndLicenseClassID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@PersonID", PersonID);
+                        command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int appNum))
+                        {
+                            applicationNum = appNum;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleException(ex, nameof(ApplicationNumMatchPersonIDAndLicenseClassID),
+                    $"Parameters: PersonID = {PersonID}, LicenseClassID = {LicenseClassID}");
+            }
+
+            return applicationNum;
+        }
+
+        public static int ApplicationNumMatchNationalNoAndLicenseClassID(string NationalNo, int LicenseClassID)
+        {
+            int applicationNum = 0;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    string query = "SP_GetApplicationNumberByNationalNoAndLicenseClassID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@NationalNo", NationalNo);
+                        command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int appNum))
+                        {
+                            applicationNum = appNum;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleException(ex, nameof(ApplicationNumMatchNationalNoAndLicenseClassID),
+                    $"Parameters: NationalNo = {NationalNo}, LicenseClassID = {LicenseClassID}");
+            }
+
+            return applicationNum;
+        }
+
+        public static bool CancelLicenseByNationalNoAndLicenseClassID(string NationalNo, int LicenseClassID)
+        {
+            bool isCancelled = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting))
+                {
+                    string query = "SP_CancelLicenseByNationalNoAndLicenseClassID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@NationalNo", NationalNo);
+                        command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                        connection.Open();
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        isCancelled = rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.HandleException(ex, nameof(CancelLicenseByNationalNoAndLicenseClassID),
+                    $"Parameters: NationalNo = {NationalNo}, LicenseClassID = {LicenseClassID}");
+            }
+
+            return isCancelled;
+        }
+
     }
 }

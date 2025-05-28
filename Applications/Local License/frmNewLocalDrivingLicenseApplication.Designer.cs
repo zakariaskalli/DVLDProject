@@ -34,7 +34,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.ctrlFilterAndMakePersonInfo1 = new DVLDProject.ctrlFilterAndMakePersonInfo();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tpApplicationInfo = new System.Windows.Forms.TabPage();
             this.lblCreatedBy = new System.Windows.Forms.Label();
             this.lblApplicationFees = new System.Windows.Forms.Label();
             this.cbLicenseClass = new System.Windows.Forms.ComboBox();
@@ -54,7 +54,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tpApplicationInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -76,7 +76,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tpApplicationInfo);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 67);
             this.tabControl1.Name = "tabControl1";
@@ -123,30 +123,30 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // tabPage2
+            // tpApplicationInfo
             // 
-            this.tabPage2.Controls.Add(this.lblCreatedBy);
-            this.tabPage2.Controls.Add(this.lblApplicationFees);
-            this.tabPage2.Controls.Add(this.cbLicenseClass);
-            this.tabPage2.Controls.Add(this.lblApplicationDate);
-            this.tabPage2.Controls.Add(this.pictureBox5);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.pictureBox4);
-            this.tabPage2.Controls.Add(this.pictureBox3);
-            this.tabPage2.Controls.Add(this.pictureBox2);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.lblAppliactionID);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.pictureBox1);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(920, 452);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Application Info";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tpApplicationInfo.Controls.Add(this.lblCreatedBy);
+            this.tpApplicationInfo.Controls.Add(this.lblApplicationFees);
+            this.tpApplicationInfo.Controls.Add(this.cbLicenseClass);
+            this.tpApplicationInfo.Controls.Add(this.lblApplicationDate);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox5);
+            this.tpApplicationInfo.Controls.Add(this.label4);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox4);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox3);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox2);
+            this.tpApplicationInfo.Controls.Add(this.label5);
+            this.tpApplicationInfo.Controls.Add(this.lblAppliactionID);
+            this.tpApplicationInfo.Controls.Add(this.label3);
+            this.tpApplicationInfo.Controls.Add(this.label2);
+            this.tpApplicationInfo.Controls.Add(this.pictureBox1);
+            this.tpApplicationInfo.Controls.Add(this.label1);
+            this.tpApplicationInfo.Location = new System.Drawing.Point(4, 28);
+            this.tpApplicationInfo.Name = "tpApplicationInfo";
+            this.tpApplicationInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tpApplicationInfo.Size = new System.Drawing.Size(920, 452);
+            this.tpApplicationInfo.TabIndex = 1;
+            this.tpApplicationInfo.Text = "Application Info";
+            this.tpApplicationInfo.UseVisualStyleBackColor = true;
             // 
             // lblCreatedBy
             // 
@@ -344,8 +344,8 @@
             this.Load += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tpApplicationInfo.ResumeLayout(false);
+            this.tpApplicationInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -362,7 +362,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tpApplicationInfo;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;

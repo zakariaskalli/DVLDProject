@@ -163,8 +163,8 @@ LicenseClassID, ClassName, ClassDescription, MinimumAllowedAge, DefaultValidityL
 
         public static DataTable SearchData(LicenseClassesColumn ChosenColumn, string SearchValue, SearchMode Mode = SearchMode.Anywhere)
         {
-            if (string.IsNullOrWhiteSpace(SearchValue) || !SqlHelper.IsSafeInput(SearchValue))
-                return new DataTable();
+            //if (string.IsNullOrWhiteSpace(SearchValue) || !SqlHelper.IsSafeInput(SearchValue))
+            //    return new DataTable();
 
             string modeValue = Mode.ToString(); // Get the mode as string for passing to the stored procedure
 
