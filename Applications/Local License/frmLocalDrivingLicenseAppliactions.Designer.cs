@@ -261,6 +261,7 @@
             this.sechToolStripMenuItem.Name = "sechToolStripMenuItem";
             this.sechToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
             this.sechToolStripMenuItem.Text = "Sechdule Tests";
+            this.sechToolStripMenuItem.Click += new System.EventHandler(this.sechToolStripMenuItem_Click);
             // 
             // sechduleVisionTestToolStripMenuItem
             // 

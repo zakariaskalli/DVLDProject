@@ -105,21 +105,17 @@ FROM            dbo.LocalDrivingLicenseApplications INNER JOIN
             string query = $@" DECLARE @LDLAppID INT = @@LDLAppID, 
                                             @ApplicationID INT;
                                 
-                                    -- التحقق من عدم وجود سجلات مرتبطة
                                     IF NOT EXISTS (SELECT 1 FROM TestAppointments WHERE LocalDrivingLicenseApplicationID = @LDLAppID)
                                     BEGIN
-                                        -- الحصول على ApplicationID
                                         SET @ApplicationID = (SELECT ApplicationID 
                                                               FROM Applications
                                                               WHERE ApplicationID = (SELECT ApplicationID 
                                                                                      FROM LocalDrivingLicenseApplications
                                                                                      WHERE LocalDrivingLicenseApplicationID = @LDLAppID));
                                         
-                                        -- حذف السجل من LocalDrivingLicenseApplications
                                         DELETE FROM LocalDrivingLicenseApplications
                                         WHERE LocalDrivingLicenseApplicationID = @LDLAppID;
                                         
-                                        -- حذف السجل من Applications
                                         DELETE FROM Applications
                                         WHERE ApplicationID = @ApplicationID;
                                 
@@ -127,7 +123,7 @@ FROM            dbo.LocalDrivingLicenseApplications INNER JOIN
                                     END
                                     ELSE
                                     BEGIN
-                                        SELECT 0 AS Success; -- يوجد سجلات مرتبطة، لا تقم بالحذف
+                                        SELECT 0 AS Success; 
                                     END";
 
             SqlCommand Command = new SqlCommand(query, connection);

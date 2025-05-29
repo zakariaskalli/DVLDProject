@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,23 +27,18 @@ namespace DVLDProject
 
         private void LoadAllData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
 
-                clsLocalDrivingLicenseApplicationsBusiness clsA = clsLocalDrivingLicenseApplicationsBusiness.UploadAllDataByDLAppInfo_LDLAppID(_LDLAppID);
+                DataTable dt = clsLocalDrivingLicenseApplications.SearchData(clsLocalDrivingLicenseApplications.LocalDrivingLicenseApplicationsColumn.LDLAppID, _LDLAppID.ToString());
 
-                lblDLAppID.Text = clsA.DLAppInfo_LDLAppID.ToString();
-                lblAppliedForLicense.Text = clsA.DLAppInfo_LicenseName.ToString();
-                lblPassedTests.Text = clsA.DLAppInfo_NumTestsPassed.ToString() + "/" + "3";
-                TestNum = clsA.DLAppInfo_NumTestsPassed + 1;
+                lblDLAppID.Text = dt.Rows[0]["LocalDrivingLicenseApplicationID"].ToString();
+                lblAppliedForLicense.Text = dt.Rows[0]["ClassName"].ToString();
+                lblPassedTests.Text = dt.Rows[0]["PassedTestCount"].ToString() + "/" + "3";
+                TestNum = (int)dt.Rows[0]["PassedTestCount"] + 1;
 
                 lblShowLicenseInfo.Enabled = true;
             }
-        }
-
-        private void gbDrivingLicenseApplicationInfo_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void ctrlDrivingLicenseApplicationInfo_Load(object sender, EventArgs e)

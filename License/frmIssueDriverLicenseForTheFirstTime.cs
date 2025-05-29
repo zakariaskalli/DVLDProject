@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace DVLDProject
     {
         int LDLAppID = -1;
         int TestNum = -1;
-        string UserName = Program._UserName;
+        string UserName = clsGlobal.CurrenntUser.UserName;
 
 
 

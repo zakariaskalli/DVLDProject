@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -217,7 +218,7 @@ namespace DVLDProject
         {
             int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(int.Parse(dataGridView1.CurrentRow.Cells[3].Value.ToString()));
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 Form frm = new frmLicenseHistory(LDLAppID);
                 frm.ShowDialog();

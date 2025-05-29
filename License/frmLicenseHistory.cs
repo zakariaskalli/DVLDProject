@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace DVLDProject
             InitializeComponent();
             _LDLAppID = lDLAppID;
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
                 _PersonID = clsMethodsGeneralBusiness.PersonIDByLDLAppID(_LDLAppID);
             }
@@ -31,7 +32,7 @@ namespace DVLDProject
 
         void LoadAllData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
                 ctrlFilterAndMakePersonInfo1._PersonID = _PersonID;
                 ctrlFilterAndMakePersonInfo1.ctrlShowPersonDetails_Load();

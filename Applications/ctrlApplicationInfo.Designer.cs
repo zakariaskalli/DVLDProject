@@ -98,7 +98,6 @@
             this.gbAppBasicInfo.TabIndex = 1;
             this.gbAppBasicInfo.TabStop = false;
             this.gbAppBasicInfo.Text = "Application Basic Info";
-            this.gbAppBasicInfo.Enter += new System.EventHandler(this.gbAppBasicInfo_Enter);
             // 
             // pictureBox7
             // 

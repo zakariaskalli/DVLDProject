@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,7 +47,7 @@ namespace DVLDProject
 
         private void lnkLbl1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(ctrlApplicationInfo1.LocalLicenseID))
+            if (clsLicenses.FindByLicenseID((int)ctrlApplicationInfo1.LocalLicenseID) != null)
             {
                 //I Find LDLAppID
                 int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlApplicationInfo1.LocalLicenseID);
@@ -63,7 +65,7 @@ namespace DVLDProject
                 return;
             }
 
-            string UserName = Program._UserName;
+            string UserName = clsGlobal.CurrenntUser.UserName;
             int LicenseID = ctrlApplicationInfo1.LocalLicenseID;
 
             int InternationalLicenseID = -1;

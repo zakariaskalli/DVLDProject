@@ -19,7 +19,7 @@ namespace DVLDProject
         /// The main entry point for the application.
         /// </summary>
 
-        static public string _UserName = null;
+        //static public string _UserName = null;
 
         [STAThread]
         static void Main()

@@ -82,13 +82,8 @@ namespace DVLDProject
         {
             int? UserID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
-
             frmUserInfo frm = new frmUserInfo(UserID);
             frm.ShowDialog();
-            LoadAllDataToDGV();
-
 
 
 
@@ -96,26 +91,27 @@ namespace DVLDProject
 
         private void addNewUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
-
             frmAddNewEditUser Form = new frmAddNewEditUser();
             Form.ShowDialog();
+
+            LoadAllDataToDGV();
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int UserID = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
 
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
+            //cbSearchBy.SelectedIndex = 0;
+            //tbFilterByData.Text = "";
 
             if (clsUsers.FindByUserID(UserID) != null)
             {
                 frmAddNewEditUser Frm = new frmAddNewEditUser(UserID);
                 Frm.ShowDialog();
 
-                LoadAllDataToDGV();
+                //LoadAllDataToDGV();
             }
             else
             {
@@ -130,8 +126,6 @@ namespace DVLDProject
         {
             int UserID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
 
             
             //clsManageUsersBussiness.UserIDIsFound(UserID);
@@ -151,21 +145,19 @@ namespace DVLDProject
             else
                 MessageBox.Show($"Person [{UserID}] Is Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
             LoadAllDataToDGV();
         }
 
         private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
 
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void callPhoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
 
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
@@ -174,11 +166,15 @@ namespace DVLDProject
         {
             int UserID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
 
             frmChangePassword Frm = new frmChangePassword(UserID);
             Frm.ShowDialog();
+
+
+            LoadAllDataToDGV();
+
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
         }
 
         private void cbSearchBy_SelectedIndexChanged(object sender, EventArgs e)
@@ -198,11 +194,15 @@ namespace DVLDProject
                         case clsUsers.UsersColumn.UserName:
                         case clsUsers.UsersColumn.FullName:
                             tbFilterByData.Visible = true;
+                            tbFilterByData.Text = "";
+                            tbFilterByData.Focus();
+                            LoadAllDataToDGV();
                             break;
 
                         case clsUsers.UsersColumn.IsActive:
                             cbIsActive.Visible = true;
                             cbIsActive.Location = new Point(230, cbIsActive.Location.Y);
+                            LoadAllDataToDGV();
                             break;
 
                         default:
@@ -226,7 +226,7 @@ namespace DVLDProject
         
         private void tbFilterByData_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (cbSearchBy.Text == "Person ID" || cbSearchBy.Text == "User ID")
+            if (cbSearchBy.Text == "PersonID" || cbSearchBy.Text == "UserID")
                 if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                     e.Handled = true;
         }

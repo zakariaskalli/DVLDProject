@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using static DVLDProject.ctrlFilterDriverLicenseInfo;
 using static DVLDProject.frmNewInternationalLicenseApplication;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
@@ -57,20 +58,20 @@ namespace DVLDProject
 
         void SearchDataLicense()
         {
-             if (tbLicenseIDSearch.Text == "" && !clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(_LicenseID))
+            if (tbLicenseIDSearch.Text == "" && !(clsLicenses.FindByLicenseID((int)_LicenseID) != null))
             {
                 return;
             }
 
             int LicenseID = -1;
 
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(_LicenseID))
+            if (clsLicenses.FindByLicenseID((int)_LicenseID) != null)
                 LicenseID = _LicenseID;
             else
                 LicenseID = Convert.ToInt16(tbLicenseIDSearch.Text);
 
 
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(LicenseID))
+            if (clsLicenses.FindByLicenseID((int)LicenseID) != null)
             {
                 if (_enChose == enChose.enNewInternationalLicenseLicense)
                 {

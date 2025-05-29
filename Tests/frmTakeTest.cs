@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 
 namespace DVLDProject
 {
     public partial class frmTakeTest : Form
     {
-        string UserName = Program._UserName;
         
         int TestAppointmentID = -1;
 
@@ -33,7 +34,7 @@ namespace DVLDProject
 
         public void LoadData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(clsA.LDLAppID)
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)clsA.LDLAppID) != null
                 ||
                 clsTestsAppointmentsBusiness.CanIUpdateTestAppointmentsByTestAppID(clsA.TestAppointmentID, clsA.TestNum))
             {
@@ -92,7 +93,7 @@ namespace DVLDProject
             string Notes = tbNote.Text;
 
 
-            if (clsA.DataPassOrFailByAppointmentIDAndTestNum(PassOrFail, clsA.TestAppointmentID, clsA.TestNum, UserName, Notes))
+            if (clsA.DataPassOrFailByAppointmentIDAndTestNum(PassOrFail, clsA.TestAppointmentID, clsA.TestNum, clsGlobal.CurrenntUser.UserName, Notes))
             {
                 MessageBox.Show("Data Saved Successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

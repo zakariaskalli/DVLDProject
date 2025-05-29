@@ -31,7 +31,7 @@ namespace DVLDProject
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsTestsAppointmentsBusiness.LoadTestAppointmentByLDLAppID(clsA.TestNum,clsA.LDLAppID);
+            DataTable dataTable = clsTestsAppointmentsBusiness.LoadTestAppointmentByLDLAppID(clsA.TestNum, clsA.LDLAppID);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 

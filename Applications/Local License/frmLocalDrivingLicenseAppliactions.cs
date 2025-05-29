@@ -27,7 +27,13 @@ namespace DVLDProject
             DataTable dataTable = clsLocalDrivingLicenseApplications.GetAllLocalDrivingLicenseApplications();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
-
+            
+            
+            cbSearchBy.SelectedIndex = 0;
+            cbStatus.SelectedIndex = 0;
+            tbFilterByData.Text = "";
+            tbFilterByData.Visible = false;
+            cbStatus.Visible = false;
         }
 
         private void LoadAllComboBoxFilterBy()
@@ -82,14 +88,17 @@ namespace DVLDProject
                 case "LDLAppID":
                     tbFilterByData.Visible = true;
                     cbStatus.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "NationalNo":
                     tbFilterByData.Visible = true;
                     cbStatus.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "FullName":
                     tbFilterByData.Visible = true;
                     cbStatus.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "Status":
                     tbFilterByData.Visible = false;
@@ -141,7 +150,7 @@ namespace DVLDProject
 
 
 
-            if (clsLocalDrivingLicenseApplicationsBusiness.CancelLicenseByNationalNo(NationalNo, LicenseClassID))
+            if (clsLocalDrivingLicenseApplications.CancelLicenseByNationalNoAndLicenseClassID(NationalNo, LicenseClassID))
             {
                 MessageBox.Show("Application Cancelled Successfully.", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -153,6 +162,7 @@ namespace DVLDProject
 
             LoadAllDataToDGV();
 
+            //tbFilterByData.Text = "";
         }
 
         private void tbFilterByData_TextChanged(object sender, EventArgs e)
@@ -180,8 +190,8 @@ namespace DVLDProject
                 return;
             }
 
+            DataTable dataTable = clsLocalDrivingLicenseApplications.SearchData((clsLocalDrivingLicenseApplications.LocalDrivingLicenseApplicationsColumn)Enum.Parse(typeof(clsLocalDrivingLicenseApplications.LocalDrivingLicenseApplicationsColumn), cbSearchBy.Text), cbStatus.Text);
 
-            DataTable dataTable = clsLocalDrivingLicenseApplicationsBusiness.SearchInTable(cbSearchBy.Text, cbStatus.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
@@ -275,10 +285,9 @@ namespace DVLDProject
             int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
             int TestNum = (int)dataGridView1.CurrentRow.Cells[5].Value + 1;
 
-            cbSearchBy.SelectedIndex = 0;
-            tbFilterByData.Text = "";
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 frmTestAppointements Frm = new frmTestAppointements(LDLAppID, TestNum);
 
@@ -287,7 +296,8 @@ namespace DVLDProject
             else
                 MessageBox.Show("LDLAppID IS Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
             LoadAllDataToDGV();
         }
 
@@ -314,7 +324,7 @@ namespace DVLDProject
             cbSearchBy.SelectedIndex = 0;
             tbFilterByData.Text = "";
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 frmIssueDriverLicenseForTheFirstTime Frm = new frmIssueDriverLicenseForTheFirstTime(LDLAppID, TestNum);
 
@@ -331,7 +341,7 @@ namespace DVLDProject
         {
             int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 cbSearchBy.SelectedIndex = 0;
                 tbFilterByData.Text = "";
@@ -361,7 +371,7 @@ namespace DVLDProject
         {
             int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 cbSearchBy.SelectedIndex = 0;
                 tbFilterByData.Text = "";
@@ -390,7 +400,7 @@ namespace DVLDProject
             int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
 
-            if (clsLocalDrivingLicenseApplicationsBusiness.DeleteLicenseByLDLAppID(LDLAppID))
+            if (  clsLocalDrivingLicenseApplications.DeleteLocalDrivingLicenseApplications(LDLAppID))
             {
                 MessageBox.Show("Application Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -407,7 +417,7 @@ namespace DVLDProject
         {
             int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
                 cbSearchBy.SelectedIndex = 0;
                 tbFilterByData.Text = "";
@@ -425,5 +435,9 @@ namespace DVLDProject
             }
         }
 
+        private void sechToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

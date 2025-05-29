@@ -30,11 +30,24 @@ namespace DVLDProject
             cbSearchBy.Items.Clear(); // Clear previous items
 
             cbSearchBy.Items.Add("None");
-
+            cbSearchBy.Items.Add("PersonID");
+            cbSearchBy.Items.Add("NationalNo");
+            cbSearchBy.Items.Add("FirstName");
+            cbSearchBy.Items.Add("SecondName");
+            cbSearchBy.Items.Add("ThirdName");
+            cbSearchBy.Items.Add("LastName");
+            cbSearchBy.Items.Add("GendorCaption");
+            cbSearchBy.Items.Add("DateOfBirth");
+            cbSearchBy.Items.Add("CountryName");
+            cbSearchBy.Items.Add("Phone");
+            cbSearchBy.Items.Add("Email");
+            
+            /*
             foreach (string column in Enum.GetNames(typeof(clsPeople.PeopleColumn)))
             {
                 cbSearchBy.Items.Add(column);
             }
+            */
 
             cbSearchBy.SelectedIndex = 0;
         }
@@ -42,7 +55,7 @@ namespace DVLDProject
         // Upload Data To Table
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsPeople.GetAllPeople();
+            DataTable dataTable = clsPeople.GetAllPeople_DataGridView();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
@@ -59,17 +72,20 @@ namespace DVLDProject
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbSearchBy.Text != "None")
-                textBox1.Visible = true;
+            {
+                tbFilterByData.Visible = true;
+                tbFilterByData.Focus();
+            }
             else
-                textBox1.Visible = false;
+                tbFilterByData.Visible = false;
 
-            textBox1.Text = "";
+            tbFilterByData.Text = "";
             LoadAllDataToDGV();
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (cbSearchBy.Text == "Person ID" || cbSearchBy.Text == "Phone")
+            if (cbSearchBy.Text == "PersonID" || cbSearchBy.Text == "Phone")
                 if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                     e.Handled = true;
         }
@@ -77,13 +93,13 @@ namespace DVLDProject
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
+            if (tbFilterByData.Text == "")
             {
                 LoadAllDataToDGV();
                 return;
             }
 
-            DataTable dataTable = clsPeople.SearchData((clsPeople.PeopleColumn)Enum.Parse(typeof(clsPeople.PeopleColumn), cbSearchBy.Text), textBox1.Text);
+            DataTable dataTable = clsPeople.SearchData_DataGridView(cbSearchBy.Text, tbFilterByData.Text);
 
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
@@ -96,34 +112,27 @@ namespace DVLDProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
-
-
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
             frm.ShowDialog();
             LoadAllDataToDGV();
 
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
         }
 
         private void addNewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
-
-
             frmAddEditPersonInfo frm = new frmAddEditPersonInfo();
             frm.ShowDialog();
             LoadAllDataToDGV();
+
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int PersonID = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
-
-
-            cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
 
 
             if (clsPeople.FindByPersonID(PersonID) != null)
@@ -139,6 +148,8 @@ namespace DVLDProject
 
             }
 
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
         }
 
         private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,14 +157,9 @@ namespace DVLDProject
             int PersonID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
 
-            cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
-
-
             frmPersonDetails Frm = new frmPersonDetails(PersonID);
             
             Frm.ShowDialog();
-            LoadAllDataToDGV();
 
         }
 
@@ -162,8 +168,7 @@ namespace DVLDProject
             int PersonID = (int)dataGridView1.CurrentRow.Cells[0].Value;
 
 
-            cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
+
 
 
             if (clsPeople.FindByPersonID(PersonID) != null)
@@ -181,13 +186,16 @@ namespace DVLDProject
             else
                 MessageBox.Show($"Person [{PersonID}] Is Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+            cbSearchBy.SelectedIndex = 0;
+            tbFilterByData.Text = "";
+
             LoadAllDataToDGV();
         }
 
         private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
+            tbFilterByData.Text = "";
 
 
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -197,7 +205,7 @@ namespace DVLDProject
         {
 
             cbSearchBy.SelectedIndex = 0;
-            textBox1.Text = "";
+            tbFilterByData.Text = "";
 
 
             MessageBox.Show("This Feature Is Not Implemented Yet!", "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);

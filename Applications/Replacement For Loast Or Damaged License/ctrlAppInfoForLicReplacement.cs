@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +41,7 @@ namespace DVLDProject
             {
                 lblApplicationFees.Text = clsMethodsGeneralBusiness.FeesReplacementForLostDrivingLicense().ToString();
             }
-            lblCreatedBy.Text = Program._UserName;
+            lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
 
             // Load Data Variable
             lblLRApplicationID.Text = "[???]";

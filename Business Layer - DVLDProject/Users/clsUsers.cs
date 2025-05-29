@@ -227,6 +227,7 @@ UserID, PersonID, UserName, FullName, IsActive);
                 return null;
        }
 
+
         public static clsUsers FindByUserName(string UserName)
         {
             if (string.IsNullOrWhiteSpace(UserName))
@@ -255,7 +256,7 @@ UserID, PersonID, UserName, FullName, IsActive);
 
        }
 
-       public static bool DeleteUsers(int UserID)
+        public static bool DeleteUsers(int UserID)
        {
 
         return clsUsersData.DeleteUsers(UserID);

@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,7 @@ namespace DVLDProject
 {
     public partial class frmScheduleTest : Form
     {
-        string UserName = Program._UserName;
+        string UserName = clsGlobal.CurrenntUser.UserName;
 
         int TestAppointmentID = -1;
 
@@ -38,7 +40,7 @@ namespace DVLDProject
 
         private void LoadAllData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(clsA.LDLAppID) 
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)clsA.LDLAppID) != null
                 ||
                 clsA.CanIUpdateTestAppointmentsByTestAppID() 
                 ||

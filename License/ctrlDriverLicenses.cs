@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +25,7 @@ namespace DVLDProject
 
         void LoadAllData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
                 // Load Data To LocalDrivingApplication Data GridViw
                 DataTable dataTable1 = clsDriverLicensesBusiness.LoadAllLDLApp(_LDLAppID);
@@ -79,7 +80,7 @@ namespace DVLDProject
         {
             int LicenseID = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
 
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(LicenseID))
+            if (clsLicenses.FindByLicenseID((int)LicenseID) != null)
             {
                 Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID));
                 frm.ShowDialog();

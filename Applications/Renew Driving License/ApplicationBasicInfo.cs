@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +23,7 @@ namespace DVLDProject
         }
         private void LoadAllData()
         {
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
 
                 clsLocalDrivingLicenseApplicationsBusiness clsA = clsLocalDrivingLicenseApplicationsBusiness.UploadAllDataByABI_LDLAppID(_LDLAppID);

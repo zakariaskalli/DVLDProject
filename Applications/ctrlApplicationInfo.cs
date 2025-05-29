@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using DVLDProject.Global_Classes;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
@@ -24,7 +26,7 @@ namespace DVLDProject
         {
             InitializeComponent();
 
-            LoadAutoInfo();
+            //LoadAutoInfo();
         }
 
         void LoadAutoInfo()
@@ -34,13 +36,17 @@ namespace DVLDProject
 
             lblApplicationDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
             lblIssueDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
-            lblFees.Text = clsMethodsGeneralBusiness.FeesNewInternationalLicenseApplication().ToString();
+
+            // FeesNewInternationalLicenseApplication
+            //lblFees.Text = clsApplicationTypes.FindByApplicationTypeID(6).ApplicationFees.ToString();
+
+            //lblFees.Text = clsMethodsGeneralBusiness.FeesNewInternationalLicenseApplication().ToString();
 
             DateTime nextYearDate = DateTime.Now.AddYears(1);
             string formattedDate = nextYearDate.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
             lblExpirationDate.Text = formattedDate;
 
-            lblCreatedBy.Text = Program._UserName;
+            lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
 
         }
 
@@ -66,14 +72,5 @@ namespace DVLDProject
             LoadDataVariable();
         }
 
-        public void ctrlApplicationInfo_Load()
-        {
-            LoadDataVariable();
-        }
-
-        private void gbAppBasicInfo_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

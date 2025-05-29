@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,13 +29,12 @@ namespace DVLDProject
 
         void LoadAutoInfo()
         {
-            // MessageBox.Show(DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US")));
-
 
             lblApplicationDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
             lblIssueDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
-            lblApplicationFees.Text = clsMethodsGeneralBusiness.FeesRenewDrivingLicenseService().ToString();
-            lblCreatedBy.Text = Program._UserName;
+            //FeesRenewDrivingLicenseService
+            lblApplicationFees.Text = clsApplicationTypes.FindByApplicationTypeID(2).ApplicationFees.ToString();
+            lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
 
         }
 
@@ -49,20 +50,26 @@ namespace DVLDProject
             tbNotes.Text = "";
 
 
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(LicenseID))
+            if (clsLicenses.FindByLicenseID((int)LicenseID) != null)
             {
                 lblOldLicenseID.Text = LicenseID.ToString();
+
+
+                clsLicenses LicenseData = clsLicenses.FindByLicenseID(LicenseID);
+             
 
                 string LicenseFees = "";
                 string ExpirationDate = "";
 
                 clsApplicationNewLicenseInfoBusiness.LoadDataByLicenseID(LicenseID,ref LicenseFees, ref ExpirationDate);
 
-                lblLicenseFees.Text = LicenseFees;
-                lblExpirationDate.Text = ExpirationDate;
+                lblLicenseFees.Text = ((int)LicenseData.PaidFees).ToString();
+                lblExpirationDate.Text = ((DateTime)LicenseData.ExpirationDate).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
 
                 // Conclusion Data
 
+
+                // to completed
                 lblTotalFees.Text = (Convert.ToInt16(lblApplicationFees.Text) + Convert.ToInt16(lblLicenseFees.Text)).ToString();
 
             }

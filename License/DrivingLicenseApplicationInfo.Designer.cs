@@ -68,7 +68,6 @@
             this.gbDrivingLicenseApplicationInfo.TabIndex = 0;
             this.gbDrivingLicenseApplicationInfo.TabStop = false;
             this.gbDrivingLicenseApplicationInfo.Text = "Driving License Application Info";
-            this.gbDrivingLicenseApplicationInfo.Enter += new System.EventHandler(this.gbDrivingLicenseApplicationInfo_Enter);
             // 
             // lblPassedTests
             // 

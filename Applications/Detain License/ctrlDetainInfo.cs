@@ -1,4 +1,5 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,7 @@ namespace DVLDProject
 
             lblDetainDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
 
-            lblCreatedBy.Text = Program._UserName;
+            lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
 
             // Load Data Variable
             lblDetainID.Text = "[???]";

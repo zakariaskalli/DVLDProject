@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -131,7 +133,7 @@ namespace DVLDProject
 
         private void lnkLbl1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(ctrlAppInfoForLicReplacement1.OldLicenseID))
+            if (clsLicenses.FindByLicenseID((int)ctrlAppInfoForLicReplacement1.OldLicenseID) != null)
             {
                 //I Find LDLAppID
                 int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlAppInfoForLicReplacement1.OldLicenseID);
@@ -147,7 +149,7 @@ namespace DVLDProject
 
             _NewLicenseID = ctrlAppInfoForLicReplacement1.ReplacedLicenseID;
 
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(_NewLicenseID))
+            if (clsLicenses.FindByLicenseID((int)_NewLicenseID) != null)
             {
                 Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(_NewLicenseID));
                 //frm._InternationalID = _InternationalID;
@@ -168,7 +170,7 @@ namespace DVLDProject
 
             int LicenseID = ctrlAppInfoForLicReplacement1.OldLicenseID;
 
-            string UserName = Program._UserName;
+            string UserName = clsGlobal.CurrenntUser.UserName;
             //string UserName = "user4";
 
             int LRApplicationID = -1;

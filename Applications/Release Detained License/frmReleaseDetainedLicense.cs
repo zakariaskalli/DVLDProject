@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Global_Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,7 +92,7 @@ namespace DVLDProject
 
         private void lnkLbl1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(ctrlReleaseDetainedLicense1.LicenseID))
+            if (clsLicenses.FindByLicenseID((int)ctrlReleaseDetainedLicense1.LicenseID) != null)
             {
                 //I Find LDLAppID
                 int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlReleaseDetainedLicense1.LicenseID);
@@ -106,7 +108,7 @@ namespace DVLDProject
 
         private void lnkLbl2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(ctrlReleaseDetainedLicense1.LicenseID))
+            if (clsLicenses.FindByLicenseID((int)ctrlReleaseDetainedLicense1.LicenseID) != null)
             {
                 Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlReleaseDetainedLicense1.LicenseID));
                 //frm._InternationalID = _InternationalID;
@@ -127,7 +129,7 @@ namespace DVLDProject
 
             int LicenseID = ctrlReleaseDetainedLicense1.LicenseID;
 
-            string UserName = Program._UserName;
+            string UserName = clsGlobal.CurrenntUser.UserName;
             //string UserName = "user4";
 
             int ApplicationID = -1;
@@ -153,8 +155,7 @@ namespace DVLDProject
 
         private void frmReleaseDetainedLicense_Load(object sender, EventArgs e)
         {
-            
-            if (clsMethodsGeneralBusiness.IsFoundLicenseByLicenseID(_LicenseID))
+            if (clsLicenses.FindByLicenseID((int)_LicenseID) != null)
             {
                 ctrlFilterDriverLicenseInfo1.FilterDisabled();
                 ctrlFilterDriverLicenseInfo1.ChoseTypeFilter((int)enChose.enReleaseDetainedLicense);

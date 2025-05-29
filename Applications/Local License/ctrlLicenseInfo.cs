@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.IO;
+using DVLD_BusinessLayer;
 
 namespace DVLDProject
 {
@@ -31,7 +32,7 @@ namespace DVLDProject
         void LoadAllData()
         {
 
-            if (clsMethodsGeneralBusiness.IsLDLAppIDFound(_LDLAppID))
+            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
             {
                 clsLicenseInfoBusiness clsA = clsLicenseInfoBusiness.LoadDataLicenseInfoByPersonID(_LDLAppID);
 

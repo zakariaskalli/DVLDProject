@@ -204,7 +204,12 @@ NationalNo,PersonID, FirstName, DateOfBirth, Gendor, Address, Phone, Nationality
 
        }
 
+        public static DataTable GetAllPeople_DataGridView()
+        {
 
+            return clsPeopleData.GetAllPeople_DataGridView();
+
+        }
 
         public bool Save()
         {
@@ -274,6 +279,18 @@ NationalNo,PersonID, FirstName, DateOfBirth, Gendor, Address, Phone, Nationality
 
             return clsPeopleData.SearchData(ChosenColumn.ToString(), SearchValue, modeValue);
         }
+
+
+        public static DataTable SearchData_DataGridView(string ChosenColumn, string SearchValue, SearchMode Mode = SearchMode.Anywhere)
+        {
+            if (string.IsNullOrWhiteSpace(SearchValue) || !SqlHelper.IsSafeInput(SearchValue))
+                return new DataTable();
+
+            string modeValue = Mode.ToString(); // Get the mode as string for passing to the stored procedure
+
+            return clsPeopleData.SearchData_DataGridView(ChosenColumn, SearchValue, modeValue);
+        }
+
 
         public int GetPersonIdByNationalNo(string NationalNo)
         {

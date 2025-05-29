@@ -154,6 +154,42 @@ namespace DVLD_DataLayer
     return dt;
 }
 
+        public static DataTable GetAllPeople_DataGridView()
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SP_Get_All_People_DataGridView";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle all exceptions in a general way
+                ErrorHandler.HandleException(ex, nameof(GetAllPeople_DataGridView), "No parameters for this method.");
+            }
+
+            return dt;
+        }
+
+
         public static int? AddNewPeople(string NationalNo, string FirstName, DateTime? DateOfBirth, byte? Gendor, string Address, string Phone, int? NationalityCountryID, string SecondName = null, string ThirdName = null, string LastName = null, string Email = null, string ImagePath = null)
     {
         int? PersonID = null;
@@ -325,5 +361,47 @@ namespace DVLD_DataLayer
 
     return dt;
 }
+
+        public static DataTable SearchData_DataGridView(string ColumnName, string SearchValue, string Mode = "Anywhere")
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = $@"SP_Search_People_ByColumn_DataGridView";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@ColumnName", ColumnName);
+                        command.Parameters.AddWithValue("@SearchValue", SearchValue);
+                        command.Parameters.AddWithValue("@Mode", Mode);  // Added Mode parameter
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+
+                            reader.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle all exceptions in a general way
+                ErrorHandler.HandleException(ex, nameof(SearchData_DataGridView), $"ColumnName: {ColumnName}, SearchValue: {SearchValue}, Mode: {Mode}");
+            }
+
+            return dt;
+        }
+
     }
 }
