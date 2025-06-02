@@ -343,15 +343,17 @@ namespace DVLDProject
 
             if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
+                
 
 
                 frmDriverLicenseInfo Frm = new frmDriverLicenseInfo(LDLAppID);
 
                 Frm.ShowDialog();
+                
 
-                LoadAllDataToDGV();
+                //cbSearchBy.SelectedIndex = 0;
+                //tbFilterByData.Text = "";
+                //LoadAllDataToDGV();
             }
             else
             {
@@ -373,15 +375,14 @@ namespace DVLDProject
 
             if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
-
-
+               
                 frmLicenseHistory Frm = new frmLicenseHistory(LDLAppID);
 
                 Frm.ShowDialog();
-
-                LoadAllDataToDGV();
+                
+                //cbSearchBy.SelectedIndex = 0;
+                //tbFilterByData.Text = "";
+                //LoadAllDataToDGV();
             }
             else
             {
