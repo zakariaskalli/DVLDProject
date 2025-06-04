@@ -1,6 +1,8 @@
 ﻿using Business_Layer___DVLDProject;
 using DVLD_BusinessLayer;
 using DVLDProject.Global_Classes;
+using DVLDProject.Login;
+
 
 //using MyFirstWinFormsProject;
 using System;
@@ -32,7 +34,7 @@ namespace DVLDProject
             {
                 ReloadNewOrNot = false;
 
-                using (frmLoginScreen Form = new frmLoginScreen())
+                using (frmLogin  Form = new frmLogin())
                 {
                     Application.Run(Form);
                 }

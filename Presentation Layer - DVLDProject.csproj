@@ -37,12 +37,17 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Guna.UI2">
+      <HintPath>..\..\..\..\..\..\Programation Level 2\BizDataLayerGen\bin\Release\Guna.UI2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -69,6 +74,12 @@
     </Compile>
     <Compile Include="Global Classes\clsGlobal.cs" />
     <Compile Include="Global Classes\clsValidatoin.cs" />
+    <Compile Include="Login\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\ctrlAddEditPersonInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -237,12 +248,6 @@
     <Compile Include="Applications\Local License\frmLocalDrivingLicenseAppliactions.Designer.cs">
       <DependentUpon>frmLocalDrivingLicenseAppliactions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login\frmLoginScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login\frmLoginScreen.Designer.cs">
-      <DependentUpon>frmLoginScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="Applications\frmManageApplicationTypes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -354,6 +359,9 @@
     <EmbeddedResource Include="Applications\Local License\frmLocalDrivingLicenseApplicationInfo.resx">
       <DependentUpon>frmLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="People\ctrlAddEditPersonInfo.resx">
       <DependentUpon>ctrlAddEditPersonInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -446,9 +454,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\Local License\frmLocalDrivingLicenseAppliactions.resx">
       <DependentUpon>frmLocalDrivingLicenseAppliactions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Login\frmLoginScreen.resx">
-      <DependentUpon>frmLoginScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\frmManageApplicationTypes.resx">
       <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
