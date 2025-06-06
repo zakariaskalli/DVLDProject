@@ -1,4 +1,6 @@
 ﻿using Business_Layer___DVLDProject;
+using DVLD_BusinessLayer;
+using DVLDProject.Applications.Local_License;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DVLDProject
 {
@@ -21,27 +24,20 @@ namespace DVLDProject
         private void LoadComboBox()
         {
             cbSearchBy.Items.Add("None");
-            cbSearchBy.Items.Add("Driver ID");
-            cbSearchBy.Items.Add("Person ID");
-            cbSearchBy.Items.Add("National No.");
-            cbSearchBy.Items.Add("Full Name");
+            cbSearchBy.Items.Add("DriverID");
+            cbSearchBy.Items.Add("PersonID");
+            cbSearchBy.Items.Add("NationalNo");
+            cbSearchBy.Items.Add("FullName");
 
             cbSearchBy.SelectedIndex = 0;
         }
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsManageDriversBusiness.LoadData();
+            DataTable dataTable = clsDrivers.GetAllDrivers();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
-            // 915
 
-            dataGridView1.Columns["DriverID"].Width = 110;
-            dataGridView1.Columns["PersonID"].Width = 110;
-            dataGridView1.Columns["NationalNo"].Width = 120;
-            dataGridView1.Columns["FullName"].Width = 245;
-            dataGridView1.Columns["Date"].Width = 140;
-            dataGridView1.Columns["Active Licenses"].Width = 140;
         }
 
 
@@ -57,13 +53,17 @@ namespace DVLDProject
         private void cbSearchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbSearchBy.Text != "None")
-                textBox1.Visible = true;
+            {
+                tbFilterByData.Visible = true;
+                tbFilterByData.Focus();
+
+            }
             else
-                textBox1.Visible = false;
+                tbFilterByData.Visible = false;
 
 
 
-            textBox1.Text = "";
+            tbFilterByData.Text = "";
             LoadAllDataToDGV();
         }
 
@@ -74,34 +74,17 @@ namespace DVLDProject
                     e.Handled = true;
         }
 
-        private string ColumnName()
-        {
-            switch (cbSearchBy.Text)
-            {
-                case "Driver ID":
-                    return "DriverID";
-                case "Person ID":
-                    return "PersonID";
-                case "National No.":
-                    return "NationalNo";
-                case "Full Name":
-                    return "FullName";
-                default:
-                    return cbSearchBy.Text;
-            }
-
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
+            if (tbFilterByData.Text == "")
             {
                 LoadAllDataToDGV();
                 return;
             }
+            
 
-
-            DataTable dataTable = clsManageDriversBusiness.SearchInTable(ColumnName(), textBox1.Text);
+            DataTable dataTable = clsDrivers.SearchData((clsDrivers.DriversColumn)Enum.Parse(typeof(clsDrivers.DriversColumn), cbSearchBy.Text), tbFilterByData.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }

@@ -13,9 +13,8 @@ namespace Business_Layer___DVLDProject
     {
         enum enIssueReason { enFirstTime = 1, enLostItem = 2, enCompensationForLoss = 3, enRenewal = 4 }
         
-        public clsLicenseInfoBusiness(int LDLAppID)
+        public clsLicenseInfoBusiness(int LicenseID)
         {
-            this.LDLAppID = LDLAppID;
             this.Class = "";
             this.Name = "";
             this.LicenseID = -1;
@@ -32,7 +31,6 @@ namespace Business_Layer___DVLDProject
             this.ImagePath = "";
         }
 
-        public int LDLAppID { get; set; }
         public string Class { get; set; }
         public string Name { get; set; }
         public int LicenseID { get; set; }
@@ -68,17 +66,13 @@ namespace Business_Layer___DVLDProject
             }
         }
 
-        static public clsLicenseInfoBusiness LoadDataLicenseInfoByPersonID(int LDLAppID)
+        static public clsLicenseInfoBusiness LoadDataLicenseInfoByPersonID(int LicenseID)
         {
 
-            clsLicenseInfoBusiness clsA = new clsLicenseInfoBusiness(LDLAppID);
-
-
-
+            clsLicenseInfoBusiness clsA = new clsLicenseInfoBusiness(LicenseID);
 
             string Class = "";
             string Name = "";
-            int LicenseID = -1;
             string NationalNo = "";
             int Gendor = 0;
             string IssueDate = "";
@@ -92,14 +86,13 @@ namespace Business_Layer___DVLDProject
 
             string ImagePath = "";
 
-            clsLicenseInfoData.LoadDataLicenseInfoByLDLAppID(LDLAppID, ref Class, ref Name, ref LicenseID,
+            clsLicenseInfoData.LoadDataLicenseInfoByLicenseID(LicenseID, ref Class, ref Name, 
                 ref NationalNo, ref Gendor, ref IssueDate, ref IssueReason, ref Notes, ref IsActive,
                 ref DateOfBirth, ref DriverID, ref ExpirationDate, ref IsDetained, ref ImagePath);
 
-            clsA.LDLAppID = LDLAppID;
+            clsA.LicenseID = LicenseID;
             clsA.Class = Class;
             clsA.Name = Name;
-            clsA.LicenseID = LicenseID;
             clsA.NationalNo = NationalNo;
 
             if (Gendor == 0)
@@ -109,7 +102,11 @@ namespace Business_Layer___DVLDProject
 
             clsA.IssueDate = IssueDate;
             clsA.IssueReason = IssueReasonByID(IssueReason);
-            clsA.Notes = Notes;
+
+            if (Notes == "")
+                clsA.Notes = "No Notes";
+            else
+                clsA.Notes = Notes;
 
             if (IsActive)
                 clsA.IsActive = "Yes";

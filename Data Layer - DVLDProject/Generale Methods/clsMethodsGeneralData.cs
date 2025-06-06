@@ -826,5 +826,38 @@ namespace Data_Layer___DVLDProject
             return DetainID;
         }
 
+        static public int LicenseIDByLDLAppID(int LDLAppID)
+        {
+            int LicenseID = -1;
+
+            SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting);
+
+            string query = $@"Declare @LDLAppID Int;
+
+                                set @LDLAppID = @@LDLAppID;
+                                
+                                
+                                select LicenseID from LocalDrivingLicenseApplications
+                                Join Licenses ON LocalDrivingLicenseApplications.ApplicationID = Licenses.ApplicationID 
+                                where LocalDrivingLicenseApplicationID = @LDLAppID";
+
+            SqlCommand Command = new SqlCommand(query, connection);
+            Command.Parameters.AddWithValue("@@LDLAppID", LDLAppID);
+
+            try
+            {
+                connection.Open();
+                object result = Command.ExecuteScalar();
+                if (result != null)
+                    LicenseID = Convert.ToInt32(result);
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return LicenseID;
+        }
     }
 }

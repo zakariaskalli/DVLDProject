@@ -151,7 +151,7 @@ namespace DVLDProject
 
             if (clsLicenses.FindByLicenseID((int)_NewLicenseID) != null)
             {
-                Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(_NewLicenseID));
+                Form frm = new frmDriverLicenseInfo(_NewLicenseID);
                 //frm._InternationalID = _InternationalID;
                 frm.ShowDialog();
             }

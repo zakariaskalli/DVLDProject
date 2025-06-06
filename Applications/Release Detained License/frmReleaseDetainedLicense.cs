@@ -110,7 +110,7 @@ namespace DVLDProject
         {
             if (clsLicenses.FindByLicenseID((int)ctrlReleaseDetainedLicense1.LicenseID) != null)
             {
-                Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlReleaseDetainedLicense1.LicenseID));
+                Form frm = new frmDriverLicenseInfo(ctrlReleaseDetainedLicense1.LicenseID);
                 //frm._InternationalID = _InternationalID;
                 frm.ShowDialog();
             }

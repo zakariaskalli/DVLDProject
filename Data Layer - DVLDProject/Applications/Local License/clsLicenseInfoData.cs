@@ -17,8 +17,8 @@ namespace Data_Layer___DVLDProject
     {
 
 
-        static public void LoadDataLicenseInfoByLDLAppID(int LDLAppID, ref string Class,
-            ref string Name, ref int LicenseID, ref string NationalNo, ref int Gendor,
+        static public void LoadDataLicenseInfoByLicenseID(int LicenseID, ref string Class,
+            ref string Name, ref string NationalNo, ref int Gendor,
             ref string IssueDate, ref int IssueReason, ref string Notes, ref bool IsActive,
             ref string DateOfBirth, ref int DriverID, ref string ExpirationDate,
             ref int IsDetained , ref string ImagePath)
@@ -27,46 +27,44 @@ namespace Data_Layer___DVLDProject
             SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting);
 
             string query = $@" 
+Declare @LicenseID INT;
 
-Declare @LDLAppID INT, @AppID INT, @LicenseClassID INT, @PersonID INT;
-                                
-                                Set @LDLAppID = @@LDLAppID;
-                                
-                                Set @AppID = (select ApplicationID from LocalDrivingLicenseApplications
-                                					where LocalDrivingLicenseApplicationID = @LDLAppID)
-                                
-                                
-                                Set @LicenseClassID = (select LicenseClassID from LocalDrivingLicenseApplications
-                                					where LocalDrivingLicenseApplicationID = @LDLAppID)
-                                
-                                Set @PersonID = (select PersonID from  People
-                                								where NationalNo = 
-                                								( select NationalNo from LocalDrivingApplicationTable 
-                                													where LDLAppID = @LDLAppID))
-                                
-                                select ( select ClassName from LicenseClasses where LicenseClassID = LicenseClass) As 'Class',
-                                (select FullName from LocalDrivingApplicationTable where LDLAppID = @LDLAppID) As 'Name',
-                                LicenseID,
-                                (select NationalNo from People where PersonID = @PersonID) As 'NationalNo',
-                                (select Gendor from People where PersonID = @PersonID) As 'Gendor', 
-                                
-                                (SELECT FORMAT(CAST(IssueDate AS DATETIME), 'dd/MMMM/yyyy')) AS 'IssueDate',
-                                IssueReason,
-                                Notes,
-                                Licenses.IsActive,
-								(SELECT FORMAT(CAST((select DateOfBirth from People where PersonID = @PersonID) AS DATETIME), 'dd/MMMM/yyyy')) AS 'DateOfBirth',
-                                DriverID,
-								(SELECT FORMAT(CAST(ExpirationDate AS DATETIME), 'dd/MMMM/yyyy')) AS 'ExpirationDate',
-                                    CASE WHEN EXISTS (SELECT 1 FROM DetainedLicenses WHERE LicenseID = Licenses.LicenseID and IsReleased = 0) 
-                                         THEN 1 
-                                         ELSE 0 
-                                    END AS IsDetained,
-                                (select ImagePath from People where PersonID = @PersonID) As 'ImagePath'
-                                from Licenses
-                                where ApplicationID = @AppID And LicenseClass = @LicenseClassID ";
+Set @LicenseID = @@LicenseID
+
+
+SELECT 
+    lc.ClassName AS Class,
+    dv.FullName AS Name,
+    dv.NationalNo,
+    p.Gendor,
+    (SELECT FORMAT(CAST(l.IssueDate AS DATETIME), 'dd/MMMM/yyyy')) AS 'IssueDate',
+    l.IssueReason,
+    l.Notes,
+    l.IsActive,
+	(SELECT FORMAT(CAST(p.DateOfBirth AS DATETIME), 'dd/MMMM/yyyy')) AS 'DateOfBirth',
+    l.DriverID,
+	(SELECT FORMAT(CAST(l.ExpirationDate AS DATETIME), 'dd/MMMM/yyyy')) AS 'ExpirationDate',
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM DetainedLicenses dl 
+            WHERE dl.LicenseID = l.LicenseID AND dl.IsReleased = 0
+        ) 
+        THEN 1 
+        ELSE 0 
+    END AS IsDetained,
+    p.ImagePath
+
+FROM Licenses l
+JOIN LicenseClasses lc ON l.LicenseClass = lc.LicenseClassID
+JOIN Drivers_View dv ON dv.DriverID = l.DriverID
+JOIN People p ON p.PersonID = dv.PersonID
+
+WHERE l.LicenseID = @LicenseID;
+ ";
 
             SqlCommand Command = new SqlCommand(query, connection);
-            Command.Parameters.AddWithValue("@@LDLAppID", LDLAppID);
+            Command.Parameters.AddWithValue("@@LicenseID", LicenseID);
 
 
 
@@ -80,7 +78,7 @@ Declare @LDLAppID INT, @AppID INT, @LicenseClassID INT, @PersonID INT;
 
                     Class = (string)reader["Class"];
                     Name = (string)reader["Name"];
-                    LicenseID = (int)reader["LicenseID"];
+                    //LicenseID = (int)reader["LicenseID"];
                     NationalNo = (string)reader["NationalNo"];
                     Gendor = Convert.ToInt32(reader["Gendor"]);
                     IssueDate = (string)reader["IssueDate"];

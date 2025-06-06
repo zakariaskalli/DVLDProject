@@ -138,12 +138,12 @@ DriverID, PersonID, CreatedByUserID, CreatedDate);
 
 
         public enum DriversColumn
-         {
-            DriverID,
-            PersonID,
-            CreatedByUserID,
-            CreatedDate
-         }
+        {
+           DriverID,
+           PersonID,
+           NationalNo,
+           FullName
+        }
 
 
         public enum SearchMode

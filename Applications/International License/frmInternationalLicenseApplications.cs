@@ -23,11 +23,11 @@ namespace DVLDProject
         private void LoadAllComboBoxFilterBy()
         {
             cbSearchBy.Items.Add("None");
-            cbSearchBy.Items.Add("Int.License ID");
-            cbSearchBy.Items.Add("Application ID");
-            cbSearchBy.Items.Add("Driver ID");
-            cbSearchBy.Items.Add("L.License ID");
-            cbSearchBy.Items.Add("Is Active");
+            cbSearchBy.Items.Add("InternationalLicenseID");
+            cbSearchBy.Items.Add("ApplicationID");
+            cbSearchBy.Items.Add("DriverID");
+            cbSearchBy.Items.Add("LicenseID");
+            cbSearchBy.Items.Add("IsActive");
 
             cbSearchBy.SelectedIndex = 0;
         }
@@ -47,19 +47,20 @@ namespace DVLDProject
             if (dataGridView1 != null && dataGridView1.Rows.Count > 0)
             {
                 // DataGridView is not null and has data
-                dataGridView1.Columns["Int.License ID"].Width = 115;
-                dataGridView1.Columns["Application ID"].Width = 115;
-                dataGridView1.Columns["Driver ID"].Width = 115;
-                dataGridView1.Columns["L.License ID"].Width = 140;
-                dataGridView1.Columns["Issue Date"].Width = 150;
-                dataGridView1.Columns["Expiration Date"].Width = 150;
-                dataGridView1.Columns["Is Active"].Width = 100;
+                //dataGridView1.Columns["InternationalLicenseID"].Width = 115;
+                //dataGridView1.Columns["ApplicationID"].Width = 115;
+                //dataGridView1.Columns["DriverID"].Width = 115;
+                //dataGridView1.Columns["LicenseID"].Width = 140;
+                //dataGridView1.Columns["Issue Date"].Width = 150;
+                //dataGridView1.Columns["Expiration Date"].Width = 150;
+                //dataGridView1.Columns["IsActive"].Width = 100;
             }
         }
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsInternationalLicenseApplicationsBusiness.LoadData();
+            DataTable dataTable = clsInternationalLicenses.GetAllInternationalLicenses();
+            //clsInternationalLicenseApplicationsBusiness.LoadData();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
@@ -94,30 +95,35 @@ namespace DVLDProject
 
         private void cbSearchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
+            
             switch (cbSearchBy.Text)
             {
                 case "None":
                     tbFilterByData.Visible = false;
                     cbIsActive.Visible = false;
                     break;
-                case "Int.License ID":
+                case "InternationalLicenseID":
                     tbFilterByData.Visible = true;
                     cbIsActive.Visible = false;
+                    tbFilterByData.Focus();
                     break;
-                case "Application ID":
+                case "ApplicationID":
                     tbFilterByData.Visible = true;
                     cbIsActive.Visible = false;
+                    tbFilterByData.Focus();
                     break;
-                case "Driver ID":
+                case "DriverID":
                     tbFilterByData.Visible = true;
                     cbIsActive.Visible = false;
+                    tbFilterByData.Focus();
                     break;
-                case "L.License ID":
+                case "LicenseID":
                     tbFilterByData.Visible = true;
                     cbIsActive.Visible = false;
+                    tbFilterByData.Focus();
                     break;
-                case "Is Active":
+                case "IsActive":
                     tbFilterByData.Visible = false;
                     cbIsActive.Visible = true;
                     cbIsActive.Location = new Point(230, cbIsActive.Location.Y);
@@ -125,6 +131,10 @@ namespace DVLDProject
                 default:
                     break;
             }
+
+            tbFilterByData.Text = "";
+
+            LoadAllDataToDGV();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -140,8 +150,7 @@ namespace DVLDProject
                 return;
             }
 
-
-            DataTable dataTable = clsInternationalLicenseApplicationsBusiness.SearchInTable(cbSearchBy.Text, tbFilterByData.Text);
+            DataTable dataTable = clsInternationalLicenses.SearchData((clsInternationalLicenses.InternationalLicensesColumn)Enum.Parse(typeof(clsInternationalLicenses.InternationalLicensesColumn), cbSearchBy.Text), tbFilterByData.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
             
@@ -168,7 +177,7 @@ namespace DVLDProject
 
             }
 
-            DataTable dataTable = clsInternationalLicenseApplicationsBusiness.SearchInTable(cbSearchBy.Text, SelectedItemNum.ToString());
+            DataTable dataTable = clsInternationalLicenses.SearchData(clsInternationalLicenses.InternationalLicensesColumn.IsActive, SelectedItemNum.ToString());
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
             MeasureDataGridView();
@@ -183,10 +192,10 @@ namespace DVLDProject
                 Form frm = new frmPersonDetails(PersonID);
                 frm.ShowDialog();
 
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
-
-                LoadAllDataToDGV();
+                //cbSearchBy.SelectedIndex = 0;
+                //tbFilterByData.Text = "";
+                //
+                //LoadAllDataToDGV();
             }
             else
             {
@@ -203,10 +212,10 @@ namespace DVLDProject
                 Form frm = new frmInternationalDriverInfo( IntLicenseID);
                 frm.ShowDialog();
 
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
-
-                LoadAllDataToDGV();
+                //cbSearchBy.SelectedIndex = 0;
+                //tbFilterByData.Text = "";
+                //
+                //LoadAllDataToDGV();
             }
             else
             {
@@ -223,10 +232,10 @@ namespace DVLDProject
                 Form frm = new frmLicenseHistory(LDLAppID);
                 frm.ShowDialog();
 
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
-
-                LoadAllDataToDGV();
+                //cbSearchBy.SelectedIndex = 0;
+                //tbFilterByData.Text = "";
+                //
+                //LoadAllDataToDGV();
             }
             else
             {

@@ -12,15 +12,14 @@ namespace DVLDProject
 {
     public partial class frmDriverLicenseInfo : Form
     {
-        readonly int _LDLAppID = -1;
+        readonly int _LicenseID = -1;
 
-        public frmDriverLicenseInfo(int lDLAppID)
+        public frmDriverLicenseInfo(int LicenseID)
         {
             InitializeComponent();
-            _LDLAppID = lDLAppID;
+            _LicenseID = LicenseID;
 
-            ctrlLicenseInfo1._LDLAppID = lDLAppID;
-            //ctrlLicenseInfo1.ctrlLicenseInfo_Load();
+            ctrlLicenseInfo1._LicenseID = LicenseID;
         }
 
         private void frmDriverLicenseInfo_Load(object sender, EventArgs e)

@@ -346,7 +346,7 @@ namespace DVLDProject
                 
 
 
-                frmDriverLicenseInfo Frm = new frmDriverLicenseInfo(LDLAppID);
+                frmDriverLicenseInfo Frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LicenseIDByLDLAppID(LDLAppID));
 
                 Frm.ShowDialog();
                 

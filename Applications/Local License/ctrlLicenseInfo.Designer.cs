@@ -136,7 +136,6 @@
             this.gbDriverLicenseInfo.TabIndex = 0;
             this.gbDriverLicenseInfo.TabStop = false;
             this.gbDriverLicenseInfo.Text = "Driver License Info";
-            this.gbDriverLicenseInfo.Enter += new System.EventHandler(this.gbDriverLicenseInfo_Enter);
             // 
             // pictureBox3
             // 

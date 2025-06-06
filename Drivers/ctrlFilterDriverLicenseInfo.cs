@@ -78,7 +78,7 @@ namespace DVLDProject
 
                     if (clsFilterDriverInfoBusiness.CanIAddInternationalLicenseByLicenseID(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
                         //_IsActive = true;
@@ -89,7 +89,7 @@ namespace DVLDProject
                     }
                     else if (clsFilterDriverInfoBusiness.IHaveInternationalLicenseByLicenseID(LicenseID) != -1)
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
 
                         _InternationalID = clsFilterDriverInfoBusiness.IHaveInternationalLicenseByLicenseID(LicenseID);
 
@@ -113,7 +113,7 @@ namespace DVLDProject
                     }
                     else if (!clsFilterDriverInfoBusiness.IsAllLicensesActiveByLicenseID(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
                         //_IsActive = false;
@@ -128,7 +128,7 @@ namespace DVLDProject
                     }
                     else if (clsFilterDriverInfoBusiness.IsLicensePastExpirationDate(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
                         //_IsActive = false;
@@ -145,7 +145,7 @@ namespace DVLDProject
                 {
                     if (!clsFilterDriverInfoBusiness.IsAllLicensesActiveByLicenseID(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -158,7 +158,7 @@ namespace DVLDProject
                     }
                     else
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID =  LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -180,7 +180,7 @@ namespace DVLDProject
                 {
                     if (clsFilterDriverInfoBusiness.IsJustLicenseActiveByLicenseID(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -193,7 +193,7 @@ namespace DVLDProject
                     }
                     else
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -213,7 +213,7 @@ namespace DVLDProject
                     if (clsFilterDriverInfoBusiness.IsJustLicenseActiveByLicenseID(LicenseID))
                     {
 
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -226,7 +226,7 @@ namespace DVLDProject
                     }
                     else
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -236,7 +236,7 @@ namespace DVLDProject
                         if (_OnClickToSearch != null)
                             ClickToSave(LicenseID, false);
 
-                        if (ctrlLicenseInfo1._LDLAppID == -1)
+                        if (ctrlLicenseInfo1._LicenseID == -1)
                         {
                             MessageBox.Show($"Selected License is not Active and Isn't have a data relied",
                                             "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -255,7 +255,7 @@ namespace DVLDProject
                         &&
                         clsMethodsGeneralBusiness.IsHaveDataInLicense(LicenseID))
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -268,7 +268,7 @@ namespace DVLDProject
                     }
                     else
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -305,7 +305,7 @@ namespace DVLDProject
                         clsMethodsGeneralBusiness.IsHaveDataInLicense(LicenseID)
                         )
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 
@@ -326,7 +326,7 @@ namespace DVLDProject
                     }
                     else
                     {
-                        ctrlLicenseInfo1._LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID);
+                        ctrlLicenseInfo1._LicenseID = LicenseID;
                         ctrlLicenseInfo1.ctrlLicenseInfo_LoadAutoData();
                         ctrlLicenseInfo1.ctrlLicenseInfo_Load();
 

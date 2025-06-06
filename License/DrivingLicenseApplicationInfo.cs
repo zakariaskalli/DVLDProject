@@ -53,7 +53,7 @@ namespace DVLDProject
 
         private void lblShowLicenseInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmDriverLicenseInfo frm = new frmDriverLicenseInfo(_LDLAppID);
+            frmDriverLicenseInfo frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LicenseIDByLDLAppID( _LDLAppID));
             frm.ShowDialog();
         }
     }

@@ -25,38 +25,43 @@ namespace Data_Layer___DVLDProject
 
             string query = $@"
 
+DECLARE @InternationalLicenseID INT;
 
-Declare @InternationalLicenseID INT, @LocalLicenseID INT, @AppID INT,
-                                    @LDLAppID INT, @PersonID INT;
-                                    --30
-                                    Set @InternationalLicenseID = @@InternationalLicenseID
-									--46
-                                    Set @LocalLicenseID = (SELECT IssuedUsingLocalLicenseID from InternationalLicenses 
-                                    									where InternationalLicenseID = @InternationalLicenseID)
-									--126
-                                    Set @AppID = (select ApplicationID from InternationalLicenses
-                                    			where InternationalLicenseID = @InternationalLicenseID)
-									-- 70
-                                    Set @LDLAppID = (select LocalDrivingLicenseApplicationID from LocalDrivingLicenseApplications where ApplicationID = @AppID)
-									--1024
-                                    Set @PersonID  = (select PersonID from People where NationalNo = (select NationalNo from LocalDrivingApplicationTable 
-                                    																	where LDLAppID =@LDLAppID))
-                                    
-                                    select 
-                                    (select FullName from LocalDrivingApplicationTable where LDLAppID = 36) As 'Name',
-                                    IssuedUsingLocalLicenseID,
-                                    (select NationalNo from People where PersonID = @PersonID) As 'NationalNo',
-                                    (select Gendor from People where PersonID = @PersonID) As 'Gendor',
-                                    (SELECT FORMAT(CAST(IssueDate AS DATETIME), 'dd/MMM/yyyy')) AS 'IssueDate',
-                                    @AppID As 'ApplicationID',
-                                    IsActive,
-                                    (SELECT FORMAT(CAST((select DateOfBirth from People where PersonID = @PersonID) AS DATETIME), 'dd/MMM/yyyy')) AS 'DateOfBirth',
-                                    DriverID,
-                                    (SELECT FORMAT(CAST(ExpirationDate AS DATETIME), 'dd/MMM/yyyy')) AS 'ExpirationDate',
-                                    (select ImagePath from People where PersonID = @PersonID) As 'ImagePath'
-                                    
-                                    from InternationalLicenses
-                                    where InternationalLicenseID = @InternationalLicenseID  ";
+Set @InternationalLicenseID = @@InternationalLicenseID;
+
+SELECT 
+    D.FullName AS [Name],
+    I.InternationalLicenseID,
+    I.IssuedUsingLocalLicenseID AS [LicenseID],
+    D.NationalNo,
+
+    -- Keep Gendor as is (0 or 1)
+    P.Gendor,
+
+    -- Format IssueDate
+    REPLACE(CONVERT(VARCHAR(11), I.IssueDate, 106), ' ', '/') AS IssueDate,
+    I.ApplicationID,
+
+    -- Keep IsActive as is (0 or 1)
+    I.IsActive,
+
+    -- Format DateOfBirth
+    REPLACE(CONVERT(VARCHAR(11), P.DateOfBirth, 106), ' ', '/') AS DateOfBirth,
+    I.DriverID,
+
+    -- Format ExpirationDate
+    REPLACE(CONVERT(VARCHAR(11), I.ExpirationDate, 106), ' ', '/') AS ExpirationDate,
+
+    -- Subquery for ImagePath
+    (SELECT ImagePath FROM People WHERE NationalNo = D.NationalNo) AS ImagePath
+
+FROM InternationalLicenses I
+JOIN Drivers_View D ON D.DriverID = I.DriverID
+JOIN People P ON P.PersonID = D.PersonID
+WHERE I.InternationalLicenseID = @InternationalLicenseID;
+
+
+";
 
             SqlCommand Command = new SqlCommand(query, connection);
             Command.Parameters.AddWithValue("@@InternationalLicenseID", InternationalLicenseID);
@@ -72,7 +77,7 @@ Declare @InternationalLicenseID INT, @LocalLicenseID INT, @AppID INT,
                 {
 
                     Name = (string)reader["Name"];
-                    LicenseID = Convert.ToInt32(reader["IssuedUsingLocalLicenseID"]);
+                    LicenseID = Convert.ToInt32(reader["LicenseID"]);
                     NationalNo = (string)reader["NationalNo"];
                     Gendor = Convert.ToInt32(reader["Gendor"]);
                     IssueDate = (string)reader["IssueDate"];

@@ -221,7 +221,7 @@ namespace DVLDProject
 
             if (clsLicenses.FindByLicenseID((int)LicenseID) != null)
             {
-                Form frm = new frmDriverLicenseInfo(clsMethodsGeneralBusiness.LDLAppIDByLicenseID(LicenseID));
+                Form frm = new frmDriverLicenseInfo(LicenseID);
                 frm.ShowDialog();
 
                 cbSearchBy.SelectedIndex = 0;

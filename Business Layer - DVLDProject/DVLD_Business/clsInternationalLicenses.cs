@@ -162,7 +162,7 @@ InternationalLicenseID, ApplicationID, DriverID, IssuedUsingLocalLicenseID, Issu
             InternationalLicenseID,
             ApplicationID,
             DriverID,
-            IssuedUsingLocalLicenseID,
+            LicenseID,
             IssueDate,
             ExpirationDate,
             IsActive,

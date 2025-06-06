@@ -17,7 +17,7 @@ namespace DVLDProject
     public partial class ctrlLicenseInfo : UserControl
     {
 
-        public int _LDLAppID = -1;
+        public int _LicenseID = -1;
         
         
         static private string _ImageMalePath = @"C:/Programation Level 2/DVLDProject/Project Image/homme.png";
@@ -32,22 +32,19 @@ namespace DVLDProject
         void LoadAllData()
         {
 
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
+            if (clsLicenses.FindByLicenseID((int)_LicenseID) != null)
             {
-                clsLicenseInfoBusiness clsA = clsLicenseInfoBusiness.LoadDataLicenseInfoByPersonID(_LDLAppID);
+                clsLicenseInfoBusiness clsA = clsLicenseInfoBusiness.LoadDataLicenseInfoByPersonID(_LicenseID);
+                
+                lblLicenseID.Text = clsA.LicenseID.ToString();
 
                 lblClass.Text = clsA.Class.ToString();
                 lblName.Text = clsA.Name.ToString();
-                lblLicenseID.Text = clsA.LicenseID.ToString();
                 lblNationalNo.Text = clsA.NationalNo.ToString();
                 lblGendor.Text = clsA.Gendor.ToString();
                 lblIssueDate.Text = clsA.IssueDate.ToString();
                 lblIssueReason.Text = clsA.IssueReason.ToString();
-
-                if (clsA.Notes == "")
-                    lblNotes.Text = "???";
-                else
-                    lblNotes.Text = clsA.Notes.ToString();
+                lblNotes.Text = clsA.Notes.ToString();
 
                 lblIsActive.Text = clsA.IsActive.ToString();
                 lblDateOfBirth.Text = clsA.DateOfBirth.ToString();
@@ -110,15 +107,11 @@ namespace DVLDProject
             LoadAutoData();
         }
 
-        public void ctrlLicenseInfo_Load(int LDLAppID)
+        public void ctrlLicenseInfo_Load(int LicenseID)
         {
-            _LDLAppID = LDLAppID;
+            _LicenseID = LicenseID;
             LoadAllData();
         }
 
-        private void gbDriverLicenseInfo_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

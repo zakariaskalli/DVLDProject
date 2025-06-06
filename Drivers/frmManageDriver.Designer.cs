@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageDriver));
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbFilterByData = new System.Windows.Forms.TextBox();
             this.TotalRecord = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.cbSearchBy = new System.Windows.Forms.ComboBox();
@@ -41,15 +41,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbFilterByData
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(248, 186);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 21);
-            this.textBox1.TabIndex = 17;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.tbFilterByData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbFilterByData.Location = new System.Drawing.Point(248, 186);
+            this.tbFilterByData.Name = "tbFilterByData";
+            this.tbFilterByData.Size = new System.Drawing.Size(147, 21);
+            this.tbFilterByData.TabIndex = 17;
+            this.tbFilterByData.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbFilterByData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // TotalRecord
             // 
@@ -138,7 +138,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(947, 524);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbFilterByData);
             this.Controls.Add(this.TotalRecord);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.cbSearchBy);
@@ -158,7 +158,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbFilterByData;
         private System.Windows.Forms.Label TotalRecord;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cbSearchBy;

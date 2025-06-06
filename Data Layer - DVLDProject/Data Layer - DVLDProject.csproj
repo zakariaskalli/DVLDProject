@@ -60,7 +60,7 @@
     <Compile Include="DVLD_DataAccess\clsApplicationTypes.cs" />
     <Compile Include="DVLD_DataAccess\clsCountries.cs" />
     <Compile Include="DVLD_DataAccess\clsDetainedLicenses.cs" />
-    <Compile Include="DVLD_DataAccess\clsDrivers.cs" />
+    <Compile Include="Drivers\clsDrivers.cs" />
     <Compile Include="DVLD_DataAccess\clsInternationalLicenses.cs" />
     <Compile Include="DVLD_DataAccess\clsLicenseClasses.cs" />
     <Compile Include="DVLD_DataAccess\clsLicenses.cs" />
@@ -77,7 +77,6 @@
     <Compile Include="Drivers\clsFilterDriverInfoData.cs" />
     <Compile Include="License\clsIssueDriverLicenseData.cs" />
     <Compile Include="Applications\Local License\clsLicenseInfoData.cs" />
-    <Compile Include="Drivers\clsManageDriversData.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralData.cs" />
     <Compile Include="Applications\Renew Driving License\clsRenewLocalDrivingLicenseData.cs" />
     <Compile Include="Applications\Replacement For Loast Or Damaged License\clsReplacementForDamagedOrLostLicensesData.cs" />

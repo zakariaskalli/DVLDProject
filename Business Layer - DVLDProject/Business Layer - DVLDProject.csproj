@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drivers\clsDrivers.cs" />
     <Compile Include="DVLD_Business\clsApplications.cs" />
     <Compile Include="Applications\clsApplicationTypes.cs" />
     <Compile Include="DVLD_Business\clsCountries.cs" />
     <Compile Include="DVLD_Business\clsDetainedLicenses.cs" />
-    <Compile Include="DVLD_Business\clsDrivers.cs" />
     <Compile Include="DVLD_Business\clsInternationalLicenses.cs" />
     <Compile Include="DVLD_Business\clsLicenseClasses.cs" />
     <Compile Include="DVLD_Business\clsLicenses.cs" />
@@ -73,7 +73,6 @@
     <Compile Include="Applications\Local License\clsLicenseInfoBusiness.cs" />
     <Compile Include="Applications\Detain License\clsListDetainedLicensesBusiness.cs" />
     <Compile Include="Applications\Local License\clsLocalDrivingLicenseApplicationsBusiness.cs" />
-    <Compile Include="Drivers\clsManageDriversBusiness.cs" />
     <Compile Include="Generale Methods\clsMethodsGeneralBusiness.cs" />
     <Compile Include="Applications\International License\clsNewInternationalLicenseApplicationBusiness.cs" />
     <Compile Include="Applications\Release Detained License\clsReleaseDetainedLicenseBusiness.cs" />

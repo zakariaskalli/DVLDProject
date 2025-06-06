@@ -69,6 +69,7 @@ namespace DVLDProject
 
         private void ctrlApplicationInfo_Load(object sender, EventArgs e)
         {
+            LoadAutoInfo();
             LoadDataVariable();
         }
 

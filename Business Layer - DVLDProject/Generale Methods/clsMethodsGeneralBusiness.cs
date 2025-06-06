@@ -167,5 +167,12 @@ namespace Business_Layer___DVLDProject
             return clsMethodsGeneralData.DetainedIDByLicenseID(LicenseID);
         }
 
+        static public int LicenseIDByLDLAppID(int LDLAppID)
+        {
+            if (LDLAppID == -1)
+                return -1;
+
+            return clsMethodsGeneralData.LicenseIDByLDLAppID(LDLAppID);
+        }
     }
 }
