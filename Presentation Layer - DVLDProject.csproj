@@ -518,6 +518,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="AllPackages\Data Layer - DVLDProject.dll.config" />
+    <None Include="AllPackages\DVLDProject.exe.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -539,6 +541,22 @@
       <Name>Business Layer - DVLDProject</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="AllPackages\BizDataLayerGen.exe" />
+    <Content Include="AllPackages\BizDataLayerGen.pdb" />
+    <Content Include="AllPackages\Business Layer - DVLDProject.dll" />
+    <Content Include="AllPackages\Business Layer - DVLDProject.pdb" />
+    <Content Include="AllPackages\Data Layer - DVLDProject.dll" />
+    <Content Include="AllPackages\Data Layer - DVLDProject.pdb" />
+    <Content Include="AllPackages\DVLDProject.exe" />
+    <Content Include="AllPackages\DVLDProject.pdb" />
+    <Content Include="AllPackages\Guna.UI2.dll" />
+    <Content Include="AllPackages\Newtonsoft.Json.dll" />
+    <Content Include="AllPackages\Newtonsoft.Json.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
