@@ -111,7 +111,6 @@
             this.ctrlFilterDriverLicenseInfo1.Size = new System.Drawing.Size(898, 359);
             this.ctrlFilterDriverLicenseInfo1.TabIndex = 3;
             this.ctrlFilterDriverLicenseInfo1._OnClickToSearch += new System.Action<int, bool>(this.ctrlFilterDriverLicenseInfo1__OnClickToSearch);
-            this.ctrlFilterDriverLicenseInfo1.Load += new System.EventHandler(this.ctrlFilterDriverLicenseInfo1_Load);
             // 
             // ctrlApplicationInfo1
             // 

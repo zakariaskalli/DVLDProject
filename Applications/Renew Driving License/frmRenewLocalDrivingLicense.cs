@@ -76,10 +76,10 @@ namespace DVLDProject
         {
             if (clsLicenses.FindByLicenseID((int)ctrlApplicationNewLicenseInfo1.LicenseID) != null)
             {
-                //I Find LDLAppID
-                int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlApplicationNewLicenseInfo1.LicenseID);
 
-                frmLicenseHistory frm = new frmLicenseHistory(LDLAppID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(ctrlApplicationNewLicenseInfo1.LicenseID).DriverID;
+
+                frmLicenseHistory frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
             }
         }

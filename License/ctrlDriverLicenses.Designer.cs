@@ -64,7 +64,6 @@
             this.gbDriverLicences.TabIndex = 0;
             this.gbDriverLicences.TabStop = false;
             this.gbDriverLicences.Text = "Driver Licenses";
-            this.gbDriverLicences.Enter += new System.EventHandler(this.gbDriverLicences_Enter);
             // 
             // tabControl1
             // 

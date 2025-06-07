@@ -12,12 +12,12 @@ namespace Business_Layer___DVLDProject
 {
     public class clsDriverLicensesBusiness
     {
-        static public DataTable LoadAllLDLApp(int LDLAppID)
+        static public DataTable LoadAllLDLAppByDriverID(int DriverID)
         {
             clsDriverLicensesData clsData = new clsDriverLicensesData();
 
 
-            DataTable dt = clsData.LoadAllLDLApp(LDLAppID);
+            DataTable dt = clsData.LoadAllLDLAppByDriverID(DriverID);
 
             if (dt != null)
                 return dt;
@@ -25,12 +25,12 @@ namespace Business_Layer___DVLDProject
                 return null;
         }
 
-        static public DataTable LoadAllInternationalLicenses(int LDLAppID)
+        static public DataTable LoadAllInternationalLicensesByDriverID(int DriverID)
         {
             clsDriverLicensesData clsData = new clsDriverLicensesData();
 
 
-            DataTable dt = clsData.LoadAllInternationalLicenses(LDLAppID);
+            DataTable dt = clsData.LoadAllInternationalLicensesByDriverID(DriverID);
 
             if (dt != null)
                 return dt;

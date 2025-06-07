@@ -71,7 +71,6 @@
             this.ctrlDriverLicenses1.Name = "ctrlDriverLicenses1";
             this.ctrlDriverLicenses1.Size = new System.Drawing.Size(928, 269);
             this.ctrlDriverLicenses1.TabIndex = 4;
-            this.ctrlDriverLicenses1.Load += new System.EventHandler(this.ctrlDriverLicenses1_Load);
             // 
             // button2
             // 

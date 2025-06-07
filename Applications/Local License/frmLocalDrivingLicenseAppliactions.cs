@@ -375,8 +375,12 @@ namespace DVLDProject
 
             if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
             {
-               
-                frmLicenseHistory Frm = new frmLicenseHistory(LDLAppID);
+                int LicenseID = clsMethodsGeneralBusiness.LicenseIDByLDLAppID(LDLAppID);
+
+                int DriverID = (int)clsLicenses.FindByLicenseID(LicenseID).DriverID;
+
+
+                frmLicenseHistory Frm = new frmLicenseHistory(DriverID);
 
                 Frm.ShowDialog();
                 
@@ -414,31 +418,5 @@ namespace DVLDProject
             LoadAllDataToDGV();
         }
 
-        private void showPersoLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int LDLAppID = (int)dataGridView1.CurrentRow.Cells[0].Value;
-
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
-            {
-                cbSearchBy.SelectedIndex = 0;
-                tbFilterByData.Text = "";
-
-
-                frmLicenseHistory Frm = new frmLicenseHistory(LDLAppID);
-
-                Frm.ShowDialog();
-
-                LoadAllDataToDGV();
-            }
-            else
-            {
-                MessageBox.Show("This LDLAppID Is Not Found", "Error Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void sechToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

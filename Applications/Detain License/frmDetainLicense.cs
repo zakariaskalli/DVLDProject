@@ -80,9 +80,9 @@ namespace DVLDProject
         {
             if (clsLicenses.FindByLicenseID((int)ctrlDetainInfo1.LicenseID) != null)
             {
-                int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlDetainInfo1.LicenseID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(ctrlDetainInfo1.LicenseID).DriverID;
 
-                frmLicenseHistory frm = new frmLicenseHistory(LDLAppID);
+                frmLicenseHistory frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
             }
             else

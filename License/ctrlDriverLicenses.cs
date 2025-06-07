@@ -14,7 +14,7 @@ namespace DVLDProject
 {
     public partial class ctrlDriverLicenses : UserControl
     {
-        public int _LDLAppID = -1;
+        public int _DriverID = -1;
 
         public ctrlDriverLicenses()
         {
@@ -25,15 +25,15 @@ namespace DVLDProject
 
         void LoadAllData()
         {
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
+            if (clsDrivers.FindByDriverID(_DriverID) != null)
             {
                 // Load Data To LocalDrivingApplication Data GridViw
-                DataTable dataTable1 = clsDriverLicensesBusiness.LoadAllLDLApp(_LDLAppID);
+                DataTable dataTable1 = clsDriverLicensesBusiness.LoadAllLDLAppByDriverID(_DriverID);
                 dataGridView1.DataSource = dataTable1;
                 lblRecord1.Text = $"# Record: {dataGridView1.RowCount}";
 
                 // Load Data To LocalDrivingApplication Data GridViw
-                DataTable dataTable2 = clsDriverLicensesBusiness.LoadAllInternationalLicenses(_LDLAppID);
+                DataTable dataTable2 = clsDriverLicensesBusiness.LoadAllInternationalLicensesByDriverID(_DriverID);
                 dataGridView2.DataSource = dataTable2;
                 lblRecord2.Text = $"# Record: {dataGridView2.RowCount}";
 
@@ -71,10 +71,6 @@ namespace DVLDProject
             LoadAllData();
         }
 
-        private void gbDriverLicences_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void showLicenseInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -50,9 +50,9 @@ namespace DVLDProject
             if (clsLicenses.FindByLicenseID((int)ctrlApplicationInfo1.LocalLicenseID) != null)
             {
                 //I Find LDLAppID
-                int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlApplicationInfo1.LocalLicenseID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(ctrlApplicationInfo1.LocalLicenseID).DriverID;
 
-                frmLicenseHistory frm = new frmLicenseHistory(LDLAppID);
+                frmLicenseHistory frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
 
             }
@@ -122,6 +122,12 @@ namespace DVLDProject
 
                 btnIssue.Enabled = false;
             }
+
+        }
+
+        public void DisabledBtnIssue()
+        {
+            btnIssue.Enabled = false;
 
         }
 

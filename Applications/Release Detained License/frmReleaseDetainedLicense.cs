@@ -95,9 +95,9 @@ namespace DVLDProject
             if (clsLicenses.FindByLicenseID((int)ctrlReleaseDetainedLicense1.LicenseID) != null)
             {
                 //I Find LDLAppID
-                int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlReleaseDetainedLicense1.LicenseID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(ctrlReleaseDetainedLicense1.LicenseID).DriverID;
 
-                frmLicenseHistory frm = new frmLicenseHistory(LDLAppID);
+                frmLicenseHistory frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
             }
             else

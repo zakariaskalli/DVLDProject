@@ -136,9 +136,9 @@ namespace DVLDProject
             if (clsLicenses.FindByLicenseID((int)ctrlAppInfoForLicReplacement1.OldLicenseID) != null)
             {
                 //I Find LDLAppID
-                int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(ctrlAppInfoForLicReplacement1.OldLicenseID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(ctrlAppInfoForLicReplacement1.OldLicenseID).DriverID;
 
-                frmLicenseHistory frm = new frmLicenseHistory(LDLAppID);
+                frmLicenseHistory frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
 
             }

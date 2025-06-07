@@ -237,11 +237,13 @@ namespace DVLDProject
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(int.Parse(dataGridView1.CurrentRow.Cells[1].Value.ToString()));
+            int LicenseID = int.Parse(dataGridView1.CurrentRow.Cells[1].Value.ToString());
 
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
+            if (clsLicenses.FindByLicenseID(LicenseID) != null)
             {
-                Form frm = new frmLicenseHistory(LDLAppID);
+                int DriverID = (int)clsLicenses.FindByLicenseID(LicenseID).DriverID;
+
+                Form frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
 
                 cbSearchBy.SelectedIndex = 0;

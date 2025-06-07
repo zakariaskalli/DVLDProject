@@ -225,11 +225,11 @@ namespace DVLDProject
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int LDLAppID = clsMethodsGeneralBusiness.LDLAppIDByLicenseID(int.Parse(dataGridView1.CurrentRow.Cells[3].Value.ToString()));
+            int DriverID = int.Parse(dataGridView1.CurrentRow.Cells[2].Value.ToString());
 
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)LDLAppID) != null)
+            if (clsDrivers.FindByDriverID(DriverID) != null)
             {
-                Form frm = new frmLicenseHistory(LDLAppID);
+                Form frm = new frmLicenseHistory(DriverID);
                 frm.ShowDialog();
 
                 //cbSearchBy.SelectedIndex = 0;

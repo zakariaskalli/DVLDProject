@@ -14,17 +14,16 @@ namespace DVLDProject
 {
     public partial class frmLicenseHistory : Form
     {
-        int _LDLAppID = -1;
-        int _PersonID = -1;
+        clsDrivers DriverInfo = null;
 
-        public frmLicenseHistory(int lDLAppID)
+        // Check Drivver ID is excist after call that
+        public frmLicenseHistory(int DriverID)
         {
             InitializeComponent();
-            _LDLAppID = lDLAppID;
 
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
+            if (clsDrivers.FindByDriverID(DriverID) != null)
             {
-                _PersonID = clsMethodsGeneralBusiness.PersonIDByLDLAppID(_LDLAppID);
+                DriverInfo = clsDrivers.FindByDriverID(DriverID);
             }
 
             clsMethodsGeneralBusiness.UpdateDataFormAllLicenses();
@@ -32,18 +31,18 @@ namespace DVLDProject
 
         void LoadAllData()
         {
-            if (clsLocalDrivingLicenseApplications.FindByLocalDrivingLicenseApplicationID((int)_LDLAppID) != null)
+            if (DriverInfo != null)
             {
-                ctrlFilterAndMakePersonInfo1._PersonID = _PersonID;
+                ctrlFilterAndMakePersonInfo1._PersonID = DriverInfo.PersonID;
                 ctrlFilterAndMakePersonInfo1.ctrlShowPersonDetails_Load();
 
-                ctrlDriverLicenses1._LDLAppID = _LDLAppID;
+                ctrlDriverLicenses1._DriverID = (int)DriverInfo.DriverID;
                 ctrlDriverLicenses1.ctrlDriverLicenses_Load();
 
 
 
                 ctrlFilterAndMakePersonInfo1.SelectCombobox(1);
-                ctrlFilterAndMakePersonInfo1.textBoxData(_PersonID.ToString());
+                ctrlFilterAndMakePersonInfo1.textBoxData(DriverInfo.PersonID.ToString());
                 ctrlFilterAndMakePersonInfo1.DisabledFilterBy();
             }
 
@@ -65,9 +64,5 @@ namespace DVLDProject
             this.Close();
         }
 
-        private void ctrlDriverLicenses1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

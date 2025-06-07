@@ -14,16 +14,18 @@ namespace Data_Layer___DVLDProject
     public class clsDriverLicensesData
     {
 
-        public DataTable LoadAllLDLApp(int LDLAppID)
+        public DataTable LoadAllLDLAppByDriverID(int DriverID)
         {
 
             DataTable dt = new DataTable();
 
             SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting);
 
-            string query = @" Declare @LDLAppID INT;
+            string query = @"
 
-                    set @LDLAppID = @@LDLAppID;
+ Declare @DriverID INT;
+
+                    set @DriverID = @@DriverID;
                     
                     
                     select LicenseID As 'Lic ID',
@@ -34,15 +36,10 @@ namespace Data_Layer___DVLDProject
                     IsActive
                     
                     from Licenses
-                    where DriverID = (
-                    			select DriverID from Drivers
-                    			where PersonID = (select PersonID from People
-                    									where NationalNo = 
-                    										(select NationalNo from LocalDrivingApplicationTable where LDLAppID = @LDLAppID))   )
-                    --and IsActive = 1";
+                    where DriverID = @DriverID";
 
             SqlCommand Command = new SqlCommand(query, connection);
-            Command.Parameters.AddWithValue("@@LDLAppID", LDLAppID);
+            Command.Parameters.AddWithValue("@@DriverID", DriverID);
 
             try
             {
@@ -64,15 +61,17 @@ namespace Data_Layer___DVLDProject
         }
 
 
-        public DataTable LoadAllInternationalLicenses(int LDLAppID)
+        public DataTable LoadAllInternationalLicensesByDriverID(int DriverID)
         {
 
             DataTable dt = new DataTable();
 
             SqlConnection connection = new SqlConnection(ConnectionSQL.connectionStarting);
 
-            string query = @" Declare @LDLAppID INT;
-                set @LDLAppID = @@LDLAppID;
+            string query = @" 
+
+Declare @DriverID INT;
+                set @DriverID = @@DriverID;
                 
                 
                 select InternationalLicenseID As 'Int.License ID',
@@ -83,18 +82,12 @@ namespace Data_Layer___DVLDProject
                 IsActive
                 
                 from InternationalLicenses
-                where DriverID = (
-                			select DriverID from Drivers
-                			where PersonID = (select PersonID from People
-                									where NationalNo = 
-                										(select NationalNo from LocalDrivingApplicationTable where LDLAppID = @LDLAppID ))   )
-                --and IsActive = 1
-				--and EXISTS (select top 1 1 Find from Licenses where LicenseID = IssuedUsingLocalLicenseID 
-				--								and IsActive = 1
-				--								and ExpirationDate >= GETDATE())";
+                where DriverID = @DriverID
+
+";
 
             SqlCommand Command = new SqlCommand(query, connection);
-            Command.Parameters.AddWithValue("@@LDLAppID", LDLAppID);
+            Command.Parameters.AddWithValue("@@DriverID", DriverID);
 
             try
             {
