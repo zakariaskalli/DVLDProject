@@ -107,13 +107,6 @@ namespace Data_Layer___DVLDProject
                                 
                                 	SET @NewLicenseID = SCOPE_IDENTITY();
 									
-                                    -- Create New LDLApp
-									INSERT INTO LocalDrivingLicenseApplications
-									      (ApplicationID,
-										  LicenseClassID)
-									VALUES
-									      (@AppID,
-									      @LicenseClassID)
                                 END;
                                 
                                 -- Return the new ApplicationID and LicenseID
@@ -242,13 +235,6 @@ namespace Data_Layer___DVLDProject
                                 
                                 	SET @NewLicenseID = SCOPE_IDENTITY();
 									
-                                    -- Create New LDLApp
-									INSERT INTO LocalDrivingLicenseApplications
-									      (ApplicationID,
-										  LicenseClassID)
-									VALUES
-									      (@AppID,
-									      @LicenseClassID)
                                 END;
                                 
                                 -- Return the new ApplicationID and LicenseID

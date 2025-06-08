@@ -23,7 +23,7 @@ namespace DVLDProject
         public ctrlAppInfoForLicReplacement()
         {
             InitializeComponent();
-            LoadAllData();
+
         }
 
         public void LoadAllData()
@@ -65,9 +65,5 @@ namespace DVLDProject
             LoadAllData();
         }
 
-        private void gbAppBasicInfo_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -84,7 +84,6 @@
             this.gbAppBasicInfo.TabIndex = 3;
             this.gbAppBasicInfo.TabStop = false;
             this.gbAppBasicInfo.Text = "Application Info for License Replacement";
-            this.gbAppBasicInfo.Enter += new System.EventHandler(this.gbAppBasicInfo_Enter);
             // 
             // pictureBox10
             // 
