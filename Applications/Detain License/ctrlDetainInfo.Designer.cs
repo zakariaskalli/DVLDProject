@@ -80,7 +80,6 @@
             this.gbAppBasicInfo.TabIndex = 4;
             this.gbAppBasicInfo.TabStop = false;
             this.gbAppBasicInfo.Text = "Detain Info";
-            this.gbAppBasicInfo.Enter += new System.EventHandler(this.gbAppBasicInfo_Enter);
             // 
             // tbFineFees
             // 

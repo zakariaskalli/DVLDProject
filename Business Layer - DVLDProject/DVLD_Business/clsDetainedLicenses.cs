@@ -184,14 +184,14 @@ DetainID, LicenseID, DetainDate, FineFees, CreatedByUserID, IsReleased, ReleaseD
         }
     
 
-        public static DataTable SearchData(DetainedLicensesColumn ChosenColumn, string SearchValue, SearchMode Mode = SearchMode.Anywhere)
+        public static DataTable SearchData(string ColumnName, string SearchValue, SearchMode Mode = SearchMode.Anywhere)
         {
             if (string.IsNullOrWhiteSpace(SearchValue) || !SqlHelper.IsSafeInput(SearchValue))
                 return new DataTable();
 
             string modeValue = Mode.ToString(); // Get the mode as string for passing to the stored procedure
 
-            return clsDetainedLicensesData.SearchData(ChosenColumn.ToString(), SearchValue, modeValue);
+            return clsDetainedLicensesData.SearchData(ColumnName, SearchValue, modeValue);
         }        
 
 

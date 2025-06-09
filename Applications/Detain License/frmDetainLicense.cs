@@ -66,15 +66,11 @@ namespace DVLDProject
             {
                 lnkLbl1.Enabled = true;
                 lnkLbl2.Enabled = false;
-
+                ctrlDetainInfo1.EnabledFineFeesTextBox();
                 btnDetain.Enabled = true;
             }
         }
 
-        private void frmDetainLicense_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void lnkLbl1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

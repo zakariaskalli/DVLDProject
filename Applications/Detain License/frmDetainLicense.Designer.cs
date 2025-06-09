@@ -128,14 +128,15 @@
             this.Controls.Add(this.lnkLbl1);
             this.Controls.Add(this.btnDetain);
             this.Controls.Add(this.btnClose);
+            
             this.Controls.Add(this.ctrlDetainInfo1);
+            
             this.Controls.Add(this.ctrlFilterDriverLicenseInfo1);
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmDetainLicense";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Detain License";
-            this.Load += new System.EventHandler(this.frmDetainLicense_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

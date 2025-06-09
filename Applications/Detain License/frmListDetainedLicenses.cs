@@ -49,7 +49,7 @@ namespace DVLDProject
 
         private void LoadAllDataToDGV()
         {
-            DataTable dataTable = clsListDetainedLicensesBusiness.LoadData();
+            DataTable dataTable = clsDetainedLicenses.GetAllDetainedLicenses();
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
 
@@ -66,15 +66,15 @@ namespace DVLDProject
 
             //980
 
-            dataGridView1.Columns["D.ID"].Width = 75;
-            dataGridView1.Columns["L.ID"].Width = 75;
-            dataGridView1.Columns["D.Date"].Width = 135;
-            dataGridView1.Columns["Is Released"].Width = 70;
-            dataGridView1.Columns["Fine Fees"].Width = 80;
-            dataGridView1.Columns["Release Date"].Width = 110;
-            dataGridView1.Columns["N.No"].Width = 65;
-            dataGridView1.Columns["Full Name"].Width = 200;
-            dataGridView1.Columns["Release App.ID"].Width = 120;
+            //dataGridView1.Columns["D.ID"].Width = 75;
+            //dataGridView1.Columns["L.ID"].Width = 75;
+            //dataGridView1.Columns["D.Date"].Width = 135;
+            //dataGridView1.Columns["Is Released"].Width = 70;
+            //dataGridView1.Columns["Fine Fees"].Width = 80;
+            //dataGridView1.Columns["Release Date"].Width = 110;
+            //dataGridView1.Columns["N.No"].Width = 65;
+            //dataGridView1.Columns["Full Name"].Width = 200;
+            //dataGridView1.Columns["Release App.ID"].Width = 120;
 
         }
 
@@ -97,6 +97,7 @@ namespace DVLDProject
                 case "Detain ID":
                     tbFilterByData.Visible = true;
                     cbIsReleased.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "Is Released":
                     tbFilterByData.Visible = false;
@@ -106,14 +107,17 @@ namespace DVLDProject
                 case "National No":
                     tbFilterByData.Visible = true;
                     cbIsReleased.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "Full Name":
                     tbFilterByData.Visible = true;
                     cbIsReleased.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 case "Release Application ID":
                     tbFilterByData.Visible = true;
                     cbIsReleased.Visible = false;
+                    tbFilterByData.Focus();
                     break;
                 default:
                     break;
@@ -128,21 +132,7 @@ namespace DVLDProject
                     e.Handled = true;
         }
 
-        private string ColumnName()
-        {
-            switch (cbSearchBy.Text)
-            {
-                case "Detain ID":
-                    return "D.ID";
-                case "National No":
-                    return "N.No";
-                case "Release Application ID":
-                    return "Release App.ID";
-                default:
-                    return cbSearchBy.Text;
-            }
-
-        }
+        
 
 
         private void tbFilterByData_TextChanged(object sender, EventArgs e)
@@ -154,7 +144,7 @@ namespace DVLDProject
             }
 
 
-            DataTable dataTable = clsListDetainedLicensesBusiness.SearchInTable(ColumnName(), tbFilterByData.Text);
+            DataTable dataTable = clsDetainedLicenses.SearchData(cbSearchBy.Text, tbFilterByData.Text);
             dataGridView1.DataSource = dataTable;
             TotalRecord.Text = $"# Record: {dataGridView1.RowCount}";
         }

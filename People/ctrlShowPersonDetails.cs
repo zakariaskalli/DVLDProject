@@ -17,9 +17,8 @@ namespace DVLDProject
     {
         public int? _PersonID = null;
         public string _NationalNo = "";
-
-        static private string _ImageMalePath = @"C:/Programation Level 2/DVLDProject/Project Image/homme.png";
-        static private string _ImageFemalePath = @"C:/Programation Level 2/DVLDProject/Project Image/medecin.png";
+static private string _ImageMalePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Project Image\homme.png");
+static private string _ImageFemalePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Project Image\medecin.png");
 
         public ctrlShowPersonDetails()
         {
@@ -145,5 +144,9 @@ namespace DVLDProject
 
         }
 
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

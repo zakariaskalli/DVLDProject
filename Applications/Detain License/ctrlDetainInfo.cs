@@ -68,6 +68,11 @@ namespace DVLDProject
             tbFineFees.Enabled = false;
         }
 
+        public void EnabledFineFeesTextBox()
+        {
+            tbFineFees.Enabled = true;
+        }
+
         private void ctrlDetainInfo_Load(object sender, EventArgs e)
         {
 
@@ -103,9 +108,5 @@ namespace DVLDProject
 
         }
 
-        private void gbAppBasicInfo_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

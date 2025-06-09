@@ -28,49 +28,44 @@ namespace DVLDProject
             //LoadAutoInfo();
         }
 
-        void LoadAutoInfo()
+        public void LoadDataVariable()
         {
-            // MessageBox.Show(DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US")));
+            // Define formatting once
+            const string dateFormat = "dd/MMM/yyyy";
+            var culture = new CultureInfo("en-US");
 
+            string currentDate = DateTime.Now.ToString(dateFormat, culture);
+            string nextYearDate = DateTime.Now.AddYears(1).ToString(dateFormat, culture);
 
-            lblApplicationDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
-            lblIssueDate.Text = DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
-
-            // FeesNewInternationalLicenseApplication
-            //lblFees.Text = clsApplicationTypes.FindByApplicationTypeID(6).ApplicationFees.ToString();
-
-            //lblFees.Text = clsMethodsGeneralBusiness.FeesNewInternationalLicenseApplication().ToString();
-
-            DateTime nextYearDate = DateTime.Now.AddYears(1);
-            string formattedDate = nextYearDate.ToString("dd/MMM/yyyy", new CultureInfo("en-US"));
-            lblExpirationDate.Text = formattedDate;
+            lblApplicationDate.Text = currentDate;
+            lblIssueDate.Text = currentDate;
+            lblExpirationDate.Text = nextYearDate;
 
             lblCreatedBy.Text = clsGlobal.CurrenntUser.UserName;
 
+            SetLabelIfValid(lblILApplicationID, ILApplicationID);
+            SetLabelIfValid(lblILLicenseID, ILLicenseID);
+            SetLabelIfValid(lblLocalLicenseID, LocalLicenseID);
+
+            // Optionally add back if needed
+            // lblFees.Text = clsApplicationTypes.FindByApplicationTypeID(6).ApplicationFees.ToString();
+            // lblFees.Text = clsMethodsGeneralBusiness.FeesNewInternationalLicenseApplication().ToString();
         }
 
-        public void LoadDataVariable()
+        private void SetLabelIfValid(Label label, int value)
         {
-            lblILApplicationID.Text = "[???]";
-            lblILLicenseID.Text = "[???]";
-            lblLocalLicenseID.Text = "[???]";
-
-            if (ILApplicationID != -1)
-                lblILApplicationID.Text = ILApplicationID.ToString();
-
-            if (ILLicenseID != -1)
-                lblILLicenseID.Text = ILLicenseID.ToString();
-
-
-            if (LocalLicenseID != -1)
-                lblLocalLicenseID.Text = LocalLicenseID.ToString();
+            label.Text = value != -1 ? value.ToString() : "[???]";
         }
+
 
         private void ctrlApplicationInfo_Load(object sender, EventArgs e)
         {
-            LoadAutoInfo();
             LoadDataVariable();
         }
 
+        private void gbAppBasicInfo_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
