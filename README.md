@@ -31,8 +31,6 @@ DVLD is a comprehensive Driving License Management System developed as part of C
 
 ## Technologies Used
 
-## Technologies Used
-
 - C# .NET Framework  
 - SQL Server with extensive use of **T-SQL** for writing stored procedures, triggers, and complex queries  
 - ADO.NET  
